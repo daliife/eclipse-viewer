@@ -35,7 +35,7 @@ export default function App() {
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: false }}
         onCreated={({ gl }) => {
-          gl.setClearColor('#010309')
+          gl.setClearColor('#000000')
         }}
       >
         <Suspense fallback={null}>

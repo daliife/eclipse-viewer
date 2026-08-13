@@ -29,13 +29,17 @@ const en: Dict = {
   insetSolar: 'Earth → Sun',
   insetLunar: 'Earth → Moon',
   solarHitTitle: 'This is the day',
-  solarHitBody: 'Need two things: new Moon, and the Moon at a node. Today: both.',
+  solarHitBody:
+    'A solar eclipse needs two things at once: a new Moon (between Earth and the Sun) and a pass through a node — the two faint points where its tilted orbit crosses the ecliptic. Today both are true, so the Moon covers the Sun.',
   solarMissTitle: 'Not this day',
-  solarMissBody: 'The Moon is {deg}° off. It moves ~13° per day, and its orbit is tilted 5°, so it misses the Sun.',
+  solarMissBody:
+    'An eclipse still needs a new Moon at a node. Today the Moon is {deg}° away: it moves ~13° per day, and the 5° tilt lifts it off the Sun’s line.',
   lunarHitTitle: 'This is the day',
-  lunarHitBody: 'Need two things: full Moon, and the Moon at a node. Today it enters Earth’s shadow.',
+  lunarHitBody:
+    'A lunar eclipse needs two things at once: a full Moon (Earth in the middle) and a pass through a node — the two faint points where its orbit crosses the ecliptic. Today both are true, so the Moon enters Earth’s shadow.',
   lunarMissTitle: 'Not this day',
-  lunarMissBody: 'The Moon is {deg}° off. Earth’s shadow is a thin cone, so one day later the Moon misses it.',
+  lunarMissBody:
+    'An eclipse still needs a full Moon at a node. Today the Moon is {deg}° away from that line-up, so it misses Earth’s thin shadow.',
   noteDidactic: 'Classroom scale: stretched so the 5° tilt is easy to see.',
   noteReal: 'True scale: Earth and Moon are tiny. That is why a perfect line-up is rare.',
   langCa: 'Català',
@@ -73,13 +77,17 @@ const ca: Dict = {
   insetSolar: 'Terra → Sol',
   insetLunar: 'Terra → Lluna',
   solarHitTitle: 'Avui sí',
-  solarHitBody: 'Calen dues coses: lluna nova i la Lluna al node. Avui: totes dues.',
+  solarHitBody:
+    'Perquè hi hagi eclipsi solar calen dues condicions alhora: lluna nova (entre la Terra i el Sol) i que passi per un node, un dels dos punts pàl·lids on la seva òrbita inclinada creua l’eclíptica. Avui es compleixen totes dues, i la Lluna tapa el Sol.',
   solarMissTitle: 'Avui no',
-  solarMissBody: 'La Lluna va {deg}° desviada. Es mou ~13° cada dia i l’òrbita està inclinada 5°, així que no tapa el Sol.',
+  solarMissBody:
+    'Encara cal lluna nova i node alhora. Avui la Lluna va {deg}° desviada: es mou ~13° cada dia i l’òrbita està inclinada 5°, així que ja no tapa el Sol.',
   lunarHitTitle: 'Avui sí',
-  lunarHitBody: 'Calen dues coses: lluna plena i la Lluna al node. Avui entra a l’ombra de la Terra.',
+  lunarHitBody:
+    'Perquè hi hagi eclipsi lunar calen dues condicions alhora: lluna plena (la Terra al mig) i que passi per un node, un dels dos punts pàl·lids on la seva òrbita creua l’eclíptica. Avui es compleixen totes dues, i la Lluna entra a l’ombra de la Terra.',
   lunarMissTitle: 'Avui no',
-  lunarMissBody: 'La Lluna va {deg}° desviada. L’ombra de la Terra és un con prim: un dia després, no hi entra.',
+  lunarMissBody:
+    'Encara cal lluna plena i node alhora. Avui la Lluna va {deg}° desviada d’aquesta alineació, i no entra al con d’ombra de la Terra.',
   noteDidactic: 'Escala didàctica: exagerada perquè es vegi la inclinació de 5°.',
   noteReal: 'Escala real: Terra i Lluna són minúscules. Per això l’alineació perfecta és rara.',
   langCa: 'Català',

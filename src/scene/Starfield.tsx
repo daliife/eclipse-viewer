@@ -17,8 +17,11 @@ function randomStars(count: number, radius: number, seed: number) {
     positions[i * 3] = r * Math.sin(phi) * Math.cos(theta)
     positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta)
     positions[i * 3 + 2] = r * Math.cos(phi)
-    const shade = 0.55 + rand() * 0.45
-    tint.setHSL(0.58 + rand() * 0.08, 0.12, shade)
+    const shade = 0.72 + rand() * 0.28
+    const roll = rand()
+    if (roll > 0.94) tint.setHSL(0.08, 0.45, shade)
+    else if (roll > 0.88) tint.setHSL(0.62, 0.22, shade)
+    else tint.setRGB(shade, shade, shade)
     colors[i * 3] = tint.r
     colors[i * 3 + 1] = tint.g
     colors[i * 3 + 2] = tint.b

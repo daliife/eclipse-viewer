@@ -1,5 +1,5 @@
 import { useTexture } from '@react-three/drei'
-import { DoubleSide, type ColorRepresentation } from 'three'
+import { AdditiveBlending, BackSide } from 'three'
 import type { Vec3 } from '../simulation/orbits'
 
 const BASE = import.meta.env.BASE_URL
@@ -27,7 +27,7 @@ export function CelestialBody({
       {emissive ? (
         <meshBasicMaterial map={map} />
       ) : (
-        <meshStandardMaterial map={map} roughness={1} metalness={0} />
+        <meshStandardMaterial map={map} roughness={0.78} metalness={0} />
       )}
     </mesh>
   )
@@ -41,19 +41,31 @@ export function textureUrls() {
   }
 }
 
-export function Glow({
-  position,
-  radius,
-  color,
-}: {
-  position: Vec3
-  radius: number
-  color: ColorRepresentation
-}) {
+export function Glow({ position, radius }: { position: Vec3; radius: number }) {
   return (
-    <mesh position={position}>
-      <sphereGeometry args={[radius, 32, 24]} />
-      <meshBasicMaterial color={color} transparent opacity={0.18} side={DoubleSide} depthWrite={false} />
-    </mesh>
+    <>
+      <mesh position={position} renderOrder={1}>
+        <sphereGeometry args={[radius * 1.12, 24, 16]} />
+        <meshBasicMaterial
+          color="#ffd38a"
+          transparent
+          opacity={0.28}
+          blending={AdditiveBlending}
+          depthWrite={false}
+          side={BackSide}
+        />
+      </mesh>
+      <mesh position={position} renderOrder={1}>
+        <sphereGeometry args={[radius * 1.7, 24, 16]} />
+        <meshBasicMaterial
+          color="#ffb347"
+          transparent
+          opacity={0.08}
+          blending={AdditiveBlending}
+          depthWrite={false}
+          side={BackSide}
+        />
+      </mesh>
+    </>
   )
 }

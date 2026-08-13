@@ -103,12 +103,12 @@ export function SolarSystem({
       const uy = dy / n
       const uz = dz / n
       const r = scale.earthRadius * 1.06
-      // Offset past the Moon's disc so the Sun stays visible (didactic bodies are huge on the sky).
+      // Small tangent offset so totality is a tight partial, not a black disc.
       const shift =
         mode === 'solar'
           ? scaleMode === 'real'
             ? scale.earthRadius * 0.08
-            : scale.moonRadius * 1.85
+            : scale.moonRadius * 1.25
           : 0
       const tx = -uz
       const tz = ux
@@ -121,7 +121,14 @@ export function SolarSystem({
       cam.lookAt(target[0], target[1], target[2])
       cam.near = scaleMode === 'real' ? 0.05 : 0.02
       cam.far = far
-      cam.fov = scaleMode === 'real' ? 2.2 : mode === 'solar' ? 48 : 40
+      const dist = Math.hypot(
+        target[0] - cam.position.x,
+        target[1] - cam.position.y,
+        target[2] - cam.position.z,
+      )
+      const disc = mode === 'solar' ? scale.sunRadius : scale.moonRadius
+      const angDeg = (2 * Math.atan(disc / Math.max(dist, 0.01)) * 180) / Math.PI
+      cam.fov = Math.min(28, Math.max(0.7, angDeg * (mode === 'solar' ? 2.05 : 1.7)))
       cam.updateProjectionMatrix()
       cam.updateMatrixWorld()
     }
@@ -176,13 +183,13 @@ export function SolarSystem({
 
   return (
     <>
-      <color attach="background" args={['#010309']} />
-      <ambientLight intensity={0.12} />
-      <pointLight position={[0, 0, 0]} intensity={4} decay={0} distance={0} />
+      <color attach="background" args={['#000000']} />
+      <ambientLight intensity={0.06} />
+      <pointLight position={[0, 0, 0]} color="#fff3d4" intensity={5.2} decay={0} distance={0} />
       <Starfield radius={scale.earthOrbit * 3.2} />
 
       <CelestialBody position={state.sun} radius={scale.sunRadius} textureUrl={textures.sun} emissive />
-      <Glow position={state.sun} radius={scale.sunRadius * 1.18} color="#ffc56a" />
+      <Glow position={state.sun} radius={scale.sunRadius} />
 
       <CelestialBody
         position={state.earth}

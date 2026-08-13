@@ -95,8 +95,44 @@ export function OrbitRings({
           quaternion={moonQuat}
           position={earth}
         />
+        <OrbitNodes earth={earth} toSun={toSun} scale={scale} />
       </group>
     </HelperGroup>
+  )
+}
+
+function OrbitNodes({
+  earth,
+  toSun,
+  scale,
+}: {
+  earth: Vec3
+  toSun: Vec3
+  scale: Scale
+}) {
+  const r = scale.moonOrbit
+  const size = Math.max(scale.earthRadius * 0.16, scale.moonOrbit * 0.022)
+  const a: Vec3 = [earth[0] + toSun[0] * r, earth[1] + toSun[1] * r, earth[2] + toSun[2] * r]
+  const b: Vec3 = [earth[0] - toSun[0] * r, earth[1] - toSun[1] * r, earth[2] - toSun[2] * r]
+  return (
+    <>
+      <NodeSphere position={a} radius={size} />
+      <NodeSphere position={b} radius={size} />
+    </>
+  )
+}
+
+function NodeSphere({ position, radius }: { position: Vec3; radius: number }) {
+  return (
+    <mesh position={position} renderOrder={3}>
+      <sphereGeometry args={[radius, 24, 16]} />
+      <meshBasicMaterial
+        color="#e6d7b0"
+        transparent
+        opacity={0.16}
+        depthWrite={false}
+      />
+    </mesh>
   )
 }
 
@@ -106,9 +142,9 @@ export function EclipticPlane({ visible, scale }: { visible: boolean; scale: Sca
       <mesh rotation={[-Math.PI / 2, 0, 0]} visible={visible} renderOrder={0}>
         <circleGeometry args={[scale.earthOrbit * 1.12, 64]} />
         <meshBasicMaterial
-          color="#3d7ea6"
+          color="#8a9098"
           transparent
-          opacity={0.045}
+          opacity={0.028}
           side={DoubleSide}
           depthWrite={false}
         />
