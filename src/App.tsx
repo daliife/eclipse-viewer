@@ -89,6 +89,7 @@ export default function App() {
           setScaleMode(next)
           setFocus('earth')
         }}
+        degreesFromAlignment={state.degreesFromAlignment}
       />
       <InsetFrame
         mode={mode}

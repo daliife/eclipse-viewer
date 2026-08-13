@@ -11,7 +11,7 @@ type Props = {
 }
 
 export function EducationPanel({ mode, simDays, degreesFromAlignment }: Props) {
-  const { t, locale, setLocale } = useI18n()
+  const { t } = useI18n()
   const [whyOpen, setWhyOpen] = useState(false)
   const keys = explainKeys(mode, simDays)
   const deg = Math.abs(degreesFromAlignment).toFixed(0)
@@ -22,33 +22,13 @@ export function EducationPanel({ mode, simDays, degreesFromAlignment }: Props) {
       aria-label={t('appTitle')}
     >
       <div className="education-heading">
-        <h1>{t('appTitle')}</h1>
-        <span className={keys.hit ? 'status status-hit' : 'status status-miss'}>
-          {t(keys.statusKey, { deg })}
-        </span>
-        <div className="lang" role="group" aria-label={t('language')}>
-          <button
-            type="button"
-            className={locale === 'ca' ? 'active' : ''}
-            aria-pressed={locale === 'ca'}
-            aria-label={t('langCa')}
-            onClick={() => setLocale('ca')}
-          >
-            CA
-          </button>
-          <button
-            type="button"
-            className={locale === 'en' ? 'active' : ''}
-            aria-pressed={locale === 'en'}
-            aria-label={t('langEn')}
-            onClick={() => setLocale('en')}
-          >
-            EN
-          </button>
-        </div>
+        <h1>
+          {t('appTitle')}{' '}
+          <span className="education-kind">({t(mode)})</span>
+        </h1>
         <button
           type="button"
-          className="education-toggle"
+          className="education-toggle is-why"
           aria-expanded={whyOpen}
           aria-controls="education-more"
           aria-label={whyOpen ? t('whyHide') : t('whyPanel')}
@@ -58,7 +38,6 @@ export function EducationPanel({ mode, simDays, degreesFromAlignment }: Props) {
         </button>
       </div>
       <div className="education-more" id="education-more">
-        <p className="education-kicker">{t(keys.titleKey)}</p>
         <p>{t(keys.bodyKey, { deg })}</p>
       </div>
     </aside>

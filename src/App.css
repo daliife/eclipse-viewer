@@ -55,6 +55,13 @@
 
 .education-heading h1 {
   flex: 1 1 auto;
+  min-width: 0;
+}
+
+.education-kind {
+  font-weight: 500;
+  color: #9aa3ad;
+  letter-spacing: 0;
 }
 
 .education-toggle {
@@ -79,11 +86,14 @@
 .education-toggle .icon {
   width: 14px;
   height: 14px;
+}
+
+.education-toggle.is-why .icon {
   transform: rotate(90deg);
   transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.education.is-open .education-toggle .icon {
+.education.is-open .education-toggle.is-why .icon {
   transform: rotate(-90deg);
 }
 
@@ -106,15 +116,7 @@
   color: #cfd6de;
 }
 
-.education .education-kicker {
-  margin: 0 0 8px;
-  font-size: 0.82rem;
-  font-weight: 650;
-  letter-spacing: -0.01em;
-  color: #eef3f8;
-}
-
-.education .status {
+.status {
   display: inline-flex;
   flex: 0 0 auto;
   margin: 0;
@@ -146,6 +148,8 @@
   gap: 0;
   max-height: min(58vh, 560px);
   overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
 }
 
 .section {
@@ -351,8 +355,16 @@ button[aria-pressed='true'] {
   gap: 12px;
 }
 
-.time-now {
+.time-now-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
   flex: 1 1 auto;
+}
+
+.time-now {
+  flex: 0 1 auto;
   min-width: 0;
   margin: 0;
   font-size: 0.82rem;
@@ -650,6 +662,10 @@ input[type='range']::-moz-range-thumb {
 
 .more-panels.is-open .more-panels-inner > .section:nth-child(4) {
   transition-delay: 0.16s;
+}
+
+.more-panels.is-open .more-panels-inner > .section:nth-child(5) {
+  transition-delay: 0.2s;
 }
 
 .more-panels-inner > .section:first-child {
@@ -979,38 +995,111 @@ input[type='range']::-moz-range-thumb {
   }
 
   .education {
-    max-width: calc(100% - 16px - min(140px, 38vw));
+    width: auto;
+    right: auto;
+    overflow: hidden;
+    max-width: calc(100% - 16px - min(120px, 30vw) - 12px);
   }
 
-  .education h1 {
-    font-size: 0.98rem;
+  .education.is-open {
+    width: auto;
+    max-width: calc(100% - 16px - min(120px, 30vw) - 12px);
   }
 
-  .controls {
-    max-width: calc(100% - 16px);
-    max-height: min(46vh, 420px);
+  .education-heading h1 {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 0.88rem;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
   }
 
-  .controls .section-title {
-    display: none;
-  }
-
-  .controls .section-head:not(:has(.section-help)) {
-    display: none;
-  }
-
-  .controls .section {
+  .play-toggle {
+    flex: 0 0 36px;
+    width: 36px;
+    min-width: 36px;
     padding: 0;
   }
 
-  .slider-row {
-    grid-template-columns: 3.6rem minmax(0, 1fr) 3.25rem;
+  .play-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .time-now {
     font-size: 0.74rem;
   }
 
+  .controls {
+    left: max(8px, env(safe-area-inset-left));
+    right: max(8px, env(safe-area-inset-right));
+    width: auto;
+    max-width: none;
+    max-height: min(68dvh, calc(100dvh - 7.5rem));
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
+
+  .controls > .section .section-head {
+    display: none;
+  }
+
+  .controls > .section {
+    padding: 0;
+  }
+
+  .more-panels.is-open {
+    grid-template-rows: max-content;
+  }
+
+  .more-panels.is-open .more-panels-inner {
+    overflow: visible;
+    min-height: auto;
+  }
+
+  .more-panels .section {
+    padding: 8px 0;
+  }
+
+  .more-panels .section-head {
+    display: flex;
+  }
+
+  .more-panels .section-title {
+    display: block;
+  }
+
+  .time-sliders {
+    gap: 4px;
+  }
+
+  .slider-row {
+    grid-template-columns: 3.4rem minmax(0, 1fr) 2.8rem;
+    font-size: 0.72rem;
+    column-gap: 6px;
+  }
+
+  .day-timeline button {
+    font-size: 0.64rem;
+    padding: 4px 1px 2px;
+    gap: 4px;
+  }
+
   .inset {
-    width: min(132px, 34vw);
-    height: min(100px, 16vh);
+    z-index: 3;
+    width: min(112px, 28vw);
+    height: min(86px, 13vh);
   }
 
   .inset-label {

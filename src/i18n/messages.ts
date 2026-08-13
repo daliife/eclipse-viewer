@@ -170,9 +170,11 @@ const ca: Dict = {
 
 export const dictionaries: Record<Locale, Dict> = { en, ca }
 
+export const LOCALE_KEY = 'eclipse-lang'
+
 export function detectLocale(): Locale {
   try {
-    const saved = localStorage.getItem('eclipse-locale')
+    const saved = localStorage.getItem(LOCALE_KEY)
     if (saved === 'ca' || saved === 'en') return saved
   } catch {
     /* ignore */

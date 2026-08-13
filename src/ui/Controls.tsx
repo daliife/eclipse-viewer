@@ -1,4 +1,5 @@
 import { useId, useState, type ReactNode } from 'react'
+import { explainKeys } from '../simulation/eclipse'
 import type { CameraFocus, EclipseMode, ScaleMode } from '../simulation/orbits'
 import { DATE_JUMPS, dateAtOffset, formatClock, formatDate, formatJumpDate } from '../simulation/orbits'
 import { dateLocale } from '../i18n/messages'
@@ -38,6 +39,7 @@ type Props = {
   onShowShadows: (value: boolean) => void
   scaleMode: ScaleMode
   onScaleMode: (mode: ScaleMode) => void
+  degreesFromAlignment: number
 }
 
 function Section({
@@ -113,20 +115,28 @@ export function Controls({
   onShowShadows,
   scaleMode,
   onScaleMode,
+  degreesFromAlignment,
 }: Props) {
-  const { t, locale } = useI18n()
+  const { t, locale, setLocale } = useI18n()
   const [moreOpen, setMoreOpen] = useState(false)
   const simDate = dateAtOffset(mode, simDays)
   const dateText = formatDate(simDate, dateLocale(locale))
   const clockText = formatClock(simDate)
+  const keys = explainKeys(mode, simDays)
+  const deg = Math.abs(degreesFromAlignment).toFixed(0)
 
   return (
     <div className="panel controls" role="toolbar" aria-label={t('controlsLabel')}>
       <Section title={t('sectionTime')}>
         <div className="time-transport">
-          <time className="time-now" dateTime={simDate.toISOString()} title={t('simDate')}>
-            {dateText}
-          </time>
+          <div className="time-now-wrap">
+            <time className="time-now" dateTime={simDate.toISOString()} title={t('simDate')}>
+              {dateText}
+            </time>
+            <span className={keys.hit ? 'status status-hit' : 'status status-miss'}>
+              {t(keys.statusKey, { deg })}
+            </span>
+          </div>
           <button
             type="button"
             className="play-toggle"
@@ -380,6 +390,27 @@ export function Controls({
             >
               <IconShadow />
               {t('shadows')}
+            </button>
+          </div>
+        </Section>
+
+        <Section title={t('language')}>
+          <div className="stack">
+            <button
+              type="button"
+              className={locale === 'ca' ? 'active' : ''}
+              aria-pressed={locale === 'ca'}
+              onClick={() => setLocale('ca')}
+            >
+              {t('langCa')}
+            </button>
+            <button
+              type="button"
+              className={locale === 'en' ? 'active' : ''}
+              aria-pressed={locale === 'en'}
+              onClick={() => setLocale('en')}
+            >
+              {t('langEn')}
             </button>
           </div>
         </Section>
