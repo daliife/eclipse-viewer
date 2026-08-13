@@ -27,6 +27,14 @@ function moonOrbitNormal(toSun: Vec3, inclinationDeg: number): Vector3 {
   return new Vector3(0, 1, 0).applyAxisAngle(axis, (inclinationDeg * Math.PI) / 180)
 }
 
+function moonOrbitTangent(toSun: Vec3, inclinationDeg: number): Vector3 {
+  const axis = new Vector3(toSun[0], toSun[1], toSun[2]).normalize()
+  const alongTrack = new Vector3(0, 1, 0).cross(axis).normalize()
+  const tiltedUp = axis.clone().cross(alongTrack)
+  const i = (inclinationDeg * Math.PI) / 180
+  return alongTrack.multiplyScalar(Math.cos(i)).add(tiltedUp.multiplyScalar(Math.sin(i))).normalize()
+}
+
 function OrbitTube({
   radius,
   tube,
@@ -74,8 +82,8 @@ export function OrbitRings({
   )
   const earthQuat = useMemo(() => quatFromNormal(new Vector3(0, 1, 0)), [])
 
-  const earthTube = scale.earthRadius * 0.012
-  const moonTube = scale.earthRadius * 0.02
+  const earthTube = scale.earthRadius * 0.005
+  const moonTube = scale.earthRadius * 0.0045
 
   return (
     <HelperGroup>
@@ -95,7 +103,12 @@ export function OrbitRings({
           quaternion={moonQuat}
           position={earth}
         />
-        <OrbitNodes earth={earth} toSun={toSun} scale={scale} />
+        <OrbitNodes
+          earth={earth}
+          toSun={toSun}
+          scale={scale}
+          tangent={moonOrbitTangent(toSun, scale.moonInclinationDeg)}
+        />
       </group>
     </HelperGroup>
   )
@@ -105,33 +118,42 @@ function OrbitNodes({
   earth,
   toSun,
   scale,
+  tangent,
 }: {
   earth: Vec3
   toSun: Vec3
   scale: Scale
+  tangent: Vector3
 }) {
   const r = scale.moonOrbit
-  const size = Math.max(scale.earthRadius * 0.16, scale.moonOrbit * 0.022)
+  const size = Math.max(scale.earthRadius * 0.028, scale.moonOrbit * 0.006)
+  const tube = Math.max(scale.earthRadius * 0.004, size * 0.12)
+  const quat = quatFromNormal(tangent)
   const a: Vec3 = [earth[0] + toSun[0] * r, earth[1] + toSun[1] * r, earth[2] + toSun[2] * r]
   const b: Vec3 = [earth[0] - toSun[0] * r, earth[1] - toSun[1] * r, earth[2] - toSun[2] * r]
   return (
     <>
-      <NodeSphere position={a} radius={size} />
-      <NodeSphere position={b} radius={size} />
+      <NodeMark position={a} radius={size} tube={tube} quaternion={quat} />
+      <NodeMark position={b} radius={size} tube={tube} quaternion={quat} />
     </>
   )
 }
 
-function NodeSphere({ position, radius }: { position: Vec3; radius: number }) {
+function NodeMark({
+  position,
+  radius,
+  tube,
+  quaternion,
+}: {
+  position: Vec3
+  radius: number
+  tube: number
+  quaternion: Quaternion
+}) {
   return (
-    <mesh position={position} renderOrder={3}>
-      <sphereGeometry args={[radius, 24, 16]} />
-      <meshBasicMaterial
-        color="#e6d7b0"
-        transparent
-        opacity={0.16}
-        depthWrite={false}
-      />
+    <mesh position={position} quaternion={quaternion} renderOrder={3}>
+      <torusGeometry args={[radius, tube, 8, 40]} />
+      <meshBasicMaterial color="#e8b44a" transparent opacity={0.85} depthWrite={false} />
     </mesh>
   )
 }

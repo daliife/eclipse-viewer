@@ -28,26 +28,34 @@ const en: Dict = {
   sectionScale: 'Scale',
   insetSolar: 'Earth → Sun',
   insetLunar: 'Earth → Moon',
-  solarHitTitle: 'This is the day',
+  solarHitTitle: 'Solar eclipse',
   solarHitBody:
-    'A solar eclipse needs two things at once: a new Moon (between Earth and the Sun) and a pass through a node — the two faint points where its tilted orbit crosses the ecliptic. Today both are true, so the Moon covers the Sun.',
-  solarMissTitle: 'Not this day',
+    'A solar eclipse needs two things at once: a new Moon (between Earth and the Sun) and a pass through a node — one of the two gold rings where its tilted orbit crosses the ecliptic. Today both are true, so the Moon covers the Sun.',
+  solarMissTitle: 'The Moon misses the Sun',
   solarMissBody:
-    'An eclipse still needs a new Moon at a node. Today the Moon is {deg}° away: it moves ~13° per day, and the 5° tilt lifts it off the Sun’s line.',
-  lunarHitTitle: 'This is the day',
+    'An eclipse still needs a new Moon at a node. The Moon is {deg}° off that line: it moves ~13° per day, and the 5° tilt lifts it away from the Sun.',
+  lunarHitTitle: 'Lunar eclipse',
   lunarHitBody:
-    'A lunar eclipse needs two things at once: a full Moon (Earth in the middle) and a pass through a node — the two faint points where its orbit crosses the ecliptic. Today both are true, so the Moon enters Earth’s shadow.',
-  lunarMissTitle: 'Not this day',
+    'A lunar eclipse needs two things at once: a full Moon (Earth in the middle) and a pass through a node — one of the two gold rings where its orbit crosses the ecliptic. Today both are true, so the Moon enters Earth’s shadow.',
+  lunarMissTitle: 'The Moon misses Earth’s shadow',
   lunarMissBody:
-    'An eclipse still needs a full Moon at a node. Today the Moon is {deg}° away from that line-up, so it misses Earth’s thin shadow.',
-  noteDidactic: 'Classroom scale: stretched so the 5° tilt is easy to see.',
-  noteReal: 'True scale: Earth and Moon are tiny. That is why a perfect line-up is rare.',
+    'An eclipse still needs a full Moon at a node. The Moon is {deg}° off that line-up, so it does not enter Earth’s thin shadow.',
+  statusHit: 'In alignment',
+  statusMiss: '{deg}° off the node',
+  metaDescription:
+    'Interactive 3D viewer of solar and lunar eclipses. See why an eclipse happens only on one day: the Moon’s phase plus a pass through an orbital node.',
+  noteDidactic: 'Distances are stretched so the 5° tilt is easy to see.',
+  noteReal: 'Earth and Moon are tiny. That is why a perfect line-up is rare.',
+  bannerDidacticTitle: 'Classroom scale',
+  bannerRealTitle: 'True scale',
   langCa: 'Català',
   langEn: 'English',
   enlargeView: 'Enlarge Earth view',
   shrinkView: 'Shrink Earth view',
   whyPanel: 'Why this day',
   controlsLabel: 'Viewer controls',
+  simDate: 'Simulation date',
+  language: 'Language',
 }
 
 const ca: Dict = {
@@ -76,26 +84,34 @@ const ca: Dict = {
   sectionScale: 'Escala',
   insetSolar: 'Terra → Sol',
   insetLunar: 'Terra → Lluna',
-  solarHitTitle: 'Avui sí',
+  solarHitTitle: 'Eclipsi solar',
   solarHitBody:
-    'Perquè hi hagi eclipsi solar calen dues condicions alhora: lluna nova (entre la Terra i el Sol) i que passi per un node, un dels dos punts pàl·lids on la seva òrbita inclinada creua l’eclíptica. Avui es compleixen totes dues, i la Lluna tapa el Sol.',
-  solarMissTitle: 'Avui no',
+    'Perquè hi hagi eclipsi solar calen dues condicions alhora: lluna nova (entre la Terra i el Sol) i que passi per un node, un dels dos anells daurats on la seva òrbita inclinada creua l’eclíptica. Avui es compleixen totes dues, i la Lluna tapa el Sol.',
+  solarMissTitle: 'La Lluna no tapa el Sol',
   solarMissBody:
-    'Encara cal lluna nova i node alhora. Avui la Lluna va {deg}° desviada: es mou ~13° cada dia i l’òrbita està inclinada 5°, així que ja no tapa el Sol.',
-  lunarHitTitle: 'Avui sí',
+    'Encara cal lluna nova i node alhora. La Lluna va {deg}° desviada: es mou ~13° cada dia i l’òrbita està inclinada 5°, així que ja no tapa el Sol.',
+  lunarHitTitle: 'Eclipsi lunar',
   lunarHitBody:
-    'Perquè hi hagi eclipsi lunar calen dues condicions alhora: lluna plena (la Terra al mig) i que passi per un node, un dels dos punts pàl·lids on la seva òrbita creua l’eclíptica. Avui es compleixen totes dues, i la Lluna entra a l’ombra de la Terra.',
-  lunarMissTitle: 'Avui no',
+    'Perquè hi hagi eclipsi lunar calen dues condicions alhora: lluna plena (la Terra al mig) i que passi per un node, un dels dos anells daurats on la seva òrbita creua l’eclíptica. Avui es compleixen totes dues, i la Lluna entra a l’ombra de la Terra.',
+  lunarMissTitle: 'La Lluna no entra a l’ombra',
   lunarMissBody:
-    'Encara cal lluna plena i node alhora. Avui la Lluna va {deg}° desviada d’aquesta alineació, i no entra al con d’ombra de la Terra.',
-  noteDidactic: 'Escala didàctica: exagerada perquè es vegi la inclinació de 5°.',
-  noteReal: 'Escala real: Terra i Lluna són minúscules. Per això l’alineació perfecta és rara.',
+    'Encara cal lluna plena i node alhora. La Lluna va {deg}° desviada d’aquesta alineació, i no entra al con d’ombra de la Terra.',
+  statusHit: 'Alineats',
+  statusMiss: '{deg}° del node',
+  metaDescription:
+    'Visualitzador 3D d’eclipsis solars i lunars. Entén per què un eclipsi només passa un dia: la fase de la Lluna i el pas per un node de l’òrbita.',
+  noteDidactic: 'Les distàncies estan exagerades perquè es vegi la inclinació de 5°.',
+  noteReal: 'La Terra i la Lluna són minúscules. Per això l’alineació perfecta és rara.',
+  bannerDidacticTitle: 'Escala didàctica',
+  bannerRealTitle: 'Escala real',
   langCa: 'Català',
   langEn: 'English',
   enlargeView: 'Amplia la vista des de la Terra',
   shrinkView: 'Redueix la vista des de la Terra',
   whyPanel: 'Per què aquest dia',
   controlsLabel: 'Controls del visualitzador',
+  simDate: 'Data de la simulació',
+  language: 'Idioma',
 }
 
 export const dictionaries: Record<Locale, Dict> = { en, ca }

@@ -1,0 +1,24 @@
+{
+  "name": "Eclipse Viewer",
+  "short_name": "Eclipses",
+  "description": "Interactive 3D viewer of solar and lunar eclipses.",
+  "start_url": "/eclipse-viewer/",
+  "scope": "/eclipse-viewer/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#05070b",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

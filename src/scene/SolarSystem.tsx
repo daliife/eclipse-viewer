@@ -5,13 +5,14 @@ import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import { PerspectiveCamera as ThreePerspectiveCamera, Vector3 } from 'three'
 import {
   focusCameraOffset,
+  lunarUmbraFactor,
   type CameraFocus,
   type EclipseMode,
   type Scale,
   type ScaleMode,
   type SimState,
 } from '../simulation/orbits'
-import { CelestialBody, Glow, textureUrls } from './CelestialBody'
+import { CelestialBody, textureUrls } from './CelestialBody'
 import { EclipticPlane, OrbitRings, ShadowCones } from './Helpers'
 import { Starfield } from './Starfield'
 
@@ -60,6 +61,7 @@ export function SolarSystem({
 
   useLayoutEffect(() => {
     camera.layers.enable(1)
+    camera.layers.enable(2)
   }, [camera])
 
   useLayoutEffect(() => {
@@ -129,6 +131,8 @@ export function SolarSystem({
       const disc = mode === 'solar' ? scale.sunRadius : scale.moonRadius
       const angDeg = (2 * Math.atan(disc / Math.max(dist, 0.01)) * 180) / Math.PI
       cam.fov = Math.min(28, Math.max(0.7, angDeg * (mode === 'solar' ? 2.05 : 1.7)))
+      cam.layers.enable(1)
+      cam.layers.enable(2)
       cam.updateProjectionMatrix()
       cam.updateMatrixWorld()
     }
@@ -171,6 +175,8 @@ export function SolarSystem({
   })
 
   const earthSpin = simDays * Math.PI * 2
+  const moonEclipse = mode === 'lunar' ? lunarUmbraFactor(state, scale) : 0
+  const moonLit = 1 - moonEclipse * 0.92
   const introPos = useRef<[number, number, number] | null>(null)
   if (!introPos.current) {
     const offset = focusCameraOffset(scale, 'earth')
@@ -184,20 +190,41 @@ export function SolarSystem({
   return (
     <>
       <color attach="background" args={['#000000']} />
-      <ambientLight intensity={0.06} />
-      <pointLight position={[0, 0, 0]} color="#fff3d4" intensity={5.2} decay={0} distance={0} />
+      <ambientLight intensity={0.04} onUpdate={(light) => light.layers.set(0)} />
+      <pointLight
+        position={[0, 0, 0]}
+        color="#fff6e8"
+        intensity={5.8}
+        decay={0}
+        distance={0}
+        onUpdate={(light) => light.layers.set(0)}
+      />
+      <pointLight
+        position={[0, 0, 0]}
+        color={moonEclipse > 0.04 ? '#ff7a45' : '#fff6e8'}
+        intensity={5.8 * moonLit}
+        decay={0}
+        distance={0}
+        onUpdate={(light) => light.layers.set(2)}
+      />
       <Starfield radius={scale.earthOrbit * 3.2} />
 
       <CelestialBody position={state.sun} radius={scale.sunRadius} textureUrl={textures.sun} emissive />
-      <Glow position={state.sun} radius={scale.sunRadius} />
 
       <CelestialBody
         position={state.earth}
         radius={scale.earthRadius}
         textureUrl={textures.earth}
         rotationY={earthSpin}
+        atmosphere
       />
-      <CelestialBody position={state.moon} radius={scale.moonRadius} textureUrl={textures.moon} />
+      <CelestialBody
+        position={state.moon}
+        radius={scale.moonRadius}
+        textureUrl={textures.moon}
+        moonLayer={2}
+        eclipse={moonEclipse}
+      />
 
       <OrbitRings earth={state.earth} visible={showOrbits} scale={scale} />
       <EclipticPlane visible={showEcliptic} scale={scale} />

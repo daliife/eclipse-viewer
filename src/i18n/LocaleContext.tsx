@@ -24,6 +24,15 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.lang = locale
     document.title = translate(locale, 'appTitle')
+    const description = translate(locale, 'metaDescription')
+    document
+      .querySelector('meta[name="description"]')
+      ?.setAttribute('content', description)
+    document.querySelector('meta[property="og:title"]')?.setAttribute('content', translate(locale, 'appTitle'))
+    document.querySelector('meta[property="og:description"]')?.setAttribute('content', description)
+    document.querySelector('meta[property="og:locale"]')?.setAttribute('content', locale === 'ca' ? 'ca_ES' : 'en_GB')
+    document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', translate(locale, 'appTitle'))
+    document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', description)
   }, [locale])
 
   const value = useMemo<I18n>(

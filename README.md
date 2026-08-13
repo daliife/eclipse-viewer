@@ -2,7 +2,7 @@
 
 Interactive 3D visualizer of solar and lunar eclipses. Distances and sizes use a **classroom scale** by default so the Moon’s 5° orbital tilt is easy to see. A **true scale** toggle uses real size/distance ratios.
 
-UI: English and Catalan. Starts paused on the 8 April 2024 solar eclipse, focused on Earth with the Moon in frame.
+UI: English and Catalan. Starts paused on the 12 August 2026 solar eclipse, with Sun, Earth, and Moon in frame.
 
 Live site: **https://daliife.github.io/eclipse-viewer/**
 
@@ -10,7 +10,7 @@ Live site: **https://daliife.github.io/eclipse-viewer/**
 
 The Moon’s orbit is tilted about 5° to the ecliptic. An eclipse needs **phase and a node**:
 
-- **Solar** (8 April 2024): new Moon at a node, so it covers the Sun.
+- **Solar** (12 August 2026, ~18:30 UTC / 20:30 CEST): new Moon at a node, so it covers the Sun. Totality crossed Spain.
 - **Lunar** (14 March 2025): full Moon at a node, so it enters Earth’s shadow.
 
 The Moon moves about 13° per day, so the day before or after it misses. Use the date jumps to see that.

@@ -46,7 +46,7 @@ export function getScale(mode: ScaleMode): Scale {
   return SCALES[mode]
 }
 
-export const SOLAR_ECLIPSE_MS = Date.UTC(2024, 3, 8, 18, 18, 0)
+export const SOLAR_ECLIPSE_MS = Date.UTC(2026, 7, 12, 18, 30, 0)
 export const LUNAR_ECLIPSE_MS = Date.UTC(2025, 2, 14, 6, 59, 0)
 
 export const DATE_JUMPS = [-2, -1, 0, 1, 2] as const
@@ -162,6 +162,32 @@ export function sunDirectionFromEarth(earth: Vec3): Vec3 {
 
 export function umbraLength(scale: Scale): number {
   return (scale.earthRadius * scale.earthOrbit) / (scale.sunRadius - scale.earthRadius)
+}
+
+/** 0 = full sunlight, 1 = deep in Earth’s umbra (lunar eclipse). */
+export function lunarUmbraFactor(state: SimState, scale: Scale): number {
+  const { earth, moon } = state
+  const dist = Math.hypot(earth[0], earth[1], earth[2]) || 1
+  const ax = earth[0] / dist
+  const ay = earth[1] / dist
+  const az = earth[2] / dist
+  const mx = moon[0] - earth[0]
+  const my = moon[1] - earth[1]
+  const mz = moon[2] - earth[2]
+  const along = mx * ax + my * ay + mz * az
+  if (along <= scale.earthRadius) return 0
+
+  const radial = Math.hypot(mx - ax * along, my - ay * along, mz - az * along)
+  const uLen = umbraLength(scale)
+  const umbraR = Math.max(0, scale.earthRadius * (1 - along / uLen))
+  const penumbraR =
+    scale.earthRadius + (along * (scale.sunRadius + scale.earthRadius)) / scale.earthOrbit
+  const mr = scale.moonRadius
+  if (radial + mr < umbraR) return 1
+  if (radial - mr > penumbraR) return 0
+  const inner = Math.max(0, umbraR - mr)
+  const outer = penumbraR + mr
+  return Math.min(1, Math.max(0, (outer - radial) / Math.max(1e-4, outer - inner)))
 }
 
 export function focusCameraOffset(scale: Scale, focus: CameraFocus): Vec3 {

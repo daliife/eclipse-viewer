@@ -127,7 +127,7 @@ export function Controls({
       </Section>
 
       <Section title={t('sectionType')}>
-        <div className="row">
+        <div className="stack">
           <button
             type="button"
             className={mode === 'solar' ? 'active' : ''}
@@ -150,7 +150,7 @@ export function Controls({
       </Section>
 
       <Section title={t('sectionCamera')}>
-        <div className="row wrap">
+        <div className="grid-2">
           <button
             type="button"
             className={focus === 'free' ? 'active' : ''}
@@ -191,7 +191,7 @@ export function Controls({
       </Section>
 
       <Section title={t('sectionScale')}>
-        <div className="row">
+        <div className="stack">
           <button
             type="button"
             className={scaleMode === 'didactic' ? 'active' : ''}
@@ -214,7 +214,7 @@ export function Controls({
       </Section>
 
       <Section title={t('sectionGuides')}>
-        <div className="row wrap">
+        <div className="grid-2">
           <button
             type="button"
             className={showOrbits ? 'active' : ''}

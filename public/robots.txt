@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://daliife.github.io/eclipse-viewer/sitemap.xml

@@ -1,20 +1,74 @@
 <!doctype html>
-<html lang="en">
+<html lang="ca">
   <head>
     <meta charset="UTF-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1"
     />
-    <meta name="theme-color" content="#02040a" />
+    <title>Visualitzador d’eclipsis</title>
     <meta
       name="description"
-      content="Interactive 3D viewer that shows why solar and lunar eclipses happen on a specific day."
+      content="Visualitzador 3D d’eclipsis solars i lunars. Entén per què un eclipsi només passa un dia: la fase de la Lluna i el pas per un node de l’òrbita."
     />
-    <title>Eclipse Viewer</title>
+    <meta name="author" content="Eclipse Viewer" />
+    <meta name="theme-color" content="#05070b" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://daliife.github.io/eclipse-viewer/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Eclipse Viewer" />
+    <meta property="og:locale" content="ca_ES" />
+    <meta property="og:locale:alternate" content="en_GB" />
+    <meta property="og:url" content="https://daliife.github.io/eclipse-viewer/" />
+    <meta property="og:title" content="Visualitzador d’eclipsis" />
+    <meta
+      property="og:description"
+      content="Simulació 3D per veure per què un eclipsi solar o lunar només passa un dia."
+    />
+    <meta property="og:image" content="https://daliife.github.io/eclipse-viewer/og.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="800" />
+    <meta property="og:image:alt" content="Solar eclipse: the Moon covering the Sun" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Visualitzador d’eclipsis" />
+    <meta
+      name="twitter:description"
+      content="Simulació 3D per veure per què un eclipsi solar o lunar només passa un dia."
+    />
+    <meta name="twitter:image" content="https://daliife.github.io/eclipse-viewer/og.jpg" />
+
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./site.webmanifest" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Eclipsis" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Eclipse Viewer",
+        "alternateName": "Visualitzador d’eclipsis",
+        "url": "https://daliife.github.io/eclipse-viewer/",
+        "description": "Interactive 3D viewer of solar and lunar eclipses. See why an eclipse happens only on one day.",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Any",
+        "inLanguage": ["ca", "en"],
+        "isAccessibleForFree": true,
+        "image": "https://daliife.github.io/eclipse-viewer/og.jpg"
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>Cal JavaScript per veure el visualitzador d’eclipsis 3D.</noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
