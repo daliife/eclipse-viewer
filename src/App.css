@@ -33,11 +33,54 @@
 }
 
 .education h1 {
-  margin: 0 0 8px;
-  font-size: 1.22rem;
+  margin: 0;
+  font-size: 1.12rem;
   line-height: 1.25;
   font-weight: 600;
   letter-spacing: -0.03em;
+  min-width: 0;
+}
+
+.education-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px 10px;
+  margin: 0 0 10px;
+}
+
+.education-heading h1 {
+  flex: 1 1 auto;
+}
+
+.education-toggle {
+  display: none;
+  width: 28px;
+  min-width: 28px;
+  height: 28px;
+  min-height: 28px;
+  padding: 0;
+  margin-left: auto;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  color: #9aa3ad;
+}
+
+.education-toggle:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #eef3f8;
+}
+
+.education-toggle .icon {
+  width: 14px;
+  height: 14px;
+  transform: rotate(90deg);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.education.is-open .education-toggle .icon {
+  transform: rotate(-90deg);
 }
 
 .education p {
@@ -49,14 +92,16 @@
 
 .education .status {
   display: inline-flex;
-  margin: 0 0 10px;
-  padding: 3px 9px;
-  font-size: 0.68rem;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 3px 8px;
+  font-size: 0.65rem;
   font-weight: 650;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   border-radius: 999px;
   line-height: 1.3;
+  white-space: nowrap;
 }
 
 .status-hit {
@@ -239,36 +284,36 @@ button[aria-pressed='true'] {
 .lang {
   display: flex;
   align-items: center;
-  gap: 2px;
-  padding: 2px 2px 2px 8px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.lang .icon {
-  width: 14px;
-  height: 14px;
-  margin-right: 2px;
-  opacity: 0.75;
+  gap: 0;
 }
 
 .lang button {
-  padding: 4px 9px;
-  font-size: 0.72rem;
+  padding: 0 7px;
+  font-size: 0.68rem;
   font-weight: 650;
-  letter-spacing: 0.04em;
-  min-width: 34px;
-  min-height: 28px;
+  letter-spacing: 0.08em;
+  min-width: 0;
+  min-height: 0;
   justify-content: center;
   border: none;
   background: transparent;
-  border-radius: 999px;
+  border-radius: 0;
+  color: #6e7680;
+}
+
+.lang button + button {
+  border-left: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.lang button:hover {
+  background: transparent;
+  color: #d0d7de;
 }
 
 .lang button.active,
 .lang button[aria-pressed='true'] {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: transparent;
+  background: transparent;
+  color: #eef3f8;
 }
 
 .time-transport {
@@ -284,9 +329,90 @@ button[aria-pressed='true'] {
   justify-content: center;
 }
 
-.day-jumps {
-  flex: 1 1 12rem;
+.day-timeline {
+  position: relative;
+  display: flex;
+  flex: 1 1 16rem;
   min-width: 0;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.day-timeline::before {
+  content: '';
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 10px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.14);
+  pointer-events: none;
+}
+
+.day-timeline button {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 6px 2px 4px;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  color: #8b949e;
+  font-size: 0.7rem;
+  font-weight: 550;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.day-timeline button:hover {
+  background: transparent;
+  color: #e8eef4;
+}
+
+.day-timeline button.active,
+.day-timeline button[aria-pressed='true'] {
+  background: transparent;
+  color: #eef3f8;
+}
+
+.day-mark {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 0 0 3px rgba(8, 10, 14, 0.85);
+  position: relative;
+  z-index: 1;
+}
+
+.day-timeline button.is-eclipse .day-mark {
+  width: 10px;
+  height: 10px;
+  background: #e8b44a;
+}
+
+.day-timeline button.active .day-mark,
+.day-timeline button[aria-pressed='true'] .day-mark {
+  background: #8ec8ff;
+  box-shadow:
+    0 0 0 3px rgba(8, 10, 14, 0.85),
+    0 0 0 5px rgba(142, 200, 255, 0.28);
+}
+
+.day-timeline button.is-eclipse .day-label {
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.64rem;
+}
+
+.day-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .time-sliders {
@@ -492,7 +618,8 @@ input[type='range']::-moz-range-thumb {
 @media (prefers-reduced-motion: reduce) {
   .more-toggle .icon,
   .more-panels,
-  .more-panels-inner > .section {
+  .more-panels-inner > .section,
+  .education-toggle .icon {
     transition: none;
   }
 }
@@ -613,22 +740,98 @@ input[type='range']::-moz-range-thumb {
   }
 }
 
+@media (max-width: 1099px) {
+  .education-toggle {
+    display: inline-flex;
+  }
+
+  .education-heading {
+    margin-bottom: 0;
+  }
+
+  .education.is-open .education-heading {
+    margin-bottom: 10px;
+  }
+
+  .education-more {
+    display: none;
+  }
+
+  .education.is-open .education-more {
+    display: block;
+  }
+
+  .play-toggle {
+    flex: 0 0 36px;
+    width: 36px;
+    padding: 0;
+  }
+
+  .play-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+}
+
 @media (max-width: 720px) {
+  .panel {
+    padding: 10px 12px;
+    border-radius: 16px;
+  }
+
   .education {
-    max-width: calc(100% - 24px - min(160px, 40vw));
+    max-width: calc(100% - 16px - min(140px, 38vw));
+  }
+
+  .education h1 {
+    font-size: 0.98rem;
+  }
+
+  .education .date {
+    font-size: 0.72rem;
   }
 
   .controls {
-    max-width: calc(100% - 24px);
+    max-width: calc(100% - 16px);
+    max-height: min(46vh, 420px);
+  }
+
+  .controls .section-title {
+    display: none;
+  }
+
+  .controls .section {
+    padding: 0;
+  }
+
+  .slider-row {
+    grid-template-columns: 3.6rem minmax(0, 1fr) 3.25rem;
+    font-size: 0.74rem;
   }
 
   .inset {
-    width: min(168px, 42vw);
-    height: min(128px, 22vh);
+    width: min(132px, 34vw);
+    height: min(100px, 16vh);
+  }
+
+  .inset-label {
+    display: none;
+  }
+
+  .inset-bar {
+    padding: 4px 6px 4px 8px;
   }
 
   .inset-large {
     width: min(92vw, 420px);
-    height: min(42vh, 320px);
+    height: min(38vh, 280px);
+  }
+
+  .inset-large .inset-label {
+    display: inline;
   }
 }

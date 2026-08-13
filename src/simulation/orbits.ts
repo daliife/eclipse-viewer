@@ -151,9 +151,12 @@ export function formatDate(date: Date, localeTag: string): string {
   )
 }
 
-export function formatDayOffset(offset: number): string {
-  if (offset === 0) return '0'
-  return offset > 0 ? `+${offset}` : String(offset)
+export function formatJumpDate(date: Date, localeTag: string): string {
+  return date.toLocaleDateString(localeTag, {
+    day: 'numeric',
+    month: 'short',
+    timeZone: 'UTC',
+  })
 }
 
 export function sunDirectionFromEarth(earth: Vec3): Vec3 {

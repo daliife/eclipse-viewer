@@ -11,7 +11,8 @@ const en: Dict = {
   speed: 'Speed',
   scrub: 'Time',
   eclipse: 'Eclipse',
-  dayOffset: 'Day {n}',
+  dayTimeline: 'Days around the eclipse',
+  jumpEclipse: 'Eclipse, {date}',
   freeCam: 'Free',
   focusSun: 'Sun',
   focusEarth: 'Earth',
@@ -33,14 +34,14 @@ const en: Dict = {
     'A solar eclipse needs two things at once: a new Moon (between Earth and the Sun) and a pass through a node — one of the two gold rings where its tilted orbit crosses the ecliptic. Today both are true, so the Moon covers the Sun.',
   solarMissTitle: 'The Moon misses the Sun',
   solarMissBody:
-    'An eclipse still needs a new Moon at a node. The Moon is {deg}° off that line: it moves ~13° per day, and the 5° tilt lifts it away from the Sun.',
+    'Covering the Sun needs a new Moon at a node. The Moon is {deg}° off that crossing: it moves about 13° a day, and the 5° tilt sends it above or below the Sun.',
   lunarHitTitle: 'Lunar eclipse',
   lunarHitBody:
     'A lunar eclipse needs two things at once: a full Moon (Earth in the middle) and a pass through a node — one of the two gold rings where its orbit crosses the ecliptic. Today both are true, so the Moon enters Earth’s shadow.',
   lunarMissTitle: 'The Moon misses Earth’s shadow',
   lunarMissBody:
-    'An eclipse still needs a full Moon at a node. The Moon is {deg}° off that line-up, so it does not enter Earth’s thin shadow.',
-  statusHit: 'In alignment',
+    'Entering Earth’s shadow needs a full Moon at a node. The Moon is {deg}° off that crossing, so it misses the thin umbra.',
+  statusHit: 'Aligned',
   statusMiss: '{deg}° off the node',
   metaDescription:
     'Interactive 3D viewer of solar and lunar eclipses. See why an eclipse happens only on one day: the Moon’s phase plus a pass through an orbital node.',
@@ -57,6 +58,7 @@ const en: Dict = {
   simDate: 'Simulation date',
   language: 'Language',
   moreOptions: 'Options',
+  whyHide: 'Hide explanation',
 }
 
 const ca: Dict = {
@@ -68,7 +70,8 @@ const ca: Dict = {
   speed: 'Velocitat',
   scrub: 'Temps',
   eclipse: 'Eclipsi',
-  dayOffset: 'Dia {n}',
+  dayTimeline: 'Dies al voltant de l’eclipsi',
+  jumpEclipse: 'Eclipsi, {date}',
   freeCam: 'Lliure',
   focusSun: 'Sol',
   focusEarth: 'Terra',
@@ -90,13 +93,13 @@ const ca: Dict = {
     'Perquè hi hagi eclipsi solar calen dues condicions alhora: lluna nova (entre la Terra i el Sol) i que passi per un node, un dels dos anells daurats on la seva òrbita inclinada creua l’eclíptica. Avui es compleixen totes dues, i la Lluna tapa el Sol.',
   solarMissTitle: 'La Lluna no tapa el Sol',
   solarMissBody:
-    'Encara cal lluna nova i node alhora. La Lluna va {deg}° desviada: es mou ~13° cada dia i l’òrbita està inclinada 5°, així que ja no tapa el Sol.',
+    'Per tapar el Sol calen lluna nova i node alhora. La Lluna és {deg}° fora del node: avança uns 13° cada dia, i l’òrbita inclinada 5° la fa passar per sobre o per sota del Sol.',
   lunarHitTitle: 'Eclipsi lunar',
   lunarHitBody:
     'Perquè hi hagi eclipsi lunar calen dues condicions alhora: lluna plena (la Terra al mig) i que passi per un node, un dels dos anells daurats on la seva òrbita creua l’eclíptica. Avui es compleixen totes dues, i la Lluna entra a l’ombra de la Terra.',
   lunarMissTitle: 'La Lluna no entra a l’ombra',
   lunarMissBody:
-    'Encara cal lluna plena i node alhora. La Lluna va {deg}° desviada d’aquesta alineació, i no entra al con d’ombra de la Terra.',
+    'Per entrar a l’ombra calen lluna plena i node alhora. La Lluna és {deg}° fora del node, i no entra al con d’ombra de la Terra.',
   statusHit: 'Alineats',
   statusMiss: '{deg}° del node',
   metaDescription:
@@ -114,6 +117,7 @@ const ca: Dict = {
   simDate: 'Data de la simulació',
   language: 'Idioma',
   moreOptions: 'Opcions',
+  whyHide: 'Amaga l’explicació',
 }
 
 export const dictionaries: Record<Locale, Dict> = { en, ca }

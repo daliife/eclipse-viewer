@@ -151,16 +151,6 @@ export function IconInfo(props: IconProps) {
   )
 }
 
-export function IconGlobe(props: IconProps) {
-  return (
-    <Svg {...props}>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M3 12h18" />
-      <path d="M12 3c2.6 3.2 2.6 14.8 0 18M12 3c-2.6 3.2-2.6 14.8 0 18" />
-    </Svg>
-  )
-}
-
 export function IconClock(props: IconProps) {
   return (
     <Svg {...props}>

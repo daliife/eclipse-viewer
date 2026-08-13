@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import type { CameraFocus, EclipseMode, ScaleMode } from '../simulation/orbits'
-import { DATE_JUMPS, formatDayOffset } from '../simulation/orbits'
+import { DATE_JUMPS, dateAtOffset, formatJumpDate } from '../simulation/orbits'
+import { dateLocale } from '../i18n/messages'
 import { useI18n } from '../i18n/LocaleContext'
 import {
   IconCamera,
@@ -79,7 +80,7 @@ export function Controls({
   scaleMode,
   onScaleMode,
 }: Props) {
-  const { t } = useI18n()
+  const { t, locale } = useI18n()
   const [moreOpen, setMoreOpen] = useState(false)
 
   return (
@@ -90,26 +91,40 @@ export function Controls({
             type="button"
             className="play-toggle"
             aria-pressed={playing}
+            aria-label={playing ? t('pause') : t('play')}
             onClick={() => onPlaying(!playing)}
           >
             {playing ? <IconPause /> : <IconPlay />}
-            {playing ? t('pause') : t('play')}
+            <span className="play-label">{playing ? t('pause') : t('play')}</span>
           </button>
-          <div className="row wrap day-jumps">
-            {DATE_JUMPS.map((offset) => (
-              <button
-                key={offset}
-                type="button"
-                className={Math.abs(simDays - offset) < 0.2 ? 'active' : ''}
-                aria-pressed={Math.abs(simDays - offset) < 0.2}
-                onClick={() => {
-                  onPlaying(false)
-                  onSimDays(offset)
-                }}
-              >
-                {offset === 0 ? t('eclipse') : t('dayOffset', { n: formatDayOffset(offset) })}
-              </button>
-            ))}
+          <div className="day-timeline" role="group" aria-label={t('dayTimeline')}>
+            {DATE_JUMPS.map((offset) => {
+              const date = dateAtOffset(mode, offset)
+              const dateText = formatJumpDate(date, dateLocale(locale))
+              const eclipse = offset === 0
+              const active = Math.abs(simDays - offset) < 0.2
+              return (
+                <button
+                  key={offset}
+                  type="button"
+                  className={[
+                    eclipse ? 'is-eclipse' : '',
+                    active ? 'active' : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                  aria-pressed={active}
+                  aria-label={eclipse ? t('jumpEclipse', { date: dateText }) : dateText}
+                  onClick={() => {
+                    onPlaying(false)
+                    onSimDays(offset)
+                  }}
+                >
+                  <span className="day-mark" aria-hidden="true" />
+                  <span className="day-label">{eclipse ? t('eclipse') : dateText}</span>
+                </button>
+              )
+            })}
           </div>
         </div>
         <div className="time-sliders">
