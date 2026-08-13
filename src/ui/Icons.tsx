@@ -169,3 +169,11 @@ export function IconClock(props: IconProps) {
     </Svg>
   )
 }
+
+export function IconChevron(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <path d="M9 5l7 7-7 7" />
+    </Svg>
+  )
+}

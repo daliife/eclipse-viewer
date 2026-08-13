@@ -5,6 +5,7 @@ import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import { PerspectiveCamera as ThreePerspectiveCamera, Vector3 } from 'three'
 import {
   focusCameraOffset,
+  framingFov,
   lunarUmbraFactor,
   type CameraFocus,
   type EclipseMode,
@@ -56,8 +57,10 @@ export function SolarSystem({
   const lastBody = useRef(new Vector3())
   const tracking = useRef<CameraFocus>('free')
   const acquiring = useRef(false)
-  const { camera } = useThree()
+  const { camera, size } = useThree()
   const far = scale.earthOrbit * 6
+  const aspect = size.width / Math.max(1, size.height)
+  const fov = framingFov(aspect)
 
   useLayoutEffect(() => {
     camera.layers.enable(1)
@@ -66,10 +69,12 @@ export function SolarSystem({
 
   useLayoutEffect(() => {
     const p = state.earth
-    const offset = focusCameraOffset(scale, 'earth')
+    const offset = focusCameraOffset(scale, 'earth', aspect)
     camera.position.set(p[0] + offset[0], p[1] + offset[1], p[2] + offset[2])
     camera.near = scaleMode === 'real' ? 0.4 : 0.1
     camera.far = far
+    const cam = camera as ThreePerspectiveCamera
+    if (cam.isPerspectiveCamera) cam.fov = fov
     camera.updateProjectionMatrix()
     tracking.current = 'earth'
     acquiring.current = false
@@ -143,7 +148,7 @@ export function SolarSystem({
     } else {
       const p =
         focus === 'sun' ? state.sun : focus === 'earth' ? state.earth : state.moon
-      const offset = focusCameraOffset(scale, focus)
+      const offset = focusCameraOffset(scale, focus, aspect)
       focusPos.current.set(p[0], p[1], p[2])
 
       if (tracking.current !== focus) {
@@ -179,7 +184,9 @@ export function SolarSystem({
   const moonLit = 1 - moonEclipse * 0.92
   const introPos = useRef<[number, number, number] | null>(null)
   if (!introPos.current) {
-    const offset = focusCameraOffset(scale, 'earth')
+    const startAspect =
+      typeof window === 'undefined' ? 1.4 : window.innerWidth / Math.max(1, window.innerHeight)
+    const offset = focusCameraOffset(scale, 'earth', startAspect)
     introPos.current = [
       state.earth[0] + offset[0],
       state.earth[1] + offset[1],
@@ -233,7 +240,7 @@ export function SolarSystem({
       <PerspectiveCamera
         makeDefault
         position={introPos.current}
-        fov={42}
+        fov={fov}
         near={scaleMode === 'real' ? 0.4 : 0.1}
         far={far}
       />
@@ -241,9 +248,11 @@ export function SolarSystem({
         ref={controls}
         enableDamping
         dampingFactor={0.08}
-        enablePan
+        enablePan={size.width >= 720}
         minDistance={scale.earthRadius * 1.4}
         maxDistance={scale.earthOrbit * 3.2}
+        rotateSpeed={size.width < 720 ? 0.72 : 0.9}
+        zoomSpeed={size.width < 720 ? 0.7 : 0.9}
       />
 
       <PerspectiveCamera ref={earthCam} fov={24} />
@@ -263,7 +272,6 @@ function DualViewport({
 
   useFrame((state) => {
     const { scene, camera, gl: renderer, size } = state
-    const canvas = renderer.domElement
     renderer.autoClear = true
     renderer.setScissorTest(false)
     renderer.setViewport(0, 0, size.width, size.height)
@@ -274,7 +282,7 @@ function DualViewport({
     const inset = insetRef.current
     if (!earthCam || !inset) return
 
-    const canvasRect = canvas.getBoundingClientRect()
+    const canvasRect = renderer.domElement.getBoundingClientRect()
     const rect = inset.getBoundingClientRect()
     const width = rect.width
     const height = rect.height
@@ -287,19 +295,21 @@ function DualViewport({
     earthCam.updateProjectionMatrix()
     earthCam.updateMatrixWorld()
 
+    renderer.autoClear = false
     renderer.setScissorTest(true)
     renderer.setScissor(left, bottom, width, height)
     renderer.setViewport(left, bottom, width, height)
-    renderer.autoClear = false
     renderer.clear(true, true, false)
     renderer.render(scene, earthCam)
     renderer.setScissorTest(false)
+    renderer.setViewport(0, 0, size.width, size.height)
     renderer.autoClear = true
   }, 1)
 
   useLayoutEffect(() => {
     return () => {
       gl.setScissorTest(false)
+      gl.setViewport(0, 0, gl.domElement.clientWidth, gl.domElement.clientHeight)
       gl.autoClear = true
     }
   }, [gl])

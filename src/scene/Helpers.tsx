@@ -52,7 +52,7 @@ function OrbitTube({
 }) {
   return (
     <mesh position={position} quaternion={quaternion} renderOrder={2}>
-      <torusGeometry args={[radius, tube, 8, 256]} />
+      <torusGeometry args={[radius, tube, 8, 128]} />
       <meshBasicMaterial
         color={color}
         transparent
@@ -162,7 +162,7 @@ export function EclipticPlane({ visible, scale }: { visible: boolean; scale: Sca
   return (
     <HelperGroup>
       <mesh rotation={[-Math.PI / 2, 0, 0]} visible={visible} renderOrder={0}>
-        <circleGeometry args={[scale.earthOrbit * 1.12, 64]} />
+        <circleGeometry args={[scale.earthOrbit * 1.12, 48]} />
         <meshBasicMaterial
           color="#8a9098"
           transparent
@@ -241,7 +241,7 @@ function ConeAlong({
   )
   return (
     <mesh position={pos} quaternion={quaternion}>
-      <coneGeometry args={[radius, length, 32, 1, true]} />
+      <coneGeometry args={[radius, length, 24, 1, true]} />
       <meshBasicMaterial color={color} transparent opacity={opacity} side={DoubleSide} depthWrite={false} />
     </mesh>
   )

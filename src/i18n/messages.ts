@@ -56,6 +56,7 @@ const en: Dict = {
   controlsLabel: 'Viewer controls',
   simDate: 'Simulation date',
   language: 'Language',
+  moreOptions: 'Options',
 }
 
 const ca: Dict = {
@@ -112,6 +113,7 @@ const ca: Dict = {
   controlsLabel: 'Controls del visualitzador',
   simDate: 'Data de la simulació',
   language: 'Idioma',
+  moreOptions: 'Opcions',
 }
 
 export const dictionaries: Record<Locale, Dict> = { en, ca }

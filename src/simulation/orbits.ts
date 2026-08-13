@@ -190,17 +190,30 @@ export function lunarUmbraFactor(state: SimState, scale: Scale): number {
   return Math.min(1, Math.max(0, (outer - radial) / Math.max(1e-4, outer - inner)))
 }
 
-export function focusCameraOffset(scale: Scale, focus: CameraFocus): Vec3 {
+/** Tighter portrait FOV would clip the Earth–Moon pair; widen vertical FOV instead. */
+export function framingFov(aspect: number): number {
+  if (aspect < 0.7) return 56
+  if (aspect < 1) return 50
+  return 42
+}
+
+export function framingDistanceBoost(aspect: number): number {
+  if (aspect >= 1) return 1
+  return 1 + (1 - Math.max(0.48, aspect)) * 0.65
+}
+
+export function focusCameraOffset(scale: Scale, focus: CameraFocus, aspect = 1.4): Vec3 {
+  const boost = framingDistanceBoost(aspect)
   if (focus === 'sun') {
-    const d = scale.sunRadius * 3.6
+    const d = scale.sunRadius * 3.6 * boost
     return [d * 0.7, d * 0.45, d]
   }
   if (focus === 'moon') {
-    const d = Math.max(scale.moonRadius * 12, scale.earthRadius * 2.4)
+    const d = Math.max(scale.moonRadius * 12, scale.earthRadius * 2.4) * boost
     return [d * 0.55, d * 0.35, d * 0.85]
   }
   // Close side view so Earth and the Moon share the frame.
-  const d = scale.moonOrbit * 1.22
+  const d = scale.moonOrbit * 1.22 * boost
   return [d * 0.1, d * 0.36, d * 0.92]
 }
 

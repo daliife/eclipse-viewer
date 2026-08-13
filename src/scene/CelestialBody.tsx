@@ -61,7 +61,7 @@ export function CelestialBody({
       }}
     >
       <mesh rotation={[0, rotationY, 0]}>
-        <sphereGeometry args={[radius, 64, 48]} />
+        <sphereGeometry args={[radius, 48, 36]} />
         {emissive ? (
           <meshBasicMaterial map={map} />
         ) : eclipse > 0.04 ? (
@@ -85,7 +85,7 @@ export function CelestialBody({
 function EarthAtmosphere({ radius }: { radius: number }) {
   return (
     <mesh scale={1.045} renderOrder={2}>
-      <sphereGeometry args={[radius, 48, 32]} />
+      <sphereGeometry args={[radius, 32, 24]} />
       <shaderMaterial
         vertexShader={ATMOS_VERT}
         fragmentShader={ATMOS_FRAG}

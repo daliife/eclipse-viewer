@@ -17,7 +17,7 @@ export default function App() {
   const insetRef = useRef<HTMLDivElement>(null)
   const [mode, setMode] = useState<EclipseMode>('solar')
   const [playing, setPlaying] = useState(false)
-  const [speed, setSpeed] = useState(0.35)
+  const [speed, setSpeed] = useState(1)
   const [simDays, setSimDays] = useState(0)
   const [focus, setFocus] = useState<CameraFocus>('earth')
   const [showOrbits, setShowOrbits] = useState(true)
@@ -32,8 +32,8 @@ export default function App() {
   return (
     <div className="app">
       <Canvas
-        dpr={[1, 2]}
-        gl={{ antialias: true, alpha: false }}
+        dpr={[1, 1.5]}
+        gl={{ antialias: true, alpha: false, stencil: false }}
         onCreated={({ gl }) => {
           gl.setClearColor('#000000')
         }}
