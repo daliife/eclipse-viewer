@@ -65,7 +65,7 @@ One-time repo setting: **Settings → Pages → Source = GitHub Actions**. The r
 | --- | --- | --- |
 | `public/textures/earth.jpg` | [three.js](https://github.com/mrdoob/three.js) `earth_atmos_2048.jpg` (NASA Visible Earth) | Public domain (NASA) |
 | `public/textures/moon.jpg` | [three.js](https://github.com/mrdoob/three.js) `moon_1024.jpg` | See three.js examples |
-| `public/textures/sun.jpg` | NASA SDO / Wikimedia | Public domain (NASA) |
+| `public/textures/sun.jpg` | [Solar System Scope](https://www.solarsystemscope.com/textures/) 2k Sun (Wikimedia) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) |
 
 ## Stack
 

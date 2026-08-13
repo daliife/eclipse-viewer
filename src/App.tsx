@@ -11,13 +11,14 @@ import {
 import { Controls } from './ui/Controls'
 import { EducationPanel } from './ui/EducationPanel'
 import { InsetFrame } from './ui/InsetFrame'
+import { WelcomeTour } from './ui/WelcomeTour'
 import './App.css'
 
 export default function App() {
   const insetRef = useRef<HTMLDivElement>(null)
   const [mode, setMode] = useState<EclipseMode>('solar')
   const [playing, setPlaying] = useState(false)
-  const [speed, setSpeed] = useState(1)
+  const [speed, setSpeed] = useState(0.5)
   const [simDays, setSimDays] = useState(0)
   const [focus, setFocus] = useState<CameraFocus>('earth')
   const [showOrbits, setShowOrbits] = useState(true)
@@ -61,7 +62,6 @@ export default function App() {
         mode={mode}
         simDays={simDays}
         degreesFromAlignment={state.degreesFromAlignment}
-        scaleMode={scaleMode}
       />
       <Controls
         mode={mode}
@@ -96,6 +96,7 @@ export default function App() {
         enlarged={insetLarge}
         onToggle={() => setInsetLarge((open) => !open)}
       />
+      <WelcomeTour />
     </div>
   )
 }

@@ -21,9 +21,9 @@ const en: Dict = {
   ecliptic: 'Ecliptic',
   shadows: 'Shadows',
   scaleDidactic: 'Classroom',
-  scaleReal: 'True scale',
+  scaleReal: 'Realistic',
   sectionType: 'Eclipse',
-  sectionTime: 'Time',
+  sectionTime: 'Controls',
   sectionCamera: 'Camera',
   sectionGuides: 'Guides',
   sectionScale: 'Scale',
@@ -47,8 +47,13 @@ const en: Dict = {
     'Interactive 3D viewer of solar and lunar eclipses. See why an eclipse happens only on one day: the Moon’s phase plus a pass through an orbital node.',
   noteDidactic: 'Distances are stretched so the 5° tilt is easy to see.',
   noteReal: 'Earth and Moon are tiny. That is why a perfect line-up is rare.',
-  bannerDidacticTitle: 'Classroom scale',
-  bannerRealTitle: 'True scale',
+  noteFreeCam: 'Orbit the scene without locking onto a body.',
+  noteFocusSun: 'Keeps the Sun in frame while you orbit.',
+  noteFocusEarth: 'Keeps Earth in frame while you orbit.',
+  noteFocusMoon: 'Keeps the Moon in frame while you orbit.',
+  noteOrbits: 'Paths of Earth and the Moon. The gold rings are the nodes.',
+  noteEcliptic: 'Earth’s orbital plane. The Moon’s path is tilted 5° to this.',
+  noteShadows: 'Umbra cones, showing who covers whom.',
   langCa: 'Català',
   langEn: 'English',
   enlargeView: 'Enlarge Earth view',
@@ -58,7 +63,26 @@ const en: Dict = {
   simDate: 'Simulation date',
   language: 'Language',
   moreOptions: 'Options',
+  aboutSection: 'About {title}',
   whyHide: 'Hide explanation',
+  tourSkip: 'Skip',
+  tourHide: 'Don’t show this tutorial again',
+  tourBack: 'Back',
+  tourNext: 'Next',
+  tourStart: 'Start',
+  tourStep: '{n} / {total}',
+  tour1Title: 'Eclipse Viewer',
+  tour1Body:
+    'This is a classroom model of the Sun, Earth and Moon. An eclipse needs the right phase and a pass through a node — one of the two gold rings.',
+  tour2Title: 'Change the day',
+  tour2Body:
+    'Jump along the dates around the eclipse, or press Play. A day later the Moon has already moved off the line.',
+  tour3Title: 'Move around',
+  tour3Body:
+    'Drag to orbit the scene. Scroll or pinch to zoom. On a phone, one finger rotates the view.',
+  tour4Title: 'Look from Earth',
+  tour4Body:
+    'The small frame is the view from Earth. Open the chevron on the time bar for solar or lunar, camera, and scale.',
 }
 
 const ca: Dict = {
@@ -80,9 +104,9 @@ const ca: Dict = {
   ecliptic: 'Eclíptica',
   shadows: 'Ombres',
   scaleDidactic: 'Didàctica',
-  scaleReal: 'Escala real',
+  scaleReal: 'Realista',
   sectionType: 'Eclipsi',
-  sectionTime: 'Temps',
+  sectionTime: 'Controls',
   sectionCamera: 'Càmera',
   sectionGuides: 'Guies',
   sectionScale: 'Escala',
@@ -106,8 +130,13 @@ const ca: Dict = {
     'Visualitzador 3D d’eclipsis solars i lunars. Entén per què un eclipsi només passa un dia: la fase de la Lluna i el pas per un node de l’òrbita.',
   noteDidactic: 'Les distàncies estan exagerades perquè es vegi la inclinació de 5°.',
   noteReal: 'La Terra i la Lluna són minúscules. Per això l’alineació perfecta és rara.',
-  bannerDidacticTitle: 'Escala didàctica',
-  bannerRealTitle: 'Escala real',
+  noteFreeCam: 'Mou l’escena lliurement, sense bloquejar cap astre.',
+  noteFocusSun: 'Manté el Sol al centre mentre orbites.',
+  noteFocusEarth: 'Manté la Terra al centre mentre orbites.',
+  noteFocusMoon: 'Manté la Lluna al centre mentre orbites.',
+  noteOrbits: 'Els camins de la Terra i la Lluna. Els anells daurats són els nodes.',
+  noteEcliptic: 'El pla de l’òrbita de la Terra. L’òrbita de la Lluna està inclinada 5°.',
+  noteShadows: 'Els cons d’ombra: qui tapa qui.',
   langCa: 'Català',
   langEn: 'English',
   enlargeView: 'Amplia la vista des de la Terra',
@@ -117,7 +146,26 @@ const ca: Dict = {
   simDate: 'Data de la simulació',
   language: 'Idioma',
   moreOptions: 'Opcions',
+  aboutSection: 'Sobre {title}',
   whyHide: 'Amaga l’explicació',
+  tourSkip: 'Omet',
+  tourHide: 'No mostris més el tutorial',
+  tourBack: 'Enrere',
+  tourNext: 'Següent',
+  tourStart: 'Comença',
+  tourStep: '{n} / {total}',
+  tour1Title: 'Visualitzador d’eclipsis',
+  tour1Body:
+    'És un model didàctic del Sol, la Terra i la Lluna. Un eclipsi necessita la fase adequada i el pas per un node — un dels dos anells daurats.',
+  tour2Title: 'Canvia el dia',
+  tour2Body:
+    'Salta pels dies al voltant de l’eclipsi, o prem Reprodueix. Un dia després, la Lluna ja ha sortit de la línia.',
+  tour3Title: 'Mou l’òrbita',
+  tour3Body:
+    'Arrossega per orbitar l’escena. Fes scroll o pessiga per apropar-te. Al mòbil, un dit gira la vista.',
+  tour4Title: 'Vista des de la Terra',
+  tour4Body:
+    'El requadre petit és el que es veuria des de la Terra. Obre la fletxa de la barra de temps per triar solar o lunar, càmera i escala.',
 }
 
 export const dictionaries: Record<Locale, Dict> = { en, ca }
@@ -129,8 +177,7 @@ export function detectLocale(): Locale {
   } catch {
     /* ignore */
   }
-  const nav = navigator.language.toLowerCase()
-  return nav.startsWith('ca') ? 'ca' : 'en'
+  return 'en'
 }
 
 export function t(locale: Locale, key: string, vars?: Record<string, string | number>): string {

@@ -137,18 +137,40 @@ export function dateAtOffset(mode: EclipseMode, simDays: number): Date {
   return new Date(eclipseInstant(mode) + simDays * 24 * 60 * 60 * 1000)
 }
 
+const CA_MONTHS = [
+  'gen.',
+  'febr.',
+  'març',
+  'abr.',
+  'maig',
+  'juny',
+  'jul.',
+  'ag.',
+  'set.',
+  'oct.',
+  'nov.',
+  'des.',
+] as const
+
+function utcClock(date: Date): string {
+  const hh = String(date.getUTCHours()).padStart(2, '0')
+  const mm = String(date.getUTCMinutes()).padStart(2, '0')
+  return `${hh}:${mm}`
+}
+
+export function formatClock(date: Date): string {
+  return utcClock(date)
+}
+
 export function formatDate(date: Date, localeTag: string): string {
-  return (
-    date.toLocaleString(localeTag, {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      timeZone: 'UTC',
-      hour12: false,
-    }) + ' UTC'
-  )
+  const time = utcClock(date)
+  if (localeTag.startsWith('ca')) {
+    const month = CA_MONTHS[date.getUTCMonth()] ?? 'ag.'
+    const de = /^[aeiou]/i.test(month) ? 'd’' : 'de '
+    return `${date.getUTCDate()} ${de}${month} del ${date.getUTCFullYear()}, ${time} UTC`
+  }
+  const month = date.toLocaleString('en-GB', { month: 'short', timeZone: 'UTC' })
+  return `${date.getUTCDate()} ${month} ${date.getUTCFullYear()}, ${time} UTC`
 }
 
 export function formatJumpDate(date: Date, localeTag: string): string {

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-type IconProps = { className?: string }
+export type IconProps = { className?: string }
 
 function Svg({ className, children }: IconProps & { children: ReactNode }) {
   return (

@@ -1,12 +1,13 @@
-import { useState, type ReactNode } from 'react'
+import { useId, useState, type ReactNode } from 'react'
 import type { CameraFocus, EclipseMode, ScaleMode } from '../simulation/orbits'
-import { DATE_JUMPS, dateAtOffset, formatJumpDate } from '../simulation/orbits'
+import { DATE_JUMPS, dateAtOffset, formatClock, formatDate, formatJumpDate } from '../simulation/orbits'
 import { dateLocale } from '../i18n/messages'
 import { useI18n } from '../i18n/LocaleContext'
 import {
   IconCamera,
   IconChevron,
   IconEarth,
+  IconInfo,
   IconMoon,
   IconOrbit,
   IconPause,
@@ -39,25 +40,58 @@ type Props = {
   onScaleMode: (mode: ScaleMode) => void
 }
 
-function Section({ title, children }: { title: string; children: ReactNode }) {
+function Section({
+  title,
+  hint,
+  hintLabel,
+  children,
+}: {
+  title: string
+  hint?: ReactNode
+  hintLabel?: string
+  children: ReactNode
+}) {
+  const tipId = useId()
   return (
-    <section className="section">
-      <h2 className="section-title">{title}</h2>
+    <section className={hint ? 'section has-help' : 'section'}>
+      <div className="section-head">
+        <h2 className="section-title">{title}</h2>
+        {hint ? (
+          <span className="section-help">
+            <button
+              type="button"
+              className="section-info"
+              aria-label={hintLabel ?? title}
+              aria-describedby={tipId}
+            >
+              <IconInfo />
+            </button>
+            <span id={tipId} className="section-tip" role="tooltip">
+              {hint}
+            </span>
+          </span>
+        ) : null}
+      </div>
       {children}
     </section>
+  )
+}
+
+function Hint({ items }: { items: { label: string; note: string }[] }) {
+  return (
+    <>
+      {items.map((item) => (
+        <span key={item.label}>
+          <strong>{item.label}.</strong> {item.note}
+        </span>
+      ))}
+    </>
   )
 }
 
 function formatSpeed(speed: number): string {
   const rounded = Math.round(speed * 100) / 100
   return `${rounded}×`
-}
-
-function formatScrub(days: number): string {
-  const rounded = Math.round(days * 10) / 10
-  if (Math.abs(rounded) < 0.05) return '0.0d'
-  const sign = rounded > 0 ? '+' : ''
-  return `${sign}${rounded.toFixed(1)}d`
 }
 
 export function Controls({
@@ -82,11 +116,17 @@ export function Controls({
 }: Props) {
   const { t, locale } = useI18n()
   const [moreOpen, setMoreOpen] = useState(false)
+  const simDate = dateAtOffset(mode, simDays)
+  const dateText = formatDate(simDate, dateLocale(locale))
+  const clockText = formatClock(simDate)
 
   return (
     <div className="panel controls" role="toolbar" aria-label={t('controlsLabel')}>
       <Section title={t('sectionTime')}>
         <div className="time-transport">
+          <time className="time-now" dateTime={simDate.toISOString()} title={t('simDate')}>
+            {dateText}
+          </time>
           <button
             type="button"
             className="play-toggle"
@@ -97,8 +137,9 @@ export function Controls({
             {playing ? <IconPause /> : <IconPlay />}
             <span className="play-label">{playing ? t('pause') : t('play')}</span>
           </button>
-          <div className="day-timeline" role="group" aria-label={t('dayTimeline')}>
-            {DATE_JUMPS.map((offset) => {
+        </div>
+        <div className="day-timeline" role="group" aria-label={t('dayTimeline')}>
+          {DATE_JUMPS.map((offset) => {
               const date = dateAtOffset(mode, offset)
               const dateText = formatJumpDate(date, dateLocale(locale))
               const eclipse = offset === 0
@@ -125,7 +166,6 @@ export function Controls({
                 </button>
               )
             })}
-          </div>
         </div>
         <div className="time-sliders">
           <label className="slider-row">
@@ -157,14 +197,14 @@ export function Controls({
               aria-valuemin={-2.5}
               aria-valuemax={2.5}
               aria-valuenow={Number(simDays.toFixed(2))}
-              aria-valuetext={formatScrub(simDays)}
+              aria-valuetext={dateText}
               onChange={(e) => {
                 onPlaying(false)
                 onSimDays(Number(e.target.value))
               }}
             />
             <span className="slider-value" aria-hidden="true">
-              {formatScrub(simDays)}
+              {clockText}
             </span>
           </label>
         </div>
@@ -212,7 +252,20 @@ export function Controls({
           </div>
         </Section>
 
-        <Section title={t('sectionCamera')}>
+        <Section
+          title={t('sectionCamera')}
+          hintLabel={t('aboutSection', { title: t('sectionCamera') })}
+          hint={
+            <Hint
+              items={[
+                { label: t('freeCam'), note: t('noteFreeCam') },
+                { label: t('focusSun'), note: t('noteFocusSun') },
+                { label: t('focusEarth'), note: t('noteFocusEarth') },
+                { label: t('focusMoon'), note: t('noteFocusMoon') },
+              ]}
+            />
+          }
+        >
           <div className="grid-2">
             <button
               type="button"
@@ -253,7 +306,18 @@ export function Controls({
           </div>
         </Section>
 
-        <Section title={t('sectionScale')}>
+        <Section
+          title={t('sectionScale')}
+          hintLabel={t('aboutSection', { title: t('sectionScale') })}
+          hint={
+            <Hint
+              items={[
+                { label: t('scaleDidactic'), note: t('noteDidactic') },
+                { label: t('scaleReal'), note: t('noteReal') },
+              ]}
+            />
+          }
+        >
           <div className="stack">
             <button
               type="button"
@@ -276,7 +340,19 @@ export function Controls({
           </div>
         </Section>
 
-        <Section title={t('sectionGuides')}>
+        <Section
+          title={t('sectionGuides')}
+          hintLabel={t('aboutSection', { title: t('sectionGuides') })}
+          hint={
+            <Hint
+              items={[
+                { label: t('orbits'), note: t('noteOrbits') },
+                { label: t('ecliptic'), note: t('noteEcliptic') },
+                { label: t('shadows'), note: t('noteShadows') },
+              ]}
+            />
+          }
+        >
           <div className="grid-2">
             <button
               type="button"

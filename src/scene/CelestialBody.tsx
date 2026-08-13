@@ -63,7 +63,7 @@ export function CelestialBody({
       <mesh rotation={[0, rotationY, 0]}>
         <sphereGeometry args={[radius, 48, 36]} />
         {emissive ? (
-          <meshBasicMaterial map={map} />
+          <meshBasicMaterial map={map} toneMapped={false} />
         ) : eclipse > 0.04 ? (
           <meshStandardMaterial
             map={map}
