@@ -1,2 +1,72 @@
-# eclipse-viewer
-An interactive web-based visualizer for exploring solar eclipses.
+# Eclipse Viewer
+
+Interactive 3D visualizer of solar and lunar eclipses. Distances and sizes use a **classroom scale** by default so the Moon’s 5° orbital tilt is easy to see. A **true scale** toggle uses real size/distance ratios.
+
+UI: English and Catalan. Starts paused on the 8 April 2024 solar eclipse, focused on Earth with the Moon in frame.
+
+Live site: **https://daliife.github.io/eclipse-viewer/**
+
+## Why an eclipse is only one day
+
+The Moon’s orbit is tilted about 5° to the ecliptic. An eclipse needs **phase and a node**:
+
+- **Solar** (8 April 2024): new Moon at a node, so it covers the Sun.
+- **Lunar** (14 March 2025): full Moon at a node, so it enters Earth’s shadow.
+
+The Moon moves about 13° per day, so the day before or after it misses. Use the date jumps to see that.
+
+This is not JPL ephemeris. Dates label constructed keyframes.
+
+## Features
+
+- Sun, Earth, and Moon with NASA / three.js textures
+- Play, speed, and day jumps (−2 … eclipse … +2)
+- Camera: free orbit, or follow Sun / Earth / Moon
+- Earth-surface inset (enlargeable) looking at the Sun or the Moon
+- Classroom scale vs true scale
+- Orbit lines, ecliptic plane, and optional shadow cones
+
+## Project layout
+
+```
+src/
+  App.tsx                 # Shell, state
+  i18n/                   # Catalan / English
+  simulation/             # Didactic orbits and copy keys
+  scene/                  # Three.js scene, cameras, helpers
+  ui/                     # Controls, education panel, inset
+public/textures/          # Sun, Earth, Moon maps
+.github/workflows/        # GitHub Pages deploy
+```
+
+## Local development
+
+```bash
+npm install
+npm run dev
+```
+
+Vite `base` is `/eclipse-viewer/`, so the app is at `http://localhost:5173/eclipse-viewer/`.
+
+```bash
+npm run build
+npm run preview
+```
+
+## Production (GitHub Pages)
+
+Pushes to `main` run [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml): `npm ci`, `vite build`, deploy `dist`.
+
+One-time repo setting: **Settings → Pages → Source = GitHub Actions**. The repo must be public on a free GitHub plan.
+
+## Textures
+
+| File | Source | License |
+| --- | --- | --- |
+| `public/textures/earth.jpg` | [three.js](https://github.com/mrdoob/three.js) `earth_atmos_2048.jpg` (NASA Visible Earth) | Public domain (NASA) |
+| `public/textures/moon.jpg` | [three.js](https://github.com/mrdoob/three.js) `moon_1024.jpg` | See three.js examples |
+| `public/textures/sun.jpg` | NASA SDO / Wikimedia | Public domain (NASA) |
+
+## Stack
+
+Vite, React, TypeScript, Three.js, React Three Fiber, Drei.

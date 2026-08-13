@@ -1,0 +1,261 @@
+.app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.app canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.panel {
+  position: absolute;
+  z-index: 2;
+  color: #eef3f8;
+  background: rgba(8, 12, 20, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 12px 14px;
+  max-width: min(420px, calc(100% - 24px));
+  pointer-events: auto;
+}
+
+.education {
+  top: max(12px, env(safe-area-inset-top));
+  left: max(12px, env(safe-area-inset-left));
+}
+
+.education h1 {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  line-height: 1.3;
+  font-weight: 650;
+}
+
+.education p {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.education .date {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.92;
+}
+
+.education .note {
+  margin: 0 0 6px;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: #d5dde8;
+}
+
+.education .note:last-child {
+  margin-bottom: 0;
+}
+
+.controls {
+  left: max(12px, env(safe-area-inset-left));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-height: min(58vh, 560px);
+  overflow-y: auto;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 0;
+}
+
+.section + .section {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.section-title {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c5d0dc;
+}
+
+.row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.row.wrap {
+  flex-wrap: wrap;
+}
+
+button {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: inherit;
+  border-radius: 6px;
+  padding: 8px 11px;
+  font-size: 0.875rem;
+  min-height: 36px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+button:focus-visible {
+  outline: 2px solid #8ec8ff;
+  outline-offset: 2px;
+}
+
+button.active,
+button[aria-pressed='true'] {
+  background: #2b6cb0;
+  border-color: #63b3ed;
+}
+
+.education-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.lang {
+  display: flex;
+  gap: 4px;
+}
+
+.lang button {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  min-width: 36px;
+  min-height: 36px;
+  justify-content: center;
+}
+
+.speed {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  flex: 1;
+}
+
+.speed input {
+  flex: 1;
+  min-height: 24px;
+  touch-action: pan-x;
+}
+
+.inset {
+  position: absolute;
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
+  width: min(300px, 38vw);
+  height: min(210px, 30vh);
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  border-radius: 6px;
+  z-index: 2;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  overflow: hidden;
+  pointer-events: none;
+  background: transparent;
+}
+
+.inset-large {
+  width: min(640px, 54vw);
+  height: min(460px, 58vh);
+}
+
+.inset-view {
+  width: 100%;
+  min-height: 0;
+  height: 100%;
+  background: transparent;
+}
+
+.inset-bar {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 6px 4px 8px;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.inset-label {
+  font-size: 0.8rem;
+  color: #fff;
+  text-shadow: 0 1px 2px #000;
+}
+
+.inset-toggle {
+  min-height: 32px;
+  min-width: 32px;
+  padding: 4px;
+  justify-content: center;
+}
+
+@media (min-width: 1100px) {
+  .controls {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    max-width: calc(100% - 24px);
+    width: auto;
+    max-height: none;
+    overflow: visible;
+    gap: 0;
+  }
+
+  .section {
+    padding: 4px 12px;
+    min-width: 0;
+  }
+
+  .section:first-child {
+    padding-left: 0;
+  }
+
+  .section:last-child {
+    padding-right: 0;
+  }
+
+  .section + .section {
+    border-top: none;
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+  }
+}
+
+@media (max-width: 720px) {
+  .education {
+    max-width: calc(100% - 24px - min(160px, 40vw));
+  }
+
+  .controls {
+    max-width: calc(100% - 24px);
+  }
+
+  .inset {
+    width: min(168px, 42vw);
+    height: min(128px, 22vh);
+  }
+
+  .inset-large {
+    width: min(92vw, 420px);
+    height: min(42vh, 320px);
+  }
+}
