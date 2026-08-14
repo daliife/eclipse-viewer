@@ -3,8 +3,10 @@ import { useI18n } from '../i18n/LocaleContext'
 import {
   IconChevron,
   IconClock,
+  IconClose,
   IconEarth,
   IconOrbit,
+  IconPlay,
   IconSun,
   type IconProps,
 } from './Icons'
@@ -150,6 +152,7 @@ export function WelcomeTour() {
 
         <div className="welcome-nav">
           <button type="button" className="welcome-skip" onClick={dismiss}>
+            <IconClose />
             {t('tourSkip')}
           </button>
           <div className="welcome-nav-end">
@@ -161,7 +164,7 @@ export function WelcomeTour() {
             ) : null}
             <button type="button" className="welcome-next" onClick={next}>
               {last ? t('tourStart') : t('tourNext')}
-              {!last ? <IconChevron /> : null}
+              {last ? <IconPlay /> : <IconChevron />}
             </button>
           </div>
         </div>

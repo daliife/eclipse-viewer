@@ -771,6 +771,7 @@ input[type='range']::-moz-range-thumb {
 
 .welcome-body {
   margin: 0 0 22px;
+  min-height: calc(0.9rem * 1.55 * 3);
   font-size: 0.9rem;
   line-height: 1.55;
   color: var(--ui-muted);
@@ -888,6 +889,7 @@ input[type='range']::-moz-range-thumb {
   background: var(--ui-hover);
 }
 
+.welcome-skip .icon,
 .welcome-back .icon,
 .welcome-next .icon {
   width: 14px;
@@ -1157,6 +1159,10 @@ input[type='range']::-moz-range-thumb {
 
   .welcome {
     padding: 22px 20px 18px;
+  }
+
+  .welcome-body {
+    min-height: calc(0.9rem * 1.55 * 4);
   }
 
   .welcome-title {

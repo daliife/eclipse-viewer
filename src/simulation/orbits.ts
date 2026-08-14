@@ -22,15 +22,40 @@ const SHARED = {
 
 const EARTH_R = 1.15
 
+/**
+ * Apparent Moon/Sun diameter on 12 Aug 2026.
+ * Total eclipse: Moon ~3% larger (EclipseWise / NASA, magnitude 1.0386).
+ */
+export const SOLAR_MOON_SUN_RATIO = 1.031
+
+function moonRadiusForSkyRatio(
+  sunRadius: number,
+  earthOrbit: number,
+  moonOrbit: number,
+  ratio = SOLAR_MOON_SUN_RATIO,
+): number {
+  return moonOrbit * Math.tan(ratio * Math.atan(sunRadius / Math.max(earthOrbit, 1e-6)))
+}
+
+function moonOrbitForSkyRatio(
+  sunRadius: number,
+  earthOrbit: number,
+  moonRadius: number,
+  ratio = SOLAR_MOON_SUN_RATIO,
+): number {
+  return moonRadius / Math.tan(ratio * Math.atan(sunRadius / Math.max(earthOrbit, 1e-6)))
+}
+
 /** Classroom: bodies visible, 5° tilt obvious. Real: true radius/distance ratios. */
 export const SCALES: Record<ScaleMode, Scale> = {
   didactic: {
     ...SHARED,
     sunRadius: 8,
     earthRadius: EARTH_R,
-    moonRadius: 0.31,
     earthOrbit: 92,
     moonOrbit: 4.8,
+    // Bigger Moon so the sky sizes match totality (compressed orbits shrink it otherwise).
+    moonRadius: moonRadiusForSkyRatio(8, 92, 4.8),
   },
   real: {
     ...SHARED,
@@ -38,7 +63,8 @@ export const SCALES: Record<ScaleMode, Scale> = {
     sunRadius: EARTH_R * 109.2,
     moonRadius: EARTH_R * 0.2727,
     earthOrbit: EARTH_R * 23455,
-    moonOrbit: EARTH_R * 60.3,
+    // Near perigee so the Moon covers the Sun on this date.
+    moonOrbit: moonOrbitForSkyRatio(EARTH_R * 109.2, EARTH_R * 23455, EARTH_R * 0.2727),
   },
 }
 

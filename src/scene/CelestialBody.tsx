@@ -1,6 +1,6 @@
 import { useTexture } from '@react-three/drei'
 import { useLayoutEffect, useMemo, useRef } from 'react'
-import { BackSide, Color, Group } from 'three'
+import { AdditiveBlending, BackSide, Color, Group } from 'three'
 import type { Vec3 } from '../simulation/orbits'
 
 const BASE = import.meta.env.BASE_URL
@@ -80,6 +80,7 @@ export function CelestialBody({
           />
         )}
       </mesh>
+      {emissive ? <SunCorona radius={radius} layer={layer} /> : null}
       {atmosphere ? <EarthAtmosphere radius={radius} layer={layer} /> : null}
     </group>
   )
@@ -101,6 +102,40 @@ function EarthAtmosphere({ radius, layer }: { radius: number; layer?: number }) 
         transparent
         depthWrite={false}
         side={BackSide}
+        toneMapped={false}
+      />
+    </mesh>
+  )
+}
+
+const CORONA_VERT = ATMOS_VERT
+
+const CORONA_FRAG = /* glsl */ `
+varying vec3 vNormal;
+varying vec3 vView;
+void main() {
+  float fresnel = pow(1.0 - abs(dot(normalize(vNormal), normalize(vView))), 5.2);
+  gl_FragColor = vec4(1.0, 0.78, 0.38, fresnel * 0.95);
+}
+`
+
+function SunCorona({ radius, layer }: { radius: number; layer?: number }) {
+  return (
+    <mesh
+      scale={1.085}
+      renderOrder={-1}
+      onUpdate={(obj) => {
+        if (layer !== undefined) obj.layers.set(layer)
+      }}
+    >
+      <sphereGeometry args={[radius, 32, 24]} />
+      <shaderMaterial
+        vertexShader={CORONA_VERT}
+        fragmentShader={CORONA_FRAG}
+        transparent
+        depthWrite={false}
+        side={BackSide}
+        blending={AdditiveBlending}
         toneMapped={false}
       />
     </mesh>

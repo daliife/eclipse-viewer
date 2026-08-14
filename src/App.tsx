@@ -22,7 +22,7 @@ export default function App() {
   const [simDays, setSimDays] = useState(0)
   const [focus, setFocus] = useState<CameraFocus>('earth')
   const [showOrbits, setShowOrbits] = useState(true)
-  const [showEcliptic, setShowEcliptic] = useState(true)
+  const [showEcliptic, setShowEcliptic] = useState(false)
   const [showShadows, setShowShadows] = useState(false)
   const [scaleMode, setScaleMode] = useState<ScaleMode>('didactic')
   const [insetLarge, setInsetLarge] = useState(false)

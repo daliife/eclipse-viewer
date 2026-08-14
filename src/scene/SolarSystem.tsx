@@ -104,7 +104,7 @@ export function SolarSystem({
     const cam = earthCam.current
     if (cam) {
       const target = mode === 'solar' ? state.sun : state.moon
-      // From Earth's centre so Moon and Sun stay colinear and the annular ring is visible.
+      // From Earth's centre so Moon and Sun stay colinear (totality, not a thick annulus).
       cam.position.set(state.earth[0], state.earth[1], state.earth[2])
       cam.up.set(0, 1, 0)
       cam.lookAt(target[0], target[1], target[2])
@@ -187,7 +187,7 @@ export function SolarSystem({
         }}
       />
       <ambientLight
-        intensity={0.32}
+        intensity={0.45}
         onUpdate={(light) => light.layers.set(2)}
       />
       <pointLight

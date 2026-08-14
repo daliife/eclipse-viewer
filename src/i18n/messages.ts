@@ -31,7 +31,7 @@ const en: Dict = {
   insetLunar: 'Earth → Moon',
   solarHitTitle: 'Solar eclipse',
   solarHitBody:
-    'A solar eclipse needs two things at once: a new Moon (between Earth and the Sun) and a pass through a node — one of the two red dots where its tilted orbit crosses the ecliptic. Today both are true, so the Moon covers the Sun.',
+    'A solar eclipse needs two things at once: a new Moon (between Earth and the Sun) and a pass through a node — one of the two red dots where its tilted orbit crosses the ecliptic. Today both are true. This one is total: the Moon looks a little larger than the Sun, so it covers the disc.',
   solarMissTitle: 'The Moon misses the Sun',
   solarMissBody:
     'Covering the Sun needs a new Moon at a node. The Moon is {deg}° off that crossing: it moves about 13° a day, and the 5° tilt sends it above or below the Sun.',
@@ -73,16 +73,16 @@ const en: Dict = {
   tourStep: '{n} / {total}',
   tour1Title: 'Eclipse Viewer',
   tour1Body:
-    'This is a classroom model of the Sun, Earth and Moon. An eclipse needs the right phase and a pass through a node — one of the two red dots on the Moon’s path.',
+    'This is a classroom model of the Sun, Earth and Moon. An eclipse needs the right phase and a node — one of the two red dots on the Moon’s path.',
   tour2Title: 'Change the day',
   tour2Body:
-    'Use the controls panel at the bottom to change the day. Jump along the dates around the eclipse, drag the Time slider, or press Play. A day later the Moon has already moved off the line.',
+    'Use the bottom controls to change the day. Jump the dates around the eclipse, drag Time, or press Play. A day later the Moon has already moved off the line.',
   tour3Title: 'Move around',
   tour3Body:
-    'Click and drag to pan around the scene. Scroll to zoom in and out. On a phone, drag with one finger to rotate and pinch to zoom.',
+    'Click and drag to pan around the Sun, Earth and Moon. Use the scroll wheel to zoom in and out. On a phone, drag with one finger to rotate and pinch to zoom.',
   tour4Title: 'Look from Earth',
   tour4Body:
-    'The small frame is the view from Earth — you can enlarge it. The bottom panel has more options: open the settings icon for solar or lunar eclipse, camera, scale, and guides.',
+    'The small frame is the view from Earth — you can enlarge it. Open the settings icon in the bottom panel for solar or lunar eclipse, camera, scale, and guides.',
 }
 
 const ca: Dict = {
@@ -114,7 +114,7 @@ const ca: Dict = {
   insetLunar: 'Terra → Lluna',
   solarHitTitle: 'Eclipsi solar',
   solarHitBody:
-    'Perquè hi hagi eclipsi solar calen dues condicions alhora: lluna nova (entre la Terra i el Sol) i que passi per un node, un dels dos punts vermells on la seva òrbita inclinada creua l’eclíptica. Avui es compleixen totes dues, i la Lluna tapa el Sol.',
+    'Perquè hi hagi eclipsi solar calen dues condicions alhora: lluna nova (entre la Terra i el Sol) i que passi per un node, un dels dos punts vermells on la seva òrbita inclinada creua l’eclíptica. Avui es compleixen totes dues. Aquest és total: la Lluna es veu una mica més gran que el Sol i en tapa el disc.',
   solarMissTitle: 'La Lluna no tapa el Sol',
   solarMissBody:
     'Per tapar el Sol calen lluna nova i node alhora. La Lluna és {deg}° fora del node: avança uns 13° cada dia, i l’òrbita inclinada 5° la fa passar per sobre o per sota del Sol.',
@@ -159,13 +159,13 @@ const ca: Dict = {
     'És un model didàctic del Sol, la Terra i la Lluna. Un eclipsi necessita la fase adequada i el pas per un node — un dels dos punts vermells del camí de la Lluna.',
   tour2Title: 'Canvia el dia',
   tour2Body:
-    'El panell de controls de sota serveix per canviar el dia. Salta pels dies al voltant de l’eclipsi, mou el control de Temps o prem Reprodueix. Un dia després, la Lluna ja ha sortit de la línia.',
+    'El panell de sota serveix per canviar el dia. Salta pels dies de l’eclipsi, mou Temps o prem Reprodueix. Un dia després, la Lluna ja ha sortit de la línia.',
   tour3Title: 'Mou la vista',
   tour3Body:
-    'Fes clic i arrossega per moure la vista (pan). Fes zoom amb la rodeta del ratolí per apropar-te o allunyar-te. Al mòbil, un dit gira la vista i pessigar amplia.',
+    'Fes clic i arrossega per moure’t pel Sol, la Terra i la Lluna. Fes zoom amb la rodeta per apropar-te o allunyar-te. Al mòbil, un dit gira la vista i pessigar amplia.',
   tour4Title: 'Vista des de la Terra',
   tour4Body:
-    'El requadre petit és el que es veuria des de la Terra; el pots ampliar. Al panell de sota hi ha més opcions: obre l’engranatge per triar eclipsi solar o lunar, càmera, escala i guies.',
+    'El requadre petit és la vista des de la Terra; el pots ampliar. Obre l’engranatge de sota per triar eclipsi solar o lunar, càmera, escala i guies.',
 }
 
 export const dictionaries: Record<Locale, Dict> = { en, ca }
