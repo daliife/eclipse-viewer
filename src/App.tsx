@@ -34,6 +34,7 @@ export default function App() {
     <div className="app">
       <Canvas
         dpr={[1, 1.5]}
+        style={{ zIndex: 0 }}
         gl={{ antialias: true, alpha: false, stencil: false }}
         onCreated={({ gl }) => {
           gl.setClearColor('#000000')

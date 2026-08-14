@@ -31,13 +31,13 @@ const en: Dict = {
   insetLunar: 'Earth → Moon',
   solarHitTitle: 'Solar eclipse',
   solarHitBody:
-    'A solar eclipse needs two things at once: a new Moon (between Earth and the Sun) and a pass through a node — one of the two gold rings where its tilted orbit crosses the ecliptic. Today both are true, so the Moon covers the Sun.',
+    'A solar eclipse needs two things at once: a new Moon (between Earth and the Sun) and a pass through a node — one of the two red dots where its tilted orbit crosses the ecliptic. Today both are true, so the Moon covers the Sun.',
   solarMissTitle: 'The Moon misses the Sun',
   solarMissBody:
     'Covering the Sun needs a new Moon at a node. The Moon is {deg}° off that crossing: it moves about 13° a day, and the 5° tilt sends it above or below the Sun.',
   lunarHitTitle: 'Lunar eclipse',
   lunarHitBody:
-    'A lunar eclipse needs two things at once: a full Moon (Earth in the middle) and a pass through a node — one of the two gold rings where its orbit crosses the ecliptic. Today both are true, so the Moon enters Earth’s shadow.',
+    'A lunar eclipse needs two things at once: a full Moon (Earth in the middle) and a pass through a node — one of the two red dots where its orbit crosses the ecliptic. Today both are true, so the Moon enters Earth’s shadow.',
   lunarMissTitle: 'The Moon misses Earth’s shadow',
   lunarMissBody:
     'Entering Earth’s shadow needs a full Moon at a node. The Moon is {deg}° off that crossing, so it misses the thin umbra.',
@@ -51,7 +51,7 @@ const en: Dict = {
   noteFocusSun: 'Keeps the Sun in frame while you orbit.',
   noteFocusEarth: 'Keeps Earth in frame while you orbit.',
   noteFocusMoon: 'Keeps the Moon in frame while you orbit.',
-  noteOrbits: 'Paths of Earth and the Moon. The gold rings are the nodes.',
+  noteOrbits: 'Paths of Earth and the Moon. The red dots are the nodes — where the Moon’s path crosses the ecliptic.',
   noteEcliptic: 'Earth’s orbital plane. The Moon’s path is tilted 5° to this.',
   noteShadows: 'Umbra cones, showing who covers whom.',
   langCa: 'Català',
@@ -73,16 +73,16 @@ const en: Dict = {
   tourStep: '{n} / {total}',
   tour1Title: 'Eclipse Viewer',
   tour1Body:
-    'This is a classroom model of the Sun, Earth and Moon. An eclipse needs the right phase and a pass through a node — one of the two gold rings.',
+    'This is a classroom model of the Sun, Earth and Moon. An eclipse needs the right phase and a pass through a node — one of the two red dots on the Moon’s path.',
   tour2Title: 'Change the day',
   tour2Body:
-    'Jump along the dates around the eclipse, or press Play. A day later the Moon has already moved off the line.',
+    'Use the controls panel at the bottom to change the day. Jump along the dates around the eclipse, drag the Time slider, or press Play. A day later the Moon has already moved off the line.',
   tour3Title: 'Move around',
   tour3Body:
-    'Drag to orbit the scene. Scroll or pinch to zoom. On a phone, one finger rotates the view.',
+    'Click and drag to pan around the scene. Scroll to zoom in and out. On a phone, drag with one finger to rotate and pinch to zoom.',
   tour4Title: 'Look from Earth',
   tour4Body:
-    'The small frame is the view from Earth. Open the chevron on the time bar for solar or lunar, camera, and scale.',
+    'The small frame is the view from Earth — you can enlarge it. The bottom panel has more options: open the chevron for solar or lunar eclipse, camera, scale, and guides.',
 }
 
 const ca: Dict = {
@@ -114,13 +114,13 @@ const ca: Dict = {
   insetLunar: 'Terra → Lluna',
   solarHitTitle: 'Eclipsi solar',
   solarHitBody:
-    'Perquè hi hagi eclipsi solar calen dues condicions alhora: lluna nova (entre la Terra i el Sol) i que passi per un node, un dels dos anells daurats on la seva òrbita inclinada creua l’eclíptica. Avui es compleixen totes dues, i la Lluna tapa el Sol.',
+    'Perquè hi hagi eclipsi solar calen dues condicions alhora: lluna nova (entre la Terra i el Sol) i que passi per un node, un dels dos punts vermells on la seva òrbita inclinada creua l’eclíptica. Avui es compleixen totes dues, i la Lluna tapa el Sol.',
   solarMissTitle: 'La Lluna no tapa el Sol',
   solarMissBody:
     'Per tapar el Sol calen lluna nova i node alhora. La Lluna és {deg}° fora del node: avança uns 13° cada dia, i l’òrbita inclinada 5° la fa passar per sobre o per sota del Sol.',
   lunarHitTitle: 'Eclipsi lunar',
   lunarHitBody:
-    'Perquè hi hagi eclipsi lunar calen dues condicions alhora: lluna plena (la Terra al mig) i que passi per un node, un dels dos anells daurats on la seva òrbita creua l’eclíptica. Avui es compleixen totes dues, i la Lluna entra a l’ombra de la Terra.',
+    'Perquè hi hagi eclipsi lunar calen dues condicions alhora: lluna plena (la Terra al mig) i que passi per un node, un dels dos punts vermells on la seva òrbita creua l’eclíptica. Avui es compleixen totes dues, i la Lluna entra a l’ombra de la Terra.',
   lunarMissTitle: 'La Lluna no entra a l’ombra',
   lunarMissBody:
     'Per entrar a l’ombra calen lluna plena i node alhora. La Lluna és {deg}° fora del node, i no entra al con d’ombra de la Terra.',
@@ -134,7 +134,7 @@ const ca: Dict = {
   noteFocusSun: 'Manté el Sol al centre mentre orbites.',
   noteFocusEarth: 'Manté la Terra al centre mentre orbites.',
   noteFocusMoon: 'Manté la Lluna al centre mentre orbites.',
-  noteOrbits: 'Els camins de la Terra i la Lluna. Els anells daurats són els nodes.',
+  noteOrbits: 'Els camins de la Terra i la Lluna. Els punts vermells són els nodes, on l’òrbita de la Lluna creua l’eclíptica.',
   noteEcliptic: 'El pla de l’òrbita de la Terra. L’òrbita de la Lluna està inclinada 5°.',
   noteShadows: 'Els cons d’ombra: qui tapa qui.',
   langCa: 'Català',
@@ -156,16 +156,16 @@ const ca: Dict = {
   tourStep: '{n} / {total}',
   tour1Title: 'Visualitzador d’eclipsis',
   tour1Body:
-    'És un model didàctic del Sol, la Terra i la Lluna. Un eclipsi necessita la fase adequada i el pas per un node — un dels dos anells daurats.',
+    'És un model didàctic del Sol, la Terra i la Lluna. Un eclipsi necessita la fase adequada i el pas per un node — un dels dos punts vermells del camí de la Lluna.',
   tour2Title: 'Canvia el dia',
   tour2Body:
-    'Salta pels dies al voltant de l’eclipsi, o prem Reprodueix. Un dia després, la Lluna ja ha sortit de la línia.',
-  tour3Title: 'Mou l’òrbita',
+    'El panell de controls de sota serveix per canviar el dia. Salta pels dies al voltant de l’eclipsi, mou el control de Temps o prem Reprodueix. Un dia després, la Lluna ja ha sortit de la línia.',
+  tour3Title: 'Mou la vista',
   tour3Body:
-    'Arrossega per orbitar l’escena. Fes scroll o pessiga per apropar-te. Al mòbil, un dit gira la vista.',
+    'Fes clic i arrossega per moure la vista (pan). Fes zoom amb la rodeta del ratolí per apropar-te o allunyar-te. Al mòbil, un dit gira la vista i pessigar amplia.',
   tour4Title: 'Vista des de la Terra',
   tour4Body:
-    'El requadre petit és el que es veuria des de la Terra. Obre la fletxa de la barra de temps per triar solar o lunar, càmera i escala.',
+    'El requadre petit és el que es veuria des de la Terra; el pots ampliar. Al panell de sota hi ha més opcions: obre la fletxa per triar eclipsi solar o lunar, càmera, escala i guies.',
 }
 
 export const dictionaries: Record<Locale, Dict> = { en, ca }

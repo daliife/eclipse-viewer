@@ -26,11 +26,14 @@ export function InsetFrame({ mode, insetRef, enlarged, onToggle }: Props) {
 
   return (
     <section
-      className={enlarged ? 'inset inset-large' : 'inset'}
+      className={enlarged ? 'panel inset inset-large' : 'panel inset'}
       aria-label={title}
     >
       <div className="inset-view" ref={insetRef} />
-      <div className="inset-bar">
+      <div
+        className="inset-bar"
+        onPointerDown={(event) => event.stopPropagation()}
+      >
         <span className="inset-label">{title}</span>
         <button
           type="button"
@@ -38,7 +41,11 @@ export function InsetFrame({ mode, insetRef, enlarged, onToggle }: Props) {
           aria-expanded={enlarged}
           aria-label={toggleLabel}
           title={toggleLabel}
-          onClick={onToggle}
+          onPointerDown={(event) => event.stopPropagation()}
+          onClick={(event) => {
+            event.stopPropagation()
+            onToggle()
+          }}
         >
           {enlarged ? <IconCollapse /> : <IconExpand />}
         </button>

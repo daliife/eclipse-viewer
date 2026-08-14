@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef, type RefObject } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
-import { PerspectiveCamera as ThreePerspectiveCamera, Vector3 } from 'three'
+import { Group, PerspectiveCamera as ThreePerspectiveCamera, Vector3 } from 'three'
 import {
   focusCameraOffset,
   framingFov,
@@ -51,6 +51,7 @@ export function SolarSystem({
   insetRef,
 }: Props) {
   const earthCam = useRef<ThreePerspectiveCamera>(null)
+  const previewHide = useRef<Group>(null)
   const controls = useRef<OrbitControlsImpl>(null)
   const focusPos = useRef(new Vector3())
   const focusDest = useRef(new Vector3())
@@ -65,6 +66,7 @@ export function SolarSystem({
   useLayoutEffect(() => {
     camera.layers.enable(1)
     camera.layers.enable(2)
+    camera.layers.enable(3)
   }, [camera])
 
   useLayoutEffect(() => {
@@ -102,29 +104,9 @@ export function SolarSystem({
     const cam = earthCam.current
     if (cam) {
       const target = mode === 'solar' ? state.sun : state.moon
-      const dx = target[0] - state.earth[0]
-      const dy = target[1] - state.earth[1]
-      const dz = target[2] - state.earth[2]
-      const n = Math.hypot(dx, dy, dz) || 1
-      const ux = dx / n
-      const uy = dy / n
-      const uz = dz / n
-      const r = scale.earthRadius * 1.06
-      // Small tangent offset so totality is a tight partial, not a black disc.
-      const shift =
-        mode === 'solar'
-          ? scaleMode === 'real'
-            ? scale.earthRadius * 0.08
-            : scale.moonRadius * 1.25
-          : 0
-      const tx = -uz
-      const tz = ux
-      const tlen = Math.hypot(tx, tz) || 1
-      cam.position.set(
-        state.earth[0] + ux * r + (tx / tlen) * shift,
-        state.earth[1] + uy * r,
-        state.earth[2] + uz * r + (tz / tlen) * shift,
-      )
+      // From Earth's centre so Moon and Sun stay colinear and the annular ring is visible.
+      cam.position.set(state.earth[0], state.earth[1], state.earth[2])
+      cam.up.set(0, 1, 0)
       cam.lookAt(target[0], target[1], target[2])
       cam.near = scaleMode === 'real' ? 0.05 : 0.02
       cam.far = far
@@ -136,7 +118,7 @@ export function SolarSystem({
       const disc = mode === 'solar' ? scale.sunRadius : scale.moonRadius
       const angDeg = (2 * Math.atan(disc / Math.max(dist, 0.01)) * 180) / Math.PI
       cam.fov = Math.min(28, Math.max(0.7, angDeg * (mode === 'solar' ? 2.05 : 1.7)))
-      cam.layers.enable(1)
+      cam.layers.set(0)
       cam.layers.enable(2)
       cam.updateProjectionMatrix()
       cam.updateMatrixWorld()
@@ -197,14 +179,23 @@ export function SolarSystem({
   return (
     <>
       <color attach="background" args={['#000000']} />
-      <ambientLight intensity={0.04} onUpdate={(light) => light.layers.set(0)} />
+      <ambientLight
+        intensity={0.04}
+        onUpdate={(light) => {
+          light.layers.set(0)
+          light.layers.enable(3)
+        }}
+      />
       <pointLight
         position={[0, 0, 0]}
         color="#fff6e8"
         intensity={5.8}
         decay={0}
         distance={0}
-        onUpdate={(light) => light.layers.set(0)}
+        onUpdate={(light) => {
+          light.layers.set(0)
+          light.layers.enable(3)
+        }}
       />
       <pointLight
         position={[0, 0, 0]}
@@ -218,24 +209,26 @@ export function SolarSystem({
 
       <CelestialBody position={state.sun} radius={scale.sunRadius} textureUrl={textures.sun} emissive />
 
-      <CelestialBody
-        position={state.earth}
-        radius={scale.earthRadius}
-        textureUrl={textures.earth}
-        rotationY={earthSpin}
-        atmosphere
-      />
+      <group ref={previewHide}>
+        <CelestialBody
+          position={state.earth}
+          radius={scale.earthRadius}
+          textureUrl={textures.earth}
+          rotationY={earthSpin}
+          atmosphere
+          layer={3}
+        />
+        <OrbitRings earth={state.earth} visible={showOrbits} scale={scale} />
+        <EclipticPlane visible={showEcliptic} scale={scale} />
+        <ShadowCones state={state} visible={showShadows} emphasize={mode === 'lunar'} scale={scale} />
+      </group>
       <CelestialBody
         position={state.moon}
         radius={scale.moonRadius}
         textureUrl={textures.moon}
-        moonLayer={2}
+        layer={2}
         eclipse={moonEclipse}
       />
-
-      <OrbitRings earth={state.earth} visible={showOrbits} scale={scale} />
-      <EclipticPlane visible={showEcliptic} scale={scale} />
-      <ShadowCones state={state} visible={showShadows} emphasize={mode === 'lunar'} scale={scale} />
 
       <PerspectiveCamera
         makeDefault
@@ -256,7 +249,7 @@ export function SolarSystem({
       />
 
       <PerspectiveCamera ref={earthCam} fov={24} />
-      <DualViewport insetRef={insetRef} earthCamRef={earthCam} />
+      <DualViewport insetRef={insetRef} earthCamRef={earthCam} hideRootRef={previewHide} />
     </>
   )
 }
@@ -264,9 +257,11 @@ export function SolarSystem({
 function DualViewport({
   insetRef,
   earthCamRef,
+  hideRootRef,
 }: {
   insetRef: RefObject<HTMLElement | null>
   earthCamRef: RefObject<ThreePerspectiveCamera | null>
+  hideRootRef: RefObject<Group | null>
 }) {
   const gl = useThree((s) => s.gl)
 
@@ -284,23 +279,29 @@ function DualViewport({
 
     const canvasRect = renderer.domElement.getBoundingClientRect()
     const rect = inset.getBoundingClientRect()
-    const width = rect.width
-    const height = rect.height
+    const left = Math.round(rect.left - canvasRect.left)
+    const bottom = Math.round(canvasRect.bottom - rect.bottom)
+    const width = Math.round(rect.width)
+    const height = Math.round(rect.height)
     if (width < 2 || height < 2) return
-
-    const left = rect.left - canvasRect.left
-    const bottom = canvasRect.bottom - rect.bottom
 
     earthCam.aspect = width / height
     earthCam.updateProjectionMatrix()
     earthCam.updateMatrixWorld()
 
+    const hidden = hideRootRef.current
+    const wasVisible = hidden?.visible ?? true
+    if (hidden) hidden.visible = false
+
+    renderer.setClearColor('#000000', 1)
     renderer.autoClear = false
     renderer.setScissorTest(true)
     renderer.setScissor(left, bottom, width, height)
     renderer.setViewport(left, bottom, width, height)
     renderer.clear(true, true, false)
     renderer.render(scene, earthCam)
+
+    if (hidden) hidden.visible = wasVisible
     renderer.setScissorTest(false)
     renderer.setViewport(0, 0, size.width, size.height)
     renderer.autoClear = true

@@ -1,6 +1,6 @@
 import { useTexture } from '@react-three/drei'
-import { useMemo } from 'react'
-import { BackSide, Color } from 'three'
+import { useLayoutEffect, useMemo, useRef } from 'react'
+import { BackSide, Color, Group } from 'three'
 import type { Vec3 } from '../simulation/orbits'
 
 const BASE = import.meta.env.BASE_URL
@@ -32,7 +32,7 @@ type BodyProps = {
   emissive?: boolean
   rotationY?: number
   atmosphere?: boolean
-  moonLayer?: number
+  layer?: number
   eclipse?: number
 }
 
@@ -43,24 +43,29 @@ export function CelestialBody({
   emissive = false,
   rotationY = 0,
   atmosphere = false,
-  moonLayer,
+  layer,
   eclipse = 0,
 }: BodyProps) {
   const map = useTexture(textureUrl)
+  const root = useRef<Group>(null)
   const eclipseColor = useMemo(
     () => new Color().lerpColors(new Color('#ffffff'), new Color('#4a2a22'), eclipse),
     [eclipse],
   )
 
+  useLayoutEffect(() => {
+    if (layer === undefined) return
+    root.current?.traverse((obj) => obj.layers.set(layer))
+  })
+
   return (
-    <group
-      position={position}
-      onUpdate={(obj) => {
-        if (moonLayer === undefined) return
-        obj.traverse((child) => child.layers.set(moonLayer))
-      }}
-    >
-      <mesh rotation={[0, rotationY, 0]}>
+    <group ref={root} position={position}>
+      <mesh
+        rotation={[0, rotationY, 0]}
+        onUpdate={(obj) => {
+          if (layer !== undefined) obj.layers.set(layer)
+        }}
+      >
         <sphereGeometry args={[radius, 48, 36]} />
         {emissive ? (
           <meshBasicMaterial map={map} toneMapped={false} />
@@ -77,14 +82,20 @@ export function CelestialBody({
           <meshStandardMaterial map={map} roughness={0.9} metalness={0} />
         )}
       </mesh>
-      {atmosphere ? <EarthAtmosphere radius={radius} /> : null}
+      {atmosphere ? <EarthAtmosphere radius={radius} layer={layer} /> : null}
     </group>
   )
 }
 
-function EarthAtmosphere({ radius }: { radius: number }) {
+function EarthAtmosphere({ radius, layer }: { radius: number; layer?: number }) {
   return (
-    <mesh scale={1.045} renderOrder={2}>
+    <mesh
+      scale={1.045}
+      renderOrder={2}
+      onUpdate={(obj) => {
+        if (layer !== undefined) obj.layers.set(layer)
+      }}
+    >
       <sphereGeometry args={[radius, 32, 24]} />
       <shaderMaterial
         vertexShader={ATMOS_VERT}

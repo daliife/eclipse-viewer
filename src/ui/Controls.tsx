@@ -118,6 +118,8 @@ export function Controls({
   degreesFromAlignment,
 }: Props) {
   const { t, locale, setLocale } = useI18n()
+  const speedId = useId()
+  const timeId = useId()
   const [moreOpen, setMoreOpen] = useState(false)
   const simDate = dateAtOffset(mode, simDays)
   const dateText = formatDate(simDate, dateLocale(locale))
@@ -129,14 +131,12 @@ export function Controls({
     <div className="panel controls" role="toolbar" aria-label={t('controlsLabel')}>
       <Section title={t('sectionTime')}>
         <div className="time-transport">
-          <div className="time-now-wrap">
-            <time className="time-now" dateTime={simDate.toISOString()} title={t('simDate')}>
-              {dateText}
-            </time>
-            <span className={keys.hit ? 'status status-hit' : 'status status-miss'}>
-              {t(keys.statusKey, { deg })}
-            </span>
-          </div>
+          <time className="time-now" dateTime={simDate.toISOString()} title={t('simDate')}>
+            {dateText}
+          </time>
+          <span className={keys.hit ? 'status status-hit' : 'status status-miss'}>
+            {t(keys.statusKey, { deg })}
+          </span>
           <button
             type="button"
             className="play-toggle"
@@ -178,45 +178,47 @@ export function Controls({
             })}
         </div>
         <div className="time-sliders">
-          <label className="slider-row">
-            <span className="slider-label">{t('speed')}</span>
-            <input
-              type="range"
-              min={0.25}
-              max={4}
-              step={0.25}
-              value={speed}
-              aria-valuemin={0.25}
-              aria-valuemax={4}
-              aria-valuenow={speed}
-              aria-valuetext={`${formatSpeed(speed)}`}
-              onChange={(e) => onSpeed(Number(e.target.value))}
-            />
-            <span className="slider-value" aria-hidden="true">
-              {formatSpeed(speed)}
-            </span>
+          <label className="slider-label" htmlFor={speedId}>
+            {t('speed')}
           </label>
-          <label className="slider-row">
-            <span className="slider-label">{t('scrub')}</span>
-            <input
-              type="range"
-              min={-2.5}
-              max={2.5}
-              step={0.01}
-              value={simDays}
-              aria-valuemin={-2.5}
-              aria-valuemax={2.5}
-              aria-valuenow={Number(simDays.toFixed(2))}
-              aria-valuetext={dateText}
-              onChange={(e) => {
-                onPlaying(false)
-                onSimDays(Number(e.target.value))
-              }}
-            />
-            <span className="slider-value" aria-hidden="true">
-              {clockText}
-            </span>
+          <input
+            id={speedId}
+            type="range"
+            min={0.25}
+            max={4}
+            step={0.25}
+            value={speed}
+            aria-valuemin={0.25}
+            aria-valuemax={4}
+            aria-valuenow={speed}
+            aria-valuetext={`${formatSpeed(speed)}`}
+            onChange={(e) => onSpeed(Number(e.target.value))}
+          />
+          <span className="slider-value" aria-hidden="true">
+            {formatSpeed(speed)}
+          </span>
+          <label className="slider-label" htmlFor={timeId}>
+            {t('scrub')}
           </label>
+          <input
+            id={timeId}
+            type="range"
+            min={-2.5}
+            max={2.5}
+            step={0.01}
+            value={simDays}
+            aria-valuemin={-2.5}
+            aria-valuemax={2.5}
+            aria-valuenow={Number(simDays.toFixed(2))}
+            aria-valuetext={dateText}
+            onChange={(e) => {
+              onPlaying(false)
+              onSimDays(Number(e.target.value))
+            }}
+          />
+          <span className="slider-value" aria-hidden="true">
+            {clockText}
+          </span>
         </div>
       </Section>
 
