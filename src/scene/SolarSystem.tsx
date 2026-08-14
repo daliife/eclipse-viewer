@@ -186,6 +186,10 @@ export function SolarSystem({
           light.layers.enable(3)
         }}
       />
+      <ambientLight
+        intensity={0.32}
+        onUpdate={(light) => light.layers.set(2)}
+      />
       <pointLight
         position={[0, 0, 0]}
         color="#fff6e8"
@@ -200,7 +204,7 @@ export function SolarSystem({
       <pointLight
         position={[0, 0, 0]}
         color={moonEclipse > 0.04 ? '#ff7a45' : '#fff6e8'}
-        intensity={5.8 * moonLit}
+        intensity={5.8 * Math.max(0.12, moonLit)}
         decay={0}
         distance={0}
         onUpdate={(light) => light.layers.set(2)}

@@ -6,7 +6,6 @@ import { dateLocale } from '../i18n/messages'
 import { useI18n } from '../i18n/LocaleContext'
 import {
   IconCamera,
-  IconChevron,
   IconEarth,
   IconInfo,
   IconMoon,
@@ -16,6 +15,7 @@ import {
   IconPlay,
   IconRuler,
   IconSchool,
+  IconSettings,
   IconShadow,
   IconSun,
 } from './Icons'
@@ -231,7 +231,7 @@ export function Controls({
         title={t('moreOptions')}
         onClick={() => setMoreOpen((open) => !open)}
       >
-        <IconChevron />
+        <IconSettings />
       </button>
 
       <div

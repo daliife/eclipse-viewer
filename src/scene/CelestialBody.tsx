@@ -48,8 +48,8 @@ export function CelestialBody({
 }: BodyProps) {
   const map = useTexture(textureUrl)
   const root = useRef<Group>(null)
-  const eclipseColor = useMemo(
-    () => new Color().lerpColors(new Color('#ffffff'), new Color('#4a2a22'), eclipse),
+  const eclipseTint = useMemo(
+    () => new Color().lerpColors(new Color('#ffffff'), new Color('#e8a090'), eclipse),
     [eclipse],
   )
 
@@ -69,17 +69,15 @@ export function CelestialBody({
         <sphereGeometry args={[radius, 48, 36]} />
         {emissive ? (
           <meshBasicMaterial map={map} toneMapped={false} />
-        ) : eclipse > 0.04 ? (
+        ) : (
           <meshStandardMaterial
             map={map}
-            color={eclipseColor}
-            roughness={0.9}
+            color={eclipseTint}
+            roughness={0.92}
             metalness={0}
-            emissive="#7a220c"
-            emissiveIntensity={0.18 + eclipse * 0.5}
+            emissive={eclipse > 0.001 ? '#7a220c' : '#000000'}
+            emissiveIntensity={eclipse * 0.72}
           />
-        ) : (
-          <meshStandardMaterial map={map} roughness={0.9} metalness={0} />
         )}
       </mesh>
       {atmosphere ? <EarthAtmosphere radius={radius} layer={layer} /> : null}

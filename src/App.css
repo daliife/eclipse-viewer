@@ -646,12 +646,6 @@ input[type='range']::-moz-range-thumb {
 .more-toggle .icon {
   width: 15px;
   height: 15px;
-  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-  transform: rotate(90deg);
-}
-
-.more-toggle.is-open .icon {
-  transform: rotate(-90deg);
 }
 
 .more-panels {
@@ -905,7 +899,6 @@ input[type='range']::-moz-range-thumb {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .more-toggle .icon,
   .more-panels,
   .more-panels-inner > .section,
   .education-toggle .icon,
@@ -980,14 +973,6 @@ input[type='range']::-moz-range-thumb {
   .more-toggle.is-open {
     background: var(--ui-hover);
     color: var(--ui-fg);
-  }
-
-  .more-toggle .icon {
-    transform: none;
-  }
-
-  .more-toggle.is-open .icon {
-    transform: rotate(180deg);
   }
 
   .more-panels {

@@ -82,7 +82,7 @@ const en: Dict = {
     'Click and drag to pan around the scene. Scroll to zoom in and out. On a phone, drag with one finger to rotate and pinch to zoom.',
   tour4Title: 'Look from Earth',
   tour4Body:
-    'The small frame is the view from Earth — you can enlarge it. The bottom panel has more options: open the chevron for solar or lunar eclipse, camera, scale, and guides.',
+    'The small frame is the view from Earth — you can enlarge it. The bottom panel has more options: open the settings icon for solar or lunar eclipse, camera, scale, and guides.',
 }
 
 const ca: Dict = {
@@ -165,7 +165,7 @@ const ca: Dict = {
     'Fes clic i arrossega per moure la vista (pan). Fes zoom amb la rodeta del ratolí per apropar-te o allunyar-te. Al mòbil, un dit gira la vista i pessigar amplia.',
   tour4Title: 'Vista des de la Terra',
   tour4Body:
-    'El requadre petit és el que es veuria des de la Terra; el pots ampliar. Al panell de sota hi ha més opcions: obre la fletxa per triar eclipsi solar o lunar, càmera, escala i guies.',
+    'El requadre petit és el que es veuria des de la Terra; el pots ampliar. Al panell de sota hi ha més opcions: obre l’engranatge per triar eclipsi solar o lunar, càmera, escala i guies.',
 }
 
 export const dictionaries: Record<Locale, Dict> = { en, ca }

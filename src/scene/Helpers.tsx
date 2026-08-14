@@ -132,18 +132,29 @@ function NodeMark({ position, radius }: { position: Vec3; radius: number }) {
 }
 
 export function EclipticPlane({ visible, scale }: { visible: boolean; scale: Scale }) {
+  const radius = scale.earthOrbit * 1.12
+  const rim = Math.max(scale.earthRadius * 0.007, scale.earthOrbit * 0.0014)
+  const discQuat = useMemo(() => quatFromNormal(new Vector3(0, 1, 0)), [])
+
   return (
     <HelperGroup>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} visible={visible} renderOrder={0}>
-        <circleGeometry args={[scale.earthOrbit * 1.12, 48]} />
-        <meshBasicMaterial
-          color="#8a9098"
-          transparent
-          opacity={0.028}
-          side={DoubleSide}
-          depthWrite={false}
-        />
-      </mesh>
+      <group visible={visible}>
+        <mesh rotation={[-Math.PI / 2, 0, 0]} renderOrder={0}>
+          <circleGeometry args={[radius, 72]} />
+          <meshBasicMaterial
+            color="#93a6bb"
+            transparent
+            opacity={0.075}
+            side={DoubleSide}
+            depthWrite={false}
+            polygonOffset
+            polygonOffsetFactor={1}
+            polygonOffsetUnits={1}
+          />
+        </mesh>
+        <OrbitTube radius={radius * 0.62} tube={rim * 0.55} color="#9aadc0" opacity={0.16} quaternion={discQuat} />
+        <OrbitTube radius={radius} tube={rim} color="#c5d4e2" opacity={0.45} quaternion={discQuat} />
+      </group>
     </HelperGroup>
   )
 }
