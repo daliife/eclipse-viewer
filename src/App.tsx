@@ -82,11 +82,19 @@ export default function App() {
         </Canvas>
       </SceneBoundary>
 
-      <EducationPanel
-        mode={mode}
-        simDays={simDays}
-        degreesFromAlignment={state.degreesFromAlignment}
-      />
+      <div className="top-chrome">
+        <EducationPanel
+          mode={mode}
+          simDays={simDays}
+          degreesFromAlignment={state.degreesFromAlignment}
+        />
+        <InsetFrame
+          mode={mode}
+          insetRef={insetRef}
+          enlarged={insetLarge}
+          onToggle={() => setInsetLarge((open) => !open)}
+        />
+      </div>
       <Controls
         mode={mode}
         onMode={(next) => {
@@ -114,12 +122,6 @@ export default function App() {
           setFocus('earth')
         }}
         degreesFromAlignment={state.degreesFromAlignment}
-      />
-      <InsetFrame
-        mode={mode}
-        insetRef={insetRef}
-        enlarged={insetLarge}
-        onToggle={() => setInsetLarge((open) => !open)}
       />
       {shouldShowTour() ? (
         <Suspense fallback={null}>

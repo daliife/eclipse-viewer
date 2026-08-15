@@ -88,6 +88,14 @@
   box-shadow: var(--ui-shadow);
 }
 
+.top-chrome {
+  pointer-events: none;
+}
+
+.top-chrome > .panel {
+  pointer-events: auto;
+}
+
 .education {
   top: max(12px, env(safe-area-inset-top));
   left: max(12px, env(safe-area-inset-left));
@@ -1115,21 +1123,39 @@ input[type='range']::-moz-range-thumb {
     --ui-radius: 16px;
   }
 
+  .top-chrome {
+    position: absolute;
+    top: max(8px, env(safe-area-inset-top));
+    left: max(8px, env(safe-area-inset-left));
+    right: max(8px, env(safe-area-inset-right));
+    z-index: 5;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 8px;
+    pointer-events: none;
+  }
+
   .panel {
     padding: 10px 12px;
     border-radius: var(--ui-radius);
   }
 
   .education {
-    width: auto;
+    position: relative;
+    top: auto;
+    left: auto;
     right: auto;
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    max-width: none;
     overflow: hidden;
-    max-width: calc(100% - 16px - min(120px, 30vw) - 12px);
   }
 
   .education.is-open {
     width: auto;
-    max-width: calc(100% - 16px - min(120px, 30vw) - 12px);
+    max-width: none;
   }
 
   .education-heading h1 {
@@ -1169,11 +1195,18 @@ input[type='range']::-moz-range-thumb {
     width: auto;
     max-width: none;
     max-height: min(68dvh, calc(100dvh - 7.5rem));
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
     overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
+  }
+
+  .controls.is-expanded {
+    height: min(68dvh, calc(100dvh - 7.5rem));
+  }
+
+  .controls > .section,
+  .more-toggle {
+    flex-shrink: 0;
   }
 
   .controls > .section .section-head {
@@ -1184,13 +1217,30 @@ input[type='range']::-moz-range-thumb {
     padding: 0;
   }
 
+  .controls button,
+  .controls label {
+    touch-action: pan-y;
+  }
+
+  .controls input[type='range'] {
+    touch-action: auto;
+  }
+
   .more-panels.is-open {
+    flex: 1 1 auto;
+    min-height: 0;
     grid-template-rows: max-content;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
   }
 
   .more-panels.is-open .more-panels-inner {
     overflow: visible;
     min-height: auto;
+    padding-bottom: 8px;
   }
 
   .more-panels .section {
@@ -1222,7 +1272,12 @@ input[type='range']::-moz-range-thumb {
   }
 
   .panel.inset {
-    z-index: 4;
+    position: relative;
+    top: auto;
+    right: auto;
+    left: auto;
+    z-index: auto;
+    flex: 0 0 min(112px, 28vw);
     width: min(112px, 28vw);
     height: min(86px, 13vh);
     padding: 0;
@@ -1236,9 +1291,11 @@ input[type='range']::-moz-range-thumb {
     padding: 4px 6px 4px 8px;
   }
 
-  .panel.inset.inset-large {
-    width: min(92vw, 420px);
-    height: min(38vh, 280px);
+  .top-chrome:has(.inset-large) .panel.inset {
+    flex: 1 0 100%;
+    width: 100%;
+    max-width: none;
+    height: min(34vh, 260px);
   }
 
   .inset-large .inset-label {

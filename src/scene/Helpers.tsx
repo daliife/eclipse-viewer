@@ -1,4 +1,5 @@
 import { useLayoutEffect, useMemo, useRef, type ReactNode } from 'react'
+import { Line } from '@react-three/drei'
 import { Group, Quaternion, Vector3, DoubleSide } from 'three'
 import {
   type Scale,
@@ -58,6 +59,49 @@ function OrbitTube({
   )
 }
 
+function circlePoints(radius: number, segments: number): [number, number, number][] {
+  const pts: [number, number, number][] = []
+  for (let i = 0; i <= segments; i++) {
+    const a = (i / segments) * Math.PI * 2
+    pts.push([Math.cos(a) * radius, Math.sin(a) * radius, 0])
+  }
+  return pts
+}
+
+function orbitSegments(radius: number) {
+  if (radius > 1000) return 768
+  if (radius > 40) return 256
+  return 192
+}
+
+function OrbitLine({
+  radius,
+  color,
+  lineWidth,
+  quaternion,
+  position,
+}: {
+  radius: number
+  color: string
+  lineWidth: number
+  quaternion?: Quaternion
+  position?: Vec3
+}) {
+  const points = useMemo(() => circlePoints(radius, orbitSegments(radius)), [radius])
+  return (
+    <group position={position} quaternion={quaternion} renderOrder={2}>
+      <Line
+        points={points}
+        color={color}
+        lineWidth={lineWidth}
+        dashed={false}
+        depthWrite={false}
+        transparent={false}
+      />
+    </group>
+  )
+}
+
 export function OrbitRings({
   earth,
   visible,
@@ -73,45 +117,53 @@ export function OrbitRings({
     [toSun[0], toSun[1], toSun[2], scale.moonInclinationDeg],
   )
   const earthQuat = useMemo(() => quatFromNormal(new Vector3(0, 1, 0)), [])
-
-  const earthTube = scale.earthRadius * 0.005
-  const moonTube = scale.earthRadius * 0.0045
+  const realistic = isRealisticScale(scale)
 
   return (
     <HelperGroup>
       <group visible={visible}>
-        <OrbitTube
+        <OrbitLine
           radius={scale.earthOrbit}
-          tube={earthTube}
-          color="#7eb4d6"
-          opacity={0.32}
+          color={realistic ? '#6ea6d4' : '#5d8aaa'}
+          lineWidth={realistic ? 2.4 : 1.7}
           quaternion={earthQuat}
         />
-        <OrbitTube
+        <OrbitLine
           radius={scale.moonOrbit}
-          tube={moonTube}
-          color="#c8d0da"
-          opacity={0.5}
+          color={realistic ? '#cfd8e2' : '#8b959f'}
+          lineWidth={realistic ? 2.6 : 2}
           quaternion={moonQuat}
           position={earth}
         />
-        <OrbitNodes earth={earth} toSun={toSun} scale={scale} />
+        <OrbitNodes earth={earth} toSun={toSun} scale={scale} realistic={realistic} />
       </group>
     </HelperGroup>
   )
+}
+
+function isRealisticScale(scale: Scale) {
+  return scale.earthOrbit > scale.earthRadius * 200
+}
+
+function nodeRadius(scale: Scale, realistic: boolean) {
+  // Classroom: easy to spot on the compressed Moon orbit.
+  // Realistic: a pin next to Earth/Moon, not a second planet.
+  return realistic ? scale.moonRadius * 0.22 : scale.earthRadius * 0.085
 }
 
 function OrbitNodes({
   earth,
   toSun,
   scale,
+  realistic,
 }: {
   earth: Vec3
   toSun: Vec3
   scale: Scale
+  realistic: boolean
 }) {
   const r = scale.moonOrbit
-  const size = Math.max(scale.earthRadius * 0.072, scale.moonOrbit * 0.016)
+  const size = nodeRadius(scale, realistic)
   const a: Vec3 = [earth[0] + toSun[0] * r, earth[1] + toSun[1] * r, earth[2] + toSun[2] * r]
   const b: Vec3 = [earth[0] - toSun[0] * r, earth[1] - toSun[1] * r, earth[2] - toSun[2] * r]
   return (

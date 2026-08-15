@@ -16,7 +16,7 @@ body,
   overflow: hidden;
   background: #000;
   font-family: ui-sans-serif, system-ui, sans-serif;
-  touch-action: none;
+  touch-action: pan-y;
 }
 
 button,

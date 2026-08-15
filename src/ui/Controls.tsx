@@ -130,7 +130,7 @@ export function Controls({
   return (
     <div
       id="viewer-controls"
-      className="panel controls"
+      className={moreOpen ? 'panel controls is-expanded' : 'panel controls'}
       role="region"
       aria-label={t('controlsLabel')}
       tabIndex={-1}
