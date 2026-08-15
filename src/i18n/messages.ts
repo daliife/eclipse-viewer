@@ -1,8 +1,6 @@
 export type Locale = 'ca' | 'en'
 
-type Dict = Record<string, string>
-
-const en: Dict = {
+const en = {
   appTitle: 'Eclipse Viewer',
   solar: 'Solar',
   lunar: 'Lunar',
@@ -87,9 +85,11 @@ const en: Dict = {
   tour4Title: 'Look from Earth',
   tour4Body:
     'The small frame is the view from Earth — you can enlarge it. Open the settings icon in the bottom panel for solar or lunar eclipse, camera, scale, and guides.',
-}
+} as const
 
-const ca: Dict = {
+export type MessageKey = keyof typeof en
+
+const ca: Record<MessageKey, string> = {
   appTitle: 'Visualitzador d’eclipsis',
   solar: 'Solar',
   lunar: 'Lunar',
@@ -176,7 +176,7 @@ const ca: Dict = {
     'El requadre petit és la vista des de la Terra; el pots ampliar. Obre l’engranatge de sota per triar eclipsi solar o lunar, càmera, escala i guies.',
 }
 
-export const dictionaries: Record<Locale, Dict> = { en, ca }
+const dictionaries: Record<Locale, Record<MessageKey, string>> = { en, ca }
 
 export const LOCALE_KEY = 'eclipse-lang'
 
@@ -199,8 +199,8 @@ export function detectLocale(): Locale {
   return 'en'
 }
 
-export function t(locale: Locale, key: string, vars?: Record<string, string | number>): string {
-  const raw = dictionaries[locale][key] ?? dictionaries.en[key] ?? key
+export function t(locale: Locale, key: MessageKey, vars?: Record<string, string | number>): string {
+  const raw = dictionaries[locale][key] ?? dictionaries.en[key]
   if (!vars) return raw
   return raw.replace(/\{(\w+)\}/g, (_, name: string) => String(vars[name] ?? ''))
 }

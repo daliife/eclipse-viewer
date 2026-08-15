@@ -1,5 +1,5 @@
 import { useId, useState, type ReactNode } from 'react'
-import { explainKeys } from '../simulation/eclipse'
+import { ALIGNMENT_EPS, explainKeys } from '../simulation/eclipse'
 import type { CameraFocus, EclipseMode, ScaleMode } from '../simulation/orbits'
 import { DATE_JUMPS, dateAtOffset, formatClock, formatDate, formatJumpDate } from '../simulation/orbits'
 import { dateLocale } from '../i18n/messages'
@@ -163,7 +163,7 @@ export function Controls({
               const date = dateAtOffset(mode, offset)
               const dateText = formatJumpDate(date, dateLocale(locale))
               const eclipse = offset === 0
-              const active = Math.abs(simDays - offset) < 0.2
+              const active = Math.abs(simDays - offset) < ALIGNMENT_EPS
               return (
                 <button
                   key={offset}

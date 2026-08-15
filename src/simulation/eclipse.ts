@@ -1,10 +1,15 @@
+import type { MessageKey } from '../i18n/messages'
 import type { EclipseMode } from './orbits'
 
-export function explainKeys(
-  mode: EclipseMode,
-  simDays: number,
-): { titleKey: string; bodyKey: string; statusKey: string; hit: boolean } {
-  const hit = Math.abs(simDays) < 0.18
+export const ALIGNMENT_EPS = 0.18
+
+export function explainKeys(mode: EclipseMode, simDays: number): {
+  titleKey: MessageKey
+  bodyKey: MessageKey
+  statusKey: MessageKey
+  hit: boolean
+} {
+  const hit = Math.abs(simDays) < ALIGNMENT_EPS
   if (mode === 'solar') {
     return hit
       ? { titleKey: 'solarHitTitle', bodyKey: 'solarHitBody', statusKey: 'statusHit', hit }

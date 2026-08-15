@@ -73,4 +73,4 @@ One-time repo setting: **Settings → Pages → Source = GitHub Actions**. The r
 
 ## Stack
 
-Vite, React, TypeScript, Three.js, React Three Fiber, Drei.
+Vite, React 19, TypeScript, Three.js, React Three Fiber, Drei. `npm run build` typechecks; `npm test` and `npm run lint` run on pull requests.

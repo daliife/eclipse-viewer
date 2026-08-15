@@ -119,7 +119,7 @@ export function WelcomeTour() {
 
   if (!open) return null
 
-  const n = String(step + 1)
+  const n = (step + 1) as 1 | 2 | 3 | 4
   const title = t(`tour${n}Title`)
   const body = t(`tour${n}Body`)
   const StepIcon = STEP_ICONS[step] ?? IconSun

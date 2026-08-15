@@ -26,7 +26,7 @@ const EARTH_R = 1.15
  * Apparent Moon/Sun diameter on 12 Aug 2026.
  * Total eclipse: Moon ~3% larger (EclipseWise / NASA, magnitude 1.0386).
  */
-export const SOLAR_MOON_SUN_RATIO = 1.031
+const SOLAR_MOON_SUN_RATIO = 1.031
 
 function moonRadiusForSkyRatio(
   sunRadius: number,
@@ -47,7 +47,7 @@ function moonOrbitForSkyRatio(
 }
 
 /** Classroom: bodies visible, 5° tilt obvious. Real: true radius/distance ratios. */
-export const SCALES: Record<ScaleMode, Scale> = {
+const SCALES: Record<ScaleMode, Scale> = {
   didactic: {
     ...SHARED,
     sunRadius: 8,
@@ -72,8 +72,8 @@ export function getScale(mode: ScaleMode): Scale {
   return SCALES[mode]
 }
 
-export const SOLAR_ECLIPSE_MS = Date.UTC(2026, 7, 12, 18, 30, 0)
-export const LUNAR_ECLIPSE_MS = Date.UTC(2025, 2, 14, 6, 59, 0)
+const SOLAR_ECLIPSE_MS = Date.UTC(2026, 7, 12, 18, 30, 0)
+const LUNAR_ECLIPSE_MS = Date.UTC(2025, 2, 14, 6, 59, 0)
 
 export const DATE_JUMPS = [-2, -1, 0, 1, 2] as const
 
@@ -155,7 +155,7 @@ export function getSimState(mode: EclipseMode, simDays: number, scale: Scale): S
   }
 }
 
-export function eclipseInstant(mode: EclipseMode): number {
+function eclipseInstant(mode: EclipseMode): number {
   return mode === 'solar' ? SOLAR_ECLIPSE_MS : LUNAR_ECLIPSE_MS
 }
 
@@ -248,7 +248,7 @@ export function framingFov(aspect: number): number {
   return 42
 }
 
-export function framingDistanceBoost(aspect: number): number {
+function framingDistanceBoost(aspect: number): number {
   if (aspect >= 1) return 1
   return 1 + (1 - Math.max(0.48, aspect)) * 0.65
 }
@@ -266,9 +266,4 @@ export function focusCameraOffset(scale: Scale, focus: CameraFocus, aspect = 1.4
   // Close side view so Earth and the Moon share the frame.
   const d = scale.moonOrbit * 1.22 * boost
   return [d * 0.1, d * 0.36, d * 0.92]
-}
-
-export function focusRadius(scale: Scale, focus: CameraFocus): number {
-  const o = focusCameraOffset(scale, focus)
-  return Math.hypot(o[0], o[1], o[2])
 }

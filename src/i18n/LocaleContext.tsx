@@ -1,10 +1,10 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
-import { detectLocale, LOCALE_KEY, t as translate, type Locale } from './messages'
+import { detectLocale, LOCALE_KEY, t as translate, type Locale, type MessageKey } from './messages'
 
 type I18n = {
   locale: Locale
   setLocale: (locale: Locale) => void
-  t: (key: string, vars?: Record<string, string | number>) => string
+  t: (key: MessageKey, vars?: Record<string, string | number>) => string
 }
 
 const I18nContext = createContext<I18n | null>(null)
