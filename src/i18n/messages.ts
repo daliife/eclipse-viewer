@@ -1,6 +1,6 @@
 export type Locale = 'ca' | 'en'
 
-const en = {
+export const en = {
   appTitle: 'Eclipse Viewer',
   solar: 'Solar',
   lunar: 'Lunar',
@@ -90,7 +90,7 @@ const en = {
 
 export type MessageKey = keyof typeof en
 
-const ca: Record<MessageKey, string> = {
+export const ca: Record<MessageKey, string> = {
   appTitle: 'Visualitzador d’eclipsis',
   solar: 'Solar',
   lunar: 'Lunar',

@@ -40,7 +40,7 @@ src/
   ui/                     # Controls, education panel, inset, tour
 public/textures/          # Sun, Earth, Moon maps
 docs/                     # README screenshots
-.github/workflows/        # GitHub Pages deploy
+.github/workflows/        # Lint, test, build, GitHub Pages
 ```
 
 ## Local development
@@ -53,13 +53,15 @@ npm run dev
 Vite `base` is `/eclipse-viewer/`, so the app is at `http://localhost:5173/eclipse-viewer/`.
 
 ```bash
+npm test
+npm run lint
 npm run build
 npm run preview
 ```
 
 ## Production (GitHub Pages)
 
-Pushes to `main` run [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml): `npm ci`, `vite build`, deploy `dist`.
+Pushes to `main` run [`.github/workflows/ci.yml`](.github/workflows/ci.yml): `npm ci`, lint, test, `vite build`, deploy `dist`. Pull requests run the same checks without deploying. Rapid pushes cancel the previous run.
 
 One-time repo setting: **Settings → Pages → Source = GitHub Actions**. The repo must be public on a free GitHub plan.
 
@@ -73,4 +75,4 @@ One-time repo setting: **Settings → Pages → Source = GitHub Actions**. The r
 
 ## Stack
 
-Vite, React 19, TypeScript, Three.js, React Three Fiber, Drei. `npm run build` typechecks; `npm test` and `npm run lint` run on pull requests.
+Vite, React 19, TypeScript, Three.js, React Three Fiber, Drei. `npm run build` typechecks. Lint and tests run on every push to `main` (and on pull requests).
