@@ -851,16 +851,16 @@ input[type='range']::-moz-range-thumb {
 .welcome-dots {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   margin: 0;
   flex-shrink: 0;
 }
 
 .welcome-dots button {
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  min-height: 44px;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  min-height: 22px;
   padding: 0;
   border: none;
   border-radius: 999px;
@@ -868,15 +868,25 @@ input[type='range']::-moz-range-thumb {
   justify-content: center;
 }
 
+.welcome-dots button:hover {
+  background: transparent;
+}
+
+.welcome-dots button:focus-visible {
+  outline: none;
+}
+
 .welcome-dots button::after {
   content: '';
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 0 0 0 transparent;
   transition:
     width 0.22s ease,
-    background 0.22s ease;
+    background 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
 .welcome-dots button.is-done::after {
@@ -884,7 +894,7 @@ input[type='range']::-moz-range-thumb {
 }
 
 .welcome-dots button.is-on::after {
-  width: 18px;
+  width: 16px;
   background: var(--ui-fg);
 }
 
@@ -894,6 +904,12 @@ input[type='range']::-moz-range-thumb {
 
 .welcome-dots button.is-on:hover::after {
   background: var(--ui-fg);
+}
+
+.welcome-dots button:focus-visible::after {
+  box-shadow:
+    0 0 0 2px var(--ui-bg),
+    0 0 0 4px var(--ui-focus);
 }
 
 .welcome-hide {

@@ -283,9 +283,8 @@ function DualViewport({
   hideRootRef: RefObject<Group | null>
 }) {
   const gl = useThree((s) => s.gl)
-  const insetClock = useRef(0)
 
-  useFrame((state, dt) => {
+  useFrame((state) => {
     const { scene, camera, gl: renderer, size } = state
     renderer.autoClear = true
     renderer.setScissorTest(false)
@@ -294,9 +293,6 @@ function DualViewport({
     renderer.render(scene, camera)
 
     if (typeof document !== 'undefined' && document.hidden) return
-    insetClock.current += dt
-    if (insetClock.current < 1 / 30) return
-    insetClock.current = 0
 
     const earthCam = earthCamRef.current
     const inset = insetRef.current
