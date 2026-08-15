@@ -69,22 +69,23 @@ const en = {
   reload: 'Reload',
   tourSkip: 'Skip',
   tourHide: 'Don’t show this tutorial again',
+  tourReplay: 'Show tutorial',
   tourBack: 'Back',
   tourNext: 'Next',
   tourStart: 'Start',
   tourStep: '{n} / {total}',
-  tour1Title: 'Eclipse Viewer',
+  tour1Title: 'See it in 3D',
   tour1Body:
-    'This is a classroom model of the Sun, Earth and Moon. An eclipse needs the right phase and a node — one of the two red dots on the Moon’s path.',
-  tour2Title: 'Change the day',
+    'This 3D view shows why solar and lunar eclipses happen. You can switch scale: didactic, so the 5° tilt is easy to see, or realistic, with true size and distance.',
+  tour2Title: 'Why it’s so rare',
   tour2Body:
-    'Use the bottom controls to change the day. Jump the dates around the eclipse, drag Time, or press Play. A day later the Moon has already moved off the line.',
-  tour3Title: 'Move around',
+    'An eclipse needs two things at once: the right Moon phase, and a pass through a node — one of the two red dots where its tilted orbit crosses the Sun–Earth plane.',
+  tour3Title: 'Move through time',
   tour3Body:
-    'Click and drag to pan around the Sun, Earth and Moon. Use the scroll wheel to zoom in and out. On a phone, drag with one finger to rotate and pinch to zoom.',
-  tour4Title: 'Look from Earth',
+    'The bottom panel moves time. Jump the dates around the eclipse, drag Time, or press Play. A day later the Moon has already left the line.',
+  tour4Title: 'Find your view',
   tour4Body:
-    'The small frame is the view from Earth — you can enlarge it. Open the settings icon in the bottom panel for solar or lunar eclipse, camera, scale, and guides.',
+    'Drag to rotate, scroll or pinch to zoom. The small frame is the view from Earth — you can enlarge it. The gear opens solar or lunar eclipse, camera, scale, and guides.',
 } as const
 
 export type MessageKey = keyof typeof en
@@ -158,22 +159,23 @@ const ca: Record<MessageKey, string> = {
   reload: 'Torna a carregar',
   tourSkip: 'Omet',
   tourHide: 'No mostris més el tutorial',
+  tourReplay: 'Torna a veure el tutorial',
   tourBack: 'Enrere',
   tourNext: 'Següent',
   tourStart: 'Comença',
   tourStep: '{n} / {total}',
-  tour1Title: 'Visualitzador d’eclipsis',
+  tour1Title: 'Mira-ho en 3D',
   tour1Body:
-    'És un model didàctic del Sol, la Terra i la Lluna. Un eclipsi necessita la fase adequada i el pas per un node — un dels dos punts vermells del camí de la Lluna.',
-  tour2Title: 'Canvia el dia',
+    'Aquesta vista 3D explica per què passen els eclipsis solars i lunars. Pots canviar l’escala: didàctica, perquè es vegi la inclinació de 5°, o realista, amb mides i distàncies de veritat.',
+  tour2Title: 'Per què és tan rar',
   tour2Body:
-    'El panell de sota serveix per canviar el dia. Salta pels dies de l’eclipsi, mou Temps o prem Reprodueix. Un dia després, la Lluna ja ha sortit de la línia.',
-  tour3Title: 'Mou la vista',
+    'Un eclipsi necessita dues coses alhora: la fase adequada de la Lluna i el pas per un node, un dels dos punts vermells on l’òrbita inclinada creua el pla Sol–Terra.',
+  tour3Title: 'Mou el temps',
   tour3Body:
-    'Fes clic i arrossega per moure’t pel Sol, la Terra i la Lluna. Fes zoom amb la rodeta per apropar-te o allunyar-te. Al mòbil, un dit gira la vista i pessigar amplia.',
-  tour4Title: 'Vista des de la Terra',
+    'El panell de sota mou el temps. Salta pels dies de l’eclipsi, arrossega Temps o prem Reprodueix. Un dia després, la Lluna ja ha sortit de la línia.',
+  tour4Title: 'Tria la vista',
   tour4Body:
-    'El requadre petit és la vista des de la Terra; el pots ampliar. Obre l’engranatge de sota per triar eclipsi solar o lunar, càmera, escala i guies.',
+    'Arrossega per girar, i fes zoom amb la rodeta o pessigant. El requadre petit és la vista des de la Terra; el pots ampliar. L’engranatge obre eclipsi solar o lunar, càmera, escala i guies.',
 }
 
 const dictionaries: Record<Locale, Record<MessageKey, string>> = { en, ca }

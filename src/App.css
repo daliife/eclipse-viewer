@@ -443,7 +443,7 @@ button[aria-pressed='true'] {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
-    'date play'
+    'date tools'
     'status play';
   column-gap: 10px;
   row-gap: 6px;
@@ -709,13 +709,23 @@ input[type='range']::-moz-range-thumb {
   height: 14px;
 }
 
+.more-bar {
+  grid-area: tools;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2px;
+  margin: -4px -6px 0 0;
+  flex-shrink: 0;
+}
+
 .more-toggle {
   width: 32px;
   min-width: 32px;
   height: 32px;
   min-height: 32px;
   padding: 0;
-  margin: 6px auto 0;
+  margin: 0;
   justify-content: center;
   border: none;
   background: transparent;
@@ -1046,6 +1056,10 @@ input[type='range']::-moz-range-thumb {
     min-width: 26rem;
   }
 
+  .controls > .section:first-child .section-head {
+    display: none;
+  }
+
   .more-panels-inner > .section,
   .controls > .section:not(:first-child) {
     flex: 0 0 auto;
@@ -1070,12 +1084,16 @@ input[type='range']::-moz-range-thumb {
     border-left: 1px solid var(--ui-line);
   }
 
+  .more-bar {
+    margin: -2px -4px 0 0;
+  }
+
   .more-toggle {
     width: 28px;
     min-width: 28px;
     height: 28px;
     min-height: 28px;
-    margin: 0 2px;
+    margin: 0;
     flex-shrink: 0;
     align-self: center;
     border-radius: var(--ui-radius-sm);
@@ -1219,8 +1237,7 @@ input[type='range']::-moz-range-thumb {
     height: min(68dvh, calc(100dvh - 7.5rem));
   }
 
-  .controls > .section,
-  .more-toggle {
+  .controls > .section {
     flex-shrink: 0;
   }
 

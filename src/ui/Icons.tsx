@@ -184,3 +184,12 @@ export function IconClose(props: IconProps) {
     </Svg>
   )
 }
+
+export function IconHelp(props: IconProps) {
+  return (
+    <Svg {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M9.6 9.2a2.5 2.5 0 1 1 3.2 3.1c-.7.4-1.3.8-1.3 1.7M12 17.2h.01" />
+    </Svg>
+  )
+}

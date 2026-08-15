@@ -40,6 +40,15 @@ export default function App() {
   const [scaleMode, setScaleMode] = useState<ScaleMode>('didactic')
   const [insetLarge, setInsetLarge] = useState(false)
   const [sceneReady, setSceneReady] = useState(false)
+  const [tourOpen, setTourOpen] = useState(shouldShowTour)
+  const [tourMounted, setTourMounted] = useState(shouldShowTour)
+  const [tourKey, setTourKey] = useState(0)
+  const showTour = useCallback(() => {
+    setTourMounted(true)
+    setTourKey((n) => n + 1)
+    setTourOpen(true)
+  }, [])
+  const hideTour = useCallback(() => setTourOpen(false), [])
   const onSceneReady = useCallback(() => setSceneReady(true), [])
   const { t } = useI18n()
 
@@ -122,10 +131,11 @@ export default function App() {
           setFocus('earth')
         }}
         degreesFromAlignment={state.degreesFromAlignment}
+        onShowTour={showTour}
       />
-      {shouldShowTour() ? (
+      {tourMounted ? (
         <Suspense fallback={null}>
-          <WelcomeTour />
+          <WelcomeTour key={tourKey} open={tourOpen} onClose={hideTour} />
         </Suspense>
       ) : null}
     </div>

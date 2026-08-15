@@ -18,6 +18,7 @@ import {
   IconSettings,
   IconShadow,
   IconSun,
+  IconHelp,
 } from './Icons'
 
 type Props = {
@@ -40,6 +41,7 @@ type Props = {
   scaleMode: ScaleMode
   onScaleMode: (mode: ScaleMode) => void
   degreesFromAlignment: number
+  onShowTour: () => void
 }
 
 function Section({
@@ -116,6 +118,7 @@ export function Controls({
   scaleMode,
   onScaleMode,
   degreesFromAlignment,
+  onShowTour,
 }: Props) {
   const { t, locale, setLocale } = useI18n()
   const speedId = useId()
@@ -140,6 +143,28 @@ export function Controls({
           <time className="time-now" dateTime={simDate.toISOString()} title={t('simDate')}>
             {dateText}
           </time>
+          <div className="more-bar">
+            <button
+              type="button"
+              className="more-toggle"
+              aria-label={t('tourReplay')}
+              title={t('tourReplay')}
+              onClick={onShowTour}
+            >
+              <IconHelp />
+            </button>
+            <button
+              type="button"
+              className={moreOpen ? 'more-toggle is-open' : 'more-toggle'}
+              aria-expanded={moreOpen}
+              aria-controls="more-controls"
+              aria-label={t('moreOptions')}
+              title={t('moreOptions')}
+              onClick={() => setMoreOpen((open) => !open)}
+            >
+              <IconSettings />
+            </button>
+          </div>
           <span
             className={keys.hit ? 'status status-hit' : 'status status-miss'}
             aria-live="polite"
@@ -235,18 +260,6 @@ export function Controls({
         </div>
       </Section>
 
-      <button
-        type="button"
-        className={moreOpen ? 'more-toggle is-open' : 'more-toggle'}
-        aria-expanded={moreOpen}
-        aria-controls="more-controls"
-        aria-label={t('moreOptions')}
-        title={t('moreOptions')}
-        onClick={() => setMoreOpen((open) => !open)}
-      >
-        <IconSettings />
-      </button>
-
       <div
         className={moreOpen ? 'more-panels is-open' : 'more-panels'}
         id="more-controls"
@@ -255,7 +268,7 @@ export function Controls({
       >
         <div className="more-panels-inner">
         <Section title={t('sectionType')}>
-          <div className="stack">
+          <div className="grid-2">
             <button
               type="button"
               className={mode === 'solar' ? 'active' : ''}
@@ -410,7 +423,7 @@ export function Controls({
         </Section>
 
         <Section title={t('language')}>
-          <div className="stack">
+          <div className="grid-2">
             <button
               type="button"
               className={locale === 'ca' ? 'active' : ''}

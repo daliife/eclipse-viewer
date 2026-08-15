@@ -13,8 +13,8 @@ import {
 
 const STEP_ICONS: ComponentType<IconProps>[] = [
   IconSun,
-  IconClock,
   IconOrbit,
+  IconClock,
   IconEarth,
 ]
 
@@ -22,14 +22,6 @@ const STORAGE_KEY = 'eclipse-hide-tour'
 const STEPS = 4
 const FOCUSABLE =
   'button, input, select, textarea, a[href], [tabindex]:not([tabindex="-1"])'
-
-function hideTourForever(): boolean {
-  try {
-    return localStorage.getItem(STORAGE_KEY) === '1'
-  } catch {
-    return false
-  }
-}
 
 function rememberHideTour() {
   try {
@@ -39,9 +31,8 @@ function rememberHideTour() {
   }
 }
 
-export function WelcomeTour() {
+export function WelcomeTour({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { t, locale, setLocale } = useI18n()
-  const [open, setOpen] = useState(() => !hideTourForever())
   const [step, setStep] = useState(0)
   const [hideNext, setHideNext] = useState(false)
   const hideNextRef = useRef(false)
@@ -71,7 +62,7 @@ export function WelcomeTour() {
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         if (hideNextRef.current) rememberHideTour()
-        setOpen(false)
+        onClose()
         return
       }
       if (event.key !== 'Tab') return
@@ -98,11 +89,11 @@ export function WelcomeTour() {
       for (const el of blocked) el.inert = false
       previous?.focus()
     }
-  }, [open])
+  }, [open, onClose])
 
   function dismiss() {
     if (hideNext) rememberHideTour()
-    setOpen(false)
+    onClose()
   }
 
   function back() {
