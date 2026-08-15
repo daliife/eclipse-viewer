@@ -343,7 +343,7 @@ export function Controls({
             />
           }
         >
-          <div className="stack">
+          <div className="grid-2">
             <button
               type="button"
               className={scaleMode === 'didactic' ? 'active' : ''}

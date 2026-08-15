@@ -7,6 +7,7 @@ import {
   focusCameraOffset,
   framingFov,
   lunarUmbraFactor,
+  moonShadowRadiusBoost,
   type CameraFocus,
   type EclipseMode,
   type Scale,
@@ -236,6 +237,15 @@ export function SolarSystem({
           rotationY={earthSpin}
           atmosphere
           layer={3}
+          solarShadow={
+            mode === 'solar'
+              ? {
+                  moon: state.moon,
+                  moonRadius: scale.moonRadius * moonShadowRadiusBoost(scale),
+                  sunRadius: scale.sunRadius,
+                }
+              : undefined
+          }
         />
         <OrbitRings earth={state.earth} visible={showOrbits} scale={scale} />
         <EclipticPlane visible={showEcliptic} scale={scale} />

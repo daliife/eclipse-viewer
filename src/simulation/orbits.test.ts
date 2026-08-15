@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { explainKeys } from './eclipse'
-import { dateAtOffset, getScale, getSimState } from './orbits'
+import { dateAtOffset, getScale, getSimState, moonShadowRadiusBoost } from './orbits'
 
 describe('explainKeys', () => {
   it('treats the eclipse day as aligned', () => {
@@ -42,5 +42,14 @@ describe('dateAtOffset', () => {
     expect(date.getUTCFullYear()).toBe(2026)
     expect(date.getUTCMonth()).toBe(7)
     expect(date.getUTCDate()).toBe(12)
+  })
+})
+
+describe('moonShadowRadiusBoost', () => {
+  it('inflates the Moon so the Earth-surface umbra is visible at both scales', () => {
+    const classroom = moonShadowRadiusBoost(getScale('didactic'))
+    const realistic = moonShadowRadiusBoost(getScale('real'))
+    expect(classroom).toBeGreaterThan(1)
+    expect(realistic).toBeGreaterThan(classroom)
   })
 })

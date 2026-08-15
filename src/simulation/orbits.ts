@@ -267,3 +267,14 @@ export function focusCameraOffset(scale: Scale, focus: CameraFocus, aspect = 1.4
   const d = scale.moonOrbit * 1.22 * boost
   return [d * 0.1, d * 0.36, d * 0.92]
 }
+
+/**
+ * True umbra on Earth is a pinprick. Inflate the Moon for the surface shadow
+ * so the classroom still shows a dark cap where the Sun is blocked.
+ */
+export function moonShadowRadiusBoost(scale: Scale): number {
+  const sunAng = Math.asin(Math.min(0.99, scale.sunRadius / Math.max(scale.earthOrbit, 1e-6)))
+  const targetMoonAng = sunAng + 0.15
+  const need = scale.moonOrbit * Math.sin(targetMoonAng)
+  return Math.max(1.2, need / Math.max(scale.moonRadius, 1e-6))
+}
