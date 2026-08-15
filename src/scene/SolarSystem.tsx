@@ -1,7 +1,6 @@
-import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type ComponentRef, type RefObject } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
-import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import { Group, PerspectiveCamera as ThreePerspectiveCamera, Vector3 } from 'three'
 import {
   focusCameraOffset,
@@ -66,7 +65,7 @@ export function SolarSystem({
 }: Props) {
   const earthCam = useRef<ThreePerspectiveCamera>(null)
   const previewHide = useRef<Group>(null)
-  const controls = useRef<OrbitControlsImpl>(null)
+  const controls = useRef<ComponentRef<typeof OrbitControls>>(null)
   const focusPos = useRef(new Vector3())
   const focusDest = useRef(new Vector3())
   const lastBody = useRef(new Vector3())

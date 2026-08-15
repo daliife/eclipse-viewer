@@ -45,23 +45,26 @@ docs/                     # README screenshots
 
 ## Local development
 
+Node 22+ and [pnpm](https://pnpm.io/) 11. Versions in `package.json` are exact (no `^` / `~`). Enable Corepack once, then:
+
 ```bash
-npm install
-npm run dev
+corepack enable
+pnpm install
+pnpm dev
 ```
 
 Vite `base` is `/eclipse-viewer/`, so the app is at `http://localhost:5173/eclipse-viewer/`.
 
 ```bash
-npm test
-npm run lint
-npm run build
-npm run preview
+pnpm test
+pnpm lint
+pnpm build
+pnpm preview
 ```
 
 ## Production (GitHub Pages)
 
-Pushes to `main` run [`.github/workflows/ci.yml`](.github/workflows/ci.yml): `npm ci`, lint, test, `vite build`, deploy `dist`. Pull requests run the same checks without deploying. Rapid pushes cancel the previous run.
+Pushes to `main` run [`.github/workflows/ci.yml`](.github/workflows/ci.yml): pin check, frozen `pnpm install`, production audit, lint, test, `vite build`, deploy `dist`. Pull requests run the same checks without deploying. Rapid pushes cancel the previous run.
 
 One-time repo setting: **Settings → Pages → Source = GitHub Actions**. The repo must be public on a free GitHub plan.
 
@@ -75,4 +78,4 @@ One-time repo setting: **Settings → Pages → Source = GitHub Actions**. The r
 
 ## Stack
 
-Vite, React 19, TypeScript, Three.js, React Three Fiber, Drei. `npm run build` typechecks. Lint and tests run on every push to `main` (and on pull requests).
+Vite, React 19, TypeScript, Three.js, React Three Fiber, Drei. pnpm, exact dependency pins. `pnpm build` typechecks. Lint, tests, and a production audit run on every push to `main` (and on pull requests).
