@@ -38,6 +38,7 @@ export function EducationPanel({ mode, simDays, degreesFromAlignment }: Props) {
         </button>
       </div>
       <div className="education-more" id="education-more">
+        <h2 className="education-why-title">{t(keys.titleKey)}</h2>
         <p>{t(keys.bodyKey, { deg })}</p>
       </div>
     </aside>

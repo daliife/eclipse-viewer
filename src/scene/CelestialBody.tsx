@@ -66,7 +66,7 @@ export function CelestialBody({
           if (layer !== undefined) obj.layers.set(layer)
         }}
       >
-        <sphereGeometry args={[radius, 48, 36]} />
+        <sphereGeometry args={[radius, 32, 24]} />
         {emissive ? (
           <meshBasicMaterial map={map} toneMapped={false} />
         ) : (

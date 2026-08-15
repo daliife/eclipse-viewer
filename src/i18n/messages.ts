@@ -60,11 +60,15 @@ const en: Dict = {
   shrinkView: 'Shrink Earth view',
   whyPanel: 'Why this day',
   controlsLabel: 'Viewer controls',
+  skipToControls: 'Skip to controls',
   simDate: 'Simulation date',
   language: 'Language',
   moreOptions: 'Options',
   aboutSection: 'About {title}',
   whyHide: 'Hide explanation',
+  loading: 'Loading the sky…',
+  sceneError: 'The 3D view failed to load.',
+  reload: 'Reload',
   tourSkip: 'Skip',
   tourHide: 'Don’t show this tutorial again',
   tourBack: 'Back',
@@ -143,11 +147,15 @@ const ca: Dict = {
   shrinkView: 'Redueix la vista des de la Terra',
   whyPanel: 'Per què aquest dia',
   controlsLabel: 'Controls del visualitzador',
+  skipToControls: 'Salta als controls',
   simDate: 'Data de la simulació',
   language: 'Idioma',
   moreOptions: 'Opcions',
   aboutSection: 'Sobre {title}',
   whyHide: 'Amaga l’explicació',
+  loading: 'Carregant el cel…',
+  sceneError: 'La vista 3D no s’ha pogut carregar.',
+  reload: 'Torna a carregar',
   tourSkip: 'Omet',
   tourHide: 'No mostris més el tutorial',
   tourBack: 'Enrere',
@@ -179,6 +187,15 @@ export function detectLocale(): Locale {
   } catch {
     /* ignore */
   }
+  const langs =
+    typeof navigator === 'undefined'
+      ? []
+      : navigator.languages?.length
+        ? navigator.languages
+        : navigator.language
+          ? [navigator.language]
+          : []
+  if (langs.some((tag) => tag.toLowerCase().startsWith('ca'))) return 'ca'
   return 'en'
 }
 

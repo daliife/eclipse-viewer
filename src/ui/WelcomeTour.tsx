@@ -20,6 +20,8 @@ const STEP_ICONS: ComponentType<IconProps>[] = [
 
 const STORAGE_KEY = 'eclipse-hide-tour'
 const STEPS = 4
+const FOCUSABLE =
+  'button, input, select, textarea, a[href], [tabindex]:not([tabindex="-1"])'
 
 function hideTourForever(): boolean {
   try {
@@ -43,22 +45,59 @@ export function WelcomeTour() {
   const [step, setStep] = useState(0)
   const [hideNext, setHideNext] = useState(false)
   const hideNextRef = useRef(false)
+  const overlayRef = useRef<HTMLDivElement>(null)
   const dialogRef = useRef<HTMLDivElement>(null)
   const titleId = useId()
+  const bodyId = useId()
   const first = step === 0
   const last = step === STEPS - 1
   hideNextRef.current = hideNext
 
   useEffect(() => {
     if (!open) return
+    const overlay = overlayRef.current
+    const app = overlay?.parentElement
+    const blocked: HTMLElement[] = []
+    if (app && overlay) {
+      for (const child of Array.from(app.children)) {
+        if (child === overlay || !(child instanceof HTMLElement)) continue
+        child.inert = true
+        blocked.push(child)
+      }
+    }
+    const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null
     dialogRef.current?.focus()
+
     const onKey = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape') return
-      if (hideNextRef.current) rememberHideTour()
-      setOpen(false)
+      if (event.key === 'Escape') {
+        if (hideNextRef.current) rememberHideTour()
+        setOpen(false)
+        return
+      }
+      if (event.key !== 'Tab') return
+      const root = dialogRef.current
+      if (!root) return
+      const items = [...root.querySelectorAll<HTMLElement>(FOCUSABLE)].filter(
+        (el) => !el.hasAttribute('disabled') && el.tabIndex !== -1,
+      )
+      if (items.length === 0) return
+      const firstEl = items[0]
+      const lastEl = items[items.length - 1]
+      const active = document.activeElement
+      if (event.shiftKey && (active === firstEl || !root.contains(active))) {
+        event.preventDefault()
+        lastEl.focus()
+      } else if (!event.shiftKey && (active === lastEl || !root.contains(active))) {
+        event.preventDefault()
+        firstEl.focus()
+      }
     }
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      for (const el of blocked) el.inert = false
+      previous?.focus()
+    }
   }, [open])
 
   function dismiss() {
@@ -86,13 +125,20 @@ export function WelcomeTour() {
   const StepIcon = STEP_ICONS[step] ?? IconSun
 
   return (
-    <div className="welcome-overlay">
+    <div
+      className="welcome-overlay"
+      ref={overlayRef}
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) dismiss()
+      }}
+    >
       <div
         ref={dialogRef}
         className="panel welcome"
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
+        aria-describedby={bodyId}
         tabIndex={-1}
       >
         <div className="welcome-top">
@@ -125,7 +171,9 @@ export function WelcomeTour() {
           <StepIcon />
           {title}
         </h2>
-        <p className="welcome-body">{body}</p>
+        <p id={bodyId} className="welcome-body">
+          {body}
+        </p>
 
         <div className="welcome-meta">
           <div className="welcome-dots">

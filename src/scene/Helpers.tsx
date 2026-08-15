@@ -44,7 +44,7 @@ function OrbitTube({
 }) {
   return (
     <mesh position={position} quaternion={quaternion} renderOrder={2}>
-      <torusGeometry args={[radius, tube, 8, 128]} />
+      <torusGeometry args={[radius, tube, 8, 64]} />
       <meshBasicMaterial
         color={color}
         transparent

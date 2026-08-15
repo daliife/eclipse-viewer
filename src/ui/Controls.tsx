@@ -128,13 +128,23 @@ export function Controls({
   const deg = Math.abs(degreesFromAlignment).toFixed(0)
 
   return (
-    <div className="panel controls" role="toolbar" aria-label={t('controlsLabel')}>
+    <div
+      id="viewer-controls"
+      className="panel controls"
+      role="region"
+      aria-label={t('controlsLabel')}
+      tabIndex={-1}
+    >
       <Section title={t('sectionTime')}>
         <div className="time-transport">
           <time className="time-now" dateTime={simDate.toISOString()} title={t('simDate')}>
             {dateText}
           </time>
-          <span className={keys.hit ? 'status status-hit' : 'status status-miss'}>
+          <span
+            className={keys.hit ? 'status status-hit' : 'status status-miss'}
+            aria-live="polite"
+            aria-atomic="true"
+          >
             {t(keys.statusKey, { deg })}
           </span>
           <button

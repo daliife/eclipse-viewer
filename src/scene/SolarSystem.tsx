@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, type RefObject } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
@@ -35,6 +35,19 @@ type Props = {
 
 const textures = textureUrls()
 
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  )
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const apply = () => setReduced(mq.matches)
+    mq.addEventListener('change', apply)
+    return () => mq.removeEventListener('change', apply)
+  }, [])
+  return reduced
+}
+
 export function SolarSystem({
   mode,
   scaleMode,
@@ -59,6 +72,7 @@ export function SolarSystem({
   const tracking = useRef<CameraFocus>('free')
   const acquiring = useRef(false)
   const { camera, size } = useThree()
+  const reduceMotion = usePrefersReducedMotion()
   const far = scale.earthOrbit * 6
   const aspect = size.width / Math.max(1, size.height)
   const fov = framingFov(aspect)
@@ -140,9 +154,10 @@ export function SolarSystem({
       }
 
       if (acquiring.current) {
+        const ease = reduceMotion ? 1 : 0.12
         focusDest.current.set(p[0] + offset[0], p[1] + offset[1], p[2] + offset[2])
-        camera.position.lerp(focusDest.current, 0.12)
-        controls.current.target.lerp(focusPos.current, 0.12)
+        camera.position.lerp(focusDest.current, ease)
+        controls.current.target.lerp(focusPos.current, ease)
         lastBody.current.copy(focusPos.current)
         if (camera.position.distanceTo(focusDest.current) < Math.max(0.12, Math.hypot(...offset) * 0.04)) {
           acquiring.current = false
@@ -243,7 +258,7 @@ export function SolarSystem({
       />
       <OrbitControls
         ref={controls}
-        enableDamping
+        enableDamping={!reduceMotion}
         dampingFactor={0.08}
         enablePan={size.width >= 720}
         minDistance={scale.earthRadius * 1.4}
@@ -268,14 +283,20 @@ function DualViewport({
   hideRootRef: RefObject<Group | null>
 }) {
   const gl = useThree((s) => s.gl)
+  const insetClock = useRef(0)
 
-  useFrame((state) => {
+  useFrame((state, dt) => {
     const { scene, camera, gl: renderer, size } = state
     renderer.autoClear = true
     renderer.setScissorTest(false)
     renderer.setViewport(0, 0, size.width, size.height)
     renderer.clear()
     renderer.render(scene, camera)
+
+    if (typeof document !== 'undefined' && document.hidden) return
+    insetClock.current += dt
+    if (insetClock.current < 1 / 30) return
+    insetClock.current = 0
 
     const earthCam = earthCamRef.current
     const inset = insetRef.current

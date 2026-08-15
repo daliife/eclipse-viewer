@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber'
-import { Suspense, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useCallback, useMemo, useRef, useState } from 'react'
 import { SolarSystem } from './scene/SolarSystem'
 import {
   getScale,
@@ -11,8 +11,21 @@ import {
 import { Controls } from './ui/Controls'
 import { EducationPanel } from './ui/EducationPanel'
 import { InsetFrame } from './ui/InsetFrame'
-import { WelcomeTour } from './ui/WelcomeTour'
+import { SceneBoundary, SceneLoading, SceneReady } from './ui/SceneBoot'
+import { useI18n } from './i18n/LocaleContext'
 import './App.css'
+
+const WelcomeTour = lazy(() =>
+  import('./ui/WelcomeTour').then((mod) => ({ default: mod.WelcomeTour })),
+)
+
+function shouldShowTour(): boolean {
+  try {
+    return localStorage.getItem('eclipse-hide-tour') !== '1'
+  } catch {
+    return true
+  }
+}
 
 export default function App() {
   const insetRef = useRef<HTMLDivElement>(null)
@@ -26,38 +39,48 @@ export default function App() {
   const [showShadows, setShowShadows] = useState(false)
   const [scaleMode, setScaleMode] = useState<ScaleMode>('didactic')
   const [insetLarge, setInsetLarge] = useState(false)
+  const [sceneReady, setSceneReady] = useState(false)
+  const onSceneReady = useCallback(() => setSceneReady(true), [])
+  const { t } = useI18n()
 
   const scale = getScale(scaleMode)
   const state = useMemo(() => getSimState(mode, simDays, scale), [mode, simDays, scale])
 
   return (
     <div className="app">
-      <Canvas
-        dpr={[1, 1.5]}
-        style={{ zIndex: 0 }}
-        gl={{ antialias: true, alpha: false, stencil: false }}
-        onCreated={({ gl }) => {
-          gl.setClearColor('#000000')
-        }}
-      >
-        <Suspense fallback={null}>
-          <SolarSystem
-            mode={mode}
-            scaleMode={scaleMode}
-            scale={scale}
-            state={state}
-            simDays={simDays}
-            playing={playing}
-            speed={speed}
-            onSimDays={setSimDays}
-            showOrbits={showOrbits}
-            showEcliptic={showEcliptic}
-            showShadows={showShadows}
-            focus={focus}
-            insetRef={insetRef}
-          />
-        </Suspense>
-      </Canvas>
+      <a className="skip-link" href="#viewer-controls">
+        {t('skipToControls')}
+      </a>
+      <SceneBoundary>
+        {sceneReady ? null : <SceneLoading />}
+        <Canvas
+          dpr={[1, 1.5]}
+          style={{ zIndex: 0 }}
+          gl={{ antialias: true, alpha: false, stencil: false }}
+          onCreated={({ gl }) => {
+            gl.setClearColor('#000000')
+          }}
+        >
+          <Suspense fallback={null}>
+            <SceneReady onReady={onSceneReady} />
+            <SolarSystem
+              mode={mode}
+              scaleMode={scaleMode}
+              scale={scale}
+              state={state}
+              simDays={simDays}
+              playing={playing}
+              speed={speed}
+              onSimDays={setSimDays}
+              showOrbits={showOrbits}
+              showEcliptic={showEcliptic}
+              showShadows={showShadows}
+              focus={focus}
+              insetRef={insetRef}
+            />
+          </Suspense>
+        </Canvas>
+      </SceneBoundary>
 
       <EducationPanel
         mode={mode}
@@ -98,7 +121,11 @@ export default function App() {
         enlarged={insetLarge}
         onToggle={() => setInsetLarge((open) => !open)}
       />
-      <WelcomeTour />
+      {shouldShowTour() ? (
+        <Suspense fallback={null}>
+          <WelcomeTour />
+        </Suspense>
+      ) : null}
     </div>
   )
 }

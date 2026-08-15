@@ -30,8 +30,8 @@ function randomStars(count: number, radius: number, seed: number) {
 }
 
 export function Starfield({ radius }: { radius: number }) {
-  const dim = useMemo(() => randomStars(2800, radius, 13), [radius])
-  const bright = useMemo(() => randomStars(220, radius * 0.98, 97), [radius])
+  const dim = useMemo(() => randomStars(1200, radius, 13), [radius])
+  const bright = useMemo(() => randomStars(100, radius * 0.98, 97), [radius])
   const dimSize = Math.max(0.7, radius * 0.001)
   const brightSize = Math.max(1.15, radius * 0.0018)
 
