@@ -155,7 +155,10 @@ export function Controls({
             onClick={() => onPlaying(!playing)}
           >
             {playing ? <IconPause /> : <IconPlay />}
-            <span className="play-label">{playing ? t('pause') : t('play')}</span>
+            <span className="play-label" aria-hidden="true">
+              <span className={playing ? undefined : 'is-on'}>{t('play')}</span>
+              <span className={playing ? 'is-on' : undefined}>{t('pause')}</span>
+            </span>
           </button>
         </div>
         <div className="day-timeline" role="group" aria-label={t('dayTimeline')}>
@@ -194,12 +197,12 @@ export function Controls({
           <input
             id={speedId}
             type="range"
-            min={0.25}
-            max={4}
-            step={0.25}
+            min={0}
+            max={2}
+            step={0.05}
             value={speed}
-            aria-valuemin={0.25}
-            aria-valuemax={4}
+            aria-valuemin={0}
+            aria-valuemax={2}
             aria-valuenow={speed}
             aria-valuetext={`${formatSpeed(speed)}`}
             onChange={(e) => onSpeed(Number(e.target.value))}

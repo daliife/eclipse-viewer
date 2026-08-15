@@ -472,9 +472,24 @@ button[aria-pressed='true'] {
   grid-area: play;
   justify-self: end;
   align-self: center;
+  position: relative;
   width: auto;
   justify-content: center;
   padding: 7px 11px;
+}
+
+.play-label {
+  display: grid;
+  justify-items: start;
+}
+
+.play-label span {
+  grid-area: 1 / 1;
+  visibility: hidden;
+}
+
+.play-label span.is-on {
+  visibility: visible;
 }
 
 .day-timeline {
