@@ -16,14 +16,14 @@ import {
 describe('explainKeys', () => {
   it('treats the eclipse day as aligned', () => {
     expect(explainKeys('solar', 0).hit).toBe(true)
-    expect(explainKeys('solar', 0).titleKey).toBe('solarHitTitle')
+    expect(explainKeys('solar', 0).bodyKey).toBe('solarHitBody')
     expect(explainKeys('solar', 0).statusKey).toBe('statusHit')
-    expect(explainKeys('lunar', 0).titleKey).toBe('lunarHitTitle')
+    expect(explainKeys('lunar', 0).bodyKey).toBe('lunarHitBody')
   })
 
   it('treats a day later as a miss', () => {
     expect(explainKeys('solar', 1).hit).toBe(false)
-    expect(explainKeys('solar', 1).titleKey).toBe('solarMissTitle')
+    expect(explainKeys('solar', 1).bodyKey).toBe('solarMissBody')
     expect(explainKeys('solar', 1).statusKey).toBe('statusMiss')
     expect(explainKeys('lunar', -1).hit).toBe(false)
   })

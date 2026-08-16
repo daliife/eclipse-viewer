@@ -23,8 +23,8 @@ export function EducationPanel({ mode, simDays, degreesFromAlignment }: Props) {
     >
       <div className="education-heading">
         <h1>
-          {t('appTitle')}{' '}
-          <span className="education-kind">({t(mode)})</span>
+          <span className="education-name">{t('appTitle')}</span>
+          <span className="education-kind">{t(mode)}</span>
         </h1>
         <button
           type="button"
@@ -38,7 +38,6 @@ export function EducationPanel({ mode, simDays, degreesFromAlignment }: Props) {
         </button>
       </div>
       <div className="education-more" id="education-more">
-        <h2 className="education-why-title">{t(keys.titleKey)}</h2>
         <p>{t(keys.bodyKey, { deg })}</p>
       </div>
     </aside>

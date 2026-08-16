@@ -1,5 +1,6 @@
 :root {
   color-scheme: dark;
+  --ui-font: 'IBM Plex Sans Variable', ui-sans-serif, system-ui, sans-serif;
 }
 
 * {
@@ -15,7 +16,9 @@ body,
   max-height: 100dvh;
   overflow: hidden;
   background: #000;
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--ui-font);
+  font-optical-sizing: auto;
+  font-synthesis: none;
   touch-action: pan-y;
 }
 

@@ -78,4 +78,4 @@ One-time repo setting: **Settings → Pages → Source = GitHub Actions**. The r
 
 ## Stack
 
-Vite, React 19, TypeScript, Three.js, React Three Fiber, Drei. pnpm, exact dependency pins. `pnpm build` typechecks. Lint, tests, and a production audit run on every push to `main` (and on pull requests).
+Vite, React 19, TypeScript, Three.js, React Three Fiber, Drei. IBM Plex Sans. pnpm, exact dependency pins. `pnpm build` typechecks. Lint, tests, and a production audit run on every push to `main` (and on pull requests).

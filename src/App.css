@@ -19,6 +19,12 @@
   --ui-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
   --ui-focus: #8ec8ff;
   --ui-active: rgba(70, 140, 210, 0.92);
+  --type-display: 1.32rem;
+  --type-body: 0.875rem;
+  --type-ui: 0.8125rem;
+  --type-caption: 0.75rem;
+  --type-label: 0.6875rem;
+  font-family: var(--ui-font);
 }
 
 .skip-link {
@@ -32,7 +38,7 @@
   border: 1px solid var(--ui-border);
   color: var(--ui-fg);
   text-decoration: none;
-  font-size: 0.84rem;
+  font-size: var(--type-ui);
   transform: translateY(calc(-100% - 24px));
 }
 
@@ -60,7 +66,7 @@
   justify-content: center;
   gap: 12px;
   color: var(--ui-muted);
-  font-size: 0.9rem;
+  font-size: var(--type-body);
   pointer-events: none;
 }
 
@@ -108,12 +114,17 @@
 }
 
 .education h1 {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55em;
   margin: 0;
-  font-size: 1.12rem;
-  line-height: 1.25;
-  font-weight: 600;
-  letter-spacing: -0.03em;
   min-width: 0;
+  font-family: var(--ui-font);
+  font-size: var(--type-display);
+  line-height: 1.15;
+  font-weight: 550;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
 }
 
 .education-heading {
@@ -128,10 +139,22 @@
   min-width: 0;
 }
 
+.education-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .education-kind {
-  font-weight: 500;
+  flex: 0 0 auto;
+  font-family: var(--ui-font);
+  font-weight: 550;
+  font-size: var(--type-label);
+  line-height: 1;
   color: var(--ui-dim);
-  letter-spacing: 0;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .education-toggle {
@@ -179,18 +202,9 @@
   display: block;
 }
 
-.education-why-title {
-  margin: 0 0 6px;
-  font-size: 0.88rem;
-  line-height: 1.3;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--ui-fg);
-}
-
 .education p {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: var(--type-body);
   line-height: 1.5;
   color: var(--ui-muted);
 }
@@ -200,7 +214,7 @@
   justify-content: center;
   margin: 0;
   padding: 3px 8px;
-  font-size: 0.65rem;
+  font-size: var(--type-label);
   font-weight: 650;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -261,7 +275,7 @@
 
 .section-title {
   margin: 0;
-  font-size: 0.68rem;
+  font-size: var(--type-label);
   font-weight: 650;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -314,7 +328,7 @@
   border: 1px solid var(--ui-border);
   box-shadow: var(--ui-shadow);
   color: var(--ui-muted);
-  font-size: 0.74rem;
+  font-size: var(--type-caption);
   font-weight: 400;
   letter-spacing: 0;
   text-transform: none;
@@ -381,7 +395,7 @@ button {
   color: inherit;
   border-radius: var(--ui-radius-sm);
   padding: 8px 12px;
-  font-size: 0.84rem;
+  font-size: var(--type-ui);
   min-height: 36px;
   cursor: pointer;
   display: inline-flex;
@@ -412,7 +426,7 @@ button[aria-pressed='true'] {
 
 .lang button {
   padding: 0 7px;
-  font-size: 0.68rem;
+  font-size: var(--type-label);
   font-weight: 650;
   letter-spacing: 0.08em;
   min-width: 0;
@@ -454,7 +468,7 @@ button[aria-pressed='true'] {
   grid-area: date;
   min-width: 0;
   margin: 0;
-  font-size: 0.82rem;
+  font-size: var(--type-ui);
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.01em;
   color: var(--ui-muted);
@@ -523,7 +537,7 @@ button[aria-pressed='true'] {
   background: transparent;
   border-radius: 10px;
   color: var(--ui-label);
-  font-size: 0.7rem;
+  font-size: var(--type-caption);
   font-weight: 550;
   letter-spacing: 0.01em;
   white-space: nowrap;
@@ -566,7 +580,7 @@ button[aria-pressed='true'] {
   font-weight: 650;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  font-size: 0.64rem;
+  font-size: var(--type-label);
 }
 
 .day-label {
@@ -585,7 +599,7 @@ button[aria-pressed='true'] {
 
 .slider-label {
   white-space: nowrap;
-  font-size: 0.8rem;
+  font-size: var(--type-ui);
   color: var(--ui-dim);
 }
 
@@ -598,7 +612,7 @@ button[aria-pressed='true'] {
 }
 
 .slider-value {
-  font-size: 0.8rem;
+  font-size: var(--type-ui);
   font-variant-numeric: tabular-nums;
   color: var(--ui-muted);
   text-align: right;
@@ -676,7 +690,7 @@ input[type='range']::-moz-range-thumb {
 }
 
 .inset-label {
-  font-size: 0.68rem;
+  font-size: var(--type-label);
   font-weight: 650;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -837,7 +851,7 @@ input[type='range']::-moz-range-thumb {
 }
 
 .welcome-index {
-  font-size: 0.68rem;
+  font-size: var(--type-label);
   font-weight: 650;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -849,10 +863,11 @@ input[type='range']::-moz-range-thumb {
   align-items: center;
   gap: 10px;
   margin: 0 0 10px;
-  font-size: 1.12rem;
-  line-height: 1.3;
-  font-weight: 600;
-  letter-spacing: -0.03em;
+  font-family: var(--ui-font);
+  font-size: var(--type-display);
+  line-height: 1.2;
+  font-weight: 550;
+  letter-spacing: 0.06em;
 }
 
 .welcome-title .icon {
@@ -863,8 +878,8 @@ input[type='range']::-moz-range-thumb {
 
 .welcome-body {
   margin: 0 0 22px;
-  min-height: calc(0.9rem * 1.55 * 3);
-  font-size: 0.9rem;
+  min-height: calc(var(--type-body) * 1.55 * 3);
+  font-size: var(--type-body);
   line-height: 1.55;
   color: var(--ui-muted);
 }
@@ -947,7 +962,7 @@ input[type='range']::-moz-range-thumb {
   gap: 8px;
   margin: 0;
   min-width: 0;
-  font-size: 0.78rem;
+  font-size: var(--type-caption);
   line-height: 1.35;
   color: var(--ui-dim);
   cursor: pointer;
@@ -1093,7 +1108,7 @@ input[type='range']::-moz-range-thumb {
 
   .more-panels button {
     padding: 6px 8px;
-    font-size: 0.78rem;
+    font-size: var(--type-caption);
     min-height: 32px;
     gap: 5px;
   }
@@ -1182,6 +1197,7 @@ input[type='range']::-moz-range-thumb {
 @media (max-width: 720px) {
   .app {
     --ui-radius: 16px;
+    --type-display: 1.12rem;
   }
 
   .top-chrome {
@@ -1224,12 +1240,6 @@ input[type='range']::-moz-range-thumb {
     flex: 1 1 auto;
     min-width: 0;
     overflow: hidden;
-    font-size: 0.88rem;
-    white-space: normal;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
   }
 
   .play-toggle {
@@ -1248,7 +1258,7 @@ input[type='range']::-moz-range-thumb {
   }
 
   .time-now {
-    font-size: 0.74rem;
+    font-size: var(--type-caption);
   }
 
   .controls {
@@ -1336,11 +1346,11 @@ input[type='range']::-moz-range-thumb {
 
   .slider-label,
   .slider-value {
-    font-size: 0.72rem;
+    font-size: var(--type-caption);
   }
 
   .day-timeline button {
-    font-size: 0.64rem;
+    font-size: var(--type-label);
     padding: 4px 1px 2px;
     gap: 4px;
   }
@@ -1381,10 +1391,6 @@ input[type='range']::-moz-range-thumb {
   }
 
   .welcome-body {
-    min-height: calc(0.9rem * 1.55 * 4);
-  }
-
-  .welcome-title {
-    font-size: 1.08rem;
+    min-height: calc(var(--type-body) * 1.55 * 4);
   }
 }
