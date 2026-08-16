@@ -268,7 +268,7 @@ export function Controls({
       >
         <div className="more-panels-inner">
         <Section title={t('sectionType')}>
-          <div className="grid-2">
+          <div className="grid-2 choice-col">
             <button
               type="button"
               className={mode === 'solar' ? 'active' : ''}
@@ -356,7 +356,7 @@ export function Controls({
             />
           }
         >
-          <div className="grid-2">
+          <div className="grid-2 choice-col">
             <button
               type="button"
               className={scaleMode === 'didactic' ? 'active' : ''}
@@ -423,7 +423,7 @@ export function Controls({
         </Section>
 
         <Section title={t('language')}>
-          <div className="grid-2">
+          <div className="grid-2 choice-col">
             <button
               type="button"
               className={locale === 'ca' ? 'active' : ''}

@@ -74,10 +74,10 @@ export const en = {
   tourNext: 'Next',
   tourStart: 'Start',
   tourStep: '{n} / {total}',
-  tour1Title: 'See it in 3D',
+  tour1Title: 'Welcome to Eclipse Viewer',
   tour1Body:
-    'This 3D view shows why solar and lunar eclipses happen. You can switch scale: didactic, so the 5° tilt is easy to see, or realistic, with true size and distance.',
-  tour2Title: 'Why it’s so rare',
+    'Eclipse Viewer is an interactive 3D scene of the Sun, Earth, and Moon. It shows why solar and lunar eclipses happen — and why they only line up for a day.',
+  tour2Title: 'Why is it so rare?',
   tour2Body:
     'An eclipse needs two things at once: the right Moon phase, and a pass through a node — one of the two red dots where its tilted orbit crosses the Sun–Earth plane.',
   tour3Title: 'Move through time',
@@ -164,10 +164,10 @@ export const ca: Record<MessageKey, string> = {
   tourNext: 'Següent',
   tourStart: 'Comença',
   tourStep: '{n} / {total}',
-  tour1Title: 'Mira-ho en 3D',
+  tour1Title: 'Benvingut al Visualitzador d’eclipsis',
   tour1Body:
-    'Aquesta vista 3D explica per què passen els eclipsis solars i lunars. Pots canviar l’escala: didàctica, perquè es vegi la inclinació de 5°, o realista, amb mides i distàncies de veritat.',
-  tour2Title: 'Per què és tan rar',
+    'El Visualitzador d’eclipsis és una escena 3D interactiva del Sol, la Terra i la Lluna. Serveix per veure per què passen els eclipsis solars i lunars, i per què només s’alineen un dia.',
+  tour2Title: 'Per què és tan rar?',
   tour2Body:
     'Un eclipsi necessita dues coses alhora: la fase adequada de la Lluna i el pas per un node, un dels dos punts vermells on l’òrbita inclinada creua el pla Sol–Terra.',
   tour3Title: 'Mou el temps',

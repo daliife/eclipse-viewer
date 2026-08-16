@@ -57,7 +57,7 @@ export function WelcomeTour({ open, onClose }: { open: boolean; onClose: () => v
       }
     }
     const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null
-    dialogRef.current?.focus()
+    dialogRef.current?.focus({ preventScroll: true })
 
     const onKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
