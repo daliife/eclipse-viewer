@@ -53,7 +53,7 @@ pnpm install
 pnpm dev
 ```
 
-Vite `base` is `/eclipse-viewer/`, so the app is at `http://localhost:5173/eclipse-viewer/`.
+Vite `base` is `/eclipse-viewer/`, so the app is at `http://localhost:4321/eclipse-viewer/`.
 
 ```bash
 pnpm test

@@ -5,10 +5,16 @@ export default defineConfig({
   plugins: [react()],
   base: '/eclipse-viewer/',
   server: {
+    port: 4321,
+    strictPort: true,
     watch: {
       usePolling: true,
       interval: 100,
     },
+  },
+  preview: {
+    port: 4321,
+    strictPort: true,
   },
   build: {
     chunkSizeWarningLimit: 700,

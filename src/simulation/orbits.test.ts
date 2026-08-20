@@ -11,6 +11,7 @@ import {
   lunarUmbraFactor,
   moonShadowRadiusBoost,
   umbraLength,
+  focusCameraOffset,
 } from './orbits'
 
 describe('explainKeys', () => {
@@ -130,6 +131,13 @@ describe('framing', () => {
     expect(framingFov(1.4)).toBe(42)
     expect(framingFov(0.8)).toBe(50)
     expect(framingFov(0.5)).toBe(56)
+  })
+
+  it('pulls Earth focus far enough to keep the Sun in frame', () => {
+    const scale = getScale('didactic')
+    const dist = Math.hypot(...focusCameraOffset(scale, 'earth', 1.4))
+    expect(dist).toBeGreaterThan(scale.earthOrbit * 0.4)
+    expect(dist).toBeLessThan(scale.earthOrbit)
   })
 
   it('gives Earth a finite umbra', () => {

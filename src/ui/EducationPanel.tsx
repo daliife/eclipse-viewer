@@ -12,7 +12,7 @@ type Props = {
 
 export function EducationPanel({ mode, simDays, degreesFromAlignment }: Props) {
   const { t } = useI18n()
-  const [whyOpen, setWhyOpen] = useState(false)
+  const [whyOpen, setWhyOpen] = useState(true)
   const keys = explainKeys(mode, simDays)
   const deg = Math.abs(degreesFromAlignment).toFixed(0)
 

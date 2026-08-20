@@ -1,7 +1,7 @@
 {
   "name": "Eclipse Viewer",
   "short_name": "Eclipses",
-  "description": "Interactive 3D viewer of solar and lunar eclipses.",
+  "description": "Interactive 3D viewer of a solar or lunar eclipse.",
   "start_url": "/eclipse-viewer/",
   "scope": "/eclipse-viewer/",
   "display": "standalone",

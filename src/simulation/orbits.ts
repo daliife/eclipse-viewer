@@ -263,9 +263,9 @@ export function focusCameraOffset(scale: Scale, focus: CameraFocus, aspect = 1.4
     const d = Math.max(scale.moonRadius * 12, scale.earthRadius * 2.4) * boost
     return [d * 0.55, d * 0.35, d * 0.85]
   }
-  // Close side view so Earth and the Moon share the frame.
-  const d = scale.moonOrbit * 1.22 * boost
-  return [d * 0.1, d * 0.36, d * 0.92]
+  // Closer 3/4 view, still pivoted on Earth: Sun, Earth, and Moon in the foreground.
+  const d = scale.earthOrbit * 0.56 * boost
+  return [d * 0.94, d * 0.22, d * 0.27]
 }
 
 /**
